@@ -1,0 +1,32 @@
+# gitignore configuration for my repo “javascriptProject
+#
+# Recommended: use eclipse
+
+# Ignore files
+MyWebProject/build/
+MYWebProject/src/
+Servers
+MyWebProject/WebContent/META-INF/MANIFEST.MF
+MyWebProject/.classpath
+.DS_Store
+MyWebProject/.settings/.jsdtscope
+MyWebProject/.settings/org.eclipse.jdt.core.prefs
+MyWebProject/.settings/org.eclipse.wst.common.component
+*.xml
+*.container
+*.name
+MyWebProject/.project
+/.metadata/
+.project
+*.MF
+*.component
+*.prefs
+JSPChap5/.classpath
+jspProject/.settings/.jsdtscope
+jspProject/.classpath
+JSPChap5/.settings/.jsdtscope
+JSPChap4/.settings/.jsdtscope
+JSPChap4/.classpath
+/bin/
+.settings/.jsdtscope
+.classpath
