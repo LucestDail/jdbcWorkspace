@@ -1,0 +1,58 @@
+<%@page import="model.Board"%>
+<%@page import="model.BoardDao"%>
+<%@page import="java.io.File"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+
+<%
+	BoardDao dao = new BoardDao();
+	String path = application.getRealPath("/") + "model1/board/file/";
+	File f = new File(path);
+	if(!f.exists()){
+		f.mkdirs();
+	}
+	int size = 10*1024*1024;
+	
+	MultipartRequest multi = new MultipartRequest(request, path, size, "euc-kr");
+	String name = multi.getParameter("name");
+	String pass = multi.getParameter("pass");
+	String subject = multi.getParameter("subject");
+	String content = multi.getParameter("content");
+	String file2 = multi.getFilesystemName("file2");
+	String file1 = multi.getFilesystemName("file1");
+	int num = Integer.parseInt(multi.getParameter("num"));
+	int grp = Integer.parseInt(multi.getParameter("grp"));
+	int grplevel = Integer.parseInt(multi.getParameter("grplevel"));
+	int grpstep = Integer.parseInt(multi.getParameter("grpstep"));
+	String msg = "수정 중 오류 발생";
+	String url = "updateForm.jsp?num"+num;
+	
+	Board curBoard = new BoardDao().selectOne(multi.getParameter("num"));
+	if(!curBoard.getPass().equals(pass)){
+		msg = "비밀번호 불일치";
+	}else{
+		Board board = new Board();
+		board.setName(multi.getParameter("name"));
+		board.setPass(multi.getParameter("pass"));
+		board.setSubject(multi.getParameter("subject"));
+		board.setContent(multi.getParameter("content"));
+		if(file2.equals(file1)){
+			board.setFile1(multi.getFilesystemName("file2"));
+		}else{
+			board.setFile1(multi.getFilesystemName("file1"));
+		}
+		board.setNum(num);
+		board.setGrp(grp);
+		board.setGrplevel(grplevel);
+		board.setGrpstep(grpstep);
+		if(dao.update(board)){
+			msg = "수정등록 완료";
+			url = "info.jsp?num="+num;
+		}
+	}
+%>
+<script>
+alert("<%=msg%>");
+location.href = "<%=url%>"
+</script>

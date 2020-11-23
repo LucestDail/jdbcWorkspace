@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>게시글 삭제 화면</title>
+<link rel = "stylesheet" href = "../../css/main.css">
+</head>
+<body>
+
+
+</body>
+</html>

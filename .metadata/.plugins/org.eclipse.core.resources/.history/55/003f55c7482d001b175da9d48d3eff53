@@ -1,0 +1,39 @@
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="java.io.File"%>
+<%@page import="model.BoardDao"%>
+<%@page import="model.Board"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<jsp:useBean id = "b" class = "model.Board"/>
+<jsp:setProperty property = "*" name = "b"/>
+<%
+	String msg = "답변등록시 오류 발생";
+	String url = "replyForm.jsp";
+/* 	String path = application.getRealPath("/") + "model1/board/file/";
+	File f = new File(path);
+	if(!f.exists()){
+		f.mkdirs();
+	}
+	int size = 10*1024*1024;
+	MultipartRequest multi = new MultipartRequest(request, path, size, "euc-kr"); */
+	BoardDao dao = new BoardDao();
+	Board board = new Board();
+	board.setName(b.getName());
+	board.setPass(b.getPass());
+	board.setSubject(b.getSubject());
+	board.setContent(b.getContent());
+	dao.grpStepAdd(b.getGrp(),b.getGrpstep());
+	int num = dao.maxnum();
+	board.setNum(num);
+	board.setGrp(b.getGrp());
+	board.setGrplevel(b.getGrplevel()+1);
+	board.setGrpstep(b.getGrpstep()+1);
+	if(dao.insert(board)){
+		msg = "답변등록 완료";
+		url = "list.jsp";
+	}
+%>
+<script type = "text/javascript">
+	alert("<%=msg%>");
+	location.href = "<%=url%>"
+</script>

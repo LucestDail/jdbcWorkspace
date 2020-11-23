@@ -1,0 +1,51 @@
+<%@page import="model.Board"%>
+<%@page import="model.BoardDao"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>게시물 상세 보기</title>
+</head>
+<body>
+		<%
+    	request.setCharacterEncoding("euc-kr");
+    	String num = request.getParameter("num");
+    	BoardDao dao = new BoardDao();
+    	Board infoBoard = dao.selectOne(num);
+    	dao.readcntAdd(num);
+    %>
+    <script>
+    alert(<%=num%>)
+	</script>
+	<table>
+		<tr>
+			<th>글쓴이</th>
+			<td><%=infoBoard.getName() %></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><%=infoBoard.getSubject() %></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td><%=infoBoard.getContent() %></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><%=infoBoard.getFile1() %></td>
+		</tr>
+		<tr>
+			<td colspan = "2">
+				<a href = "reply.jsp">답변</a>
+				<a href = "update.jsp">수정</a>
+				<a href = "delete.jsp">삭제</a>
+				<a href = "list.jsp">목록</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

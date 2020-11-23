@@ -1,0 +1,19 @@
+<%@page import="model.BoardDao"%>
+<%@page import="model.Board"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%
+	String num = request.getParameter("num");
+	Board b = new BoardDao().selectOne(num);
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>

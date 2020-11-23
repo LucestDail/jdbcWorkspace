@@ -1,0 +1,47 @@
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="java.io.File"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+	String uploadPath = application.getRealPath("/") + "upload/";
+	int size = 10*1024*1024;
+	File f = new File(uploadPath);
+	if(!f.exists()){
+		f.mkdirs();
+	}
+	MultipartRequest multi = new MultipartRequest(request, uploadPath, size, "euc-kr");
+	String name = multi.getParameter("name");
+	String title = multi.getParameter("title");
+	String fname = multi.getFilesystemName("file1");//파일의 이름입니다...
+%>
+<table>
+	<tr>
+		<th>업로드 위치</th>
+		<td> <%=uploadPath %></td>
+	</tr>
+	<tr>
+		<th>올린 사람</th>
+		<td><%=name %></td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td><%=title %></td>
+	</tr>
+	<tr>
+		<th>파일</th>
+		<td><a href = "<%=fname %>"><%=fname %></a></td>
+	</tr>
+</table>
+업로드 위치 : <%=uploadPath %><br>
+올린 사람 : <%=name %><br>
+제목 : <%=title %><br>
+파일 : <a href = "<%=fname %>"><%=fname %></a><br>
+</body>
+</html>

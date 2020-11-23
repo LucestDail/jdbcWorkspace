@@ -1,0 +1,14 @@
+package model;
+
+public class BoardDao {
+	public int maxnum() {
+		
+		return 0;
+	}
+	
+	public boolean insert(Board board) {
+		
+		return false;
+	}
+
+}

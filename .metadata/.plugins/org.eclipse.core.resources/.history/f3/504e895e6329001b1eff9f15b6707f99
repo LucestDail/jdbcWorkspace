@@ -1,0 +1,52 @@
+<%@page import="java.util.List"%>
+<%@page import="model.MemberDao"%>
+<%@page import="model.Member"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+<%
+	request.setCharacterEncoding("euc-kr");
+	String parameterId = request.getParameter("id");
+	String sessionId = (String)session.getAttribute("login");
+	if(sessionId == null){%>
+		alert("로그인 하세용...");
+		location.href('loginForm.jsp');
+	<%
+	}
+	Member mem = new MemberDao().selectOne(parameterId);
+	String id = null;
+	String name = null;
+	String gender = null;
+	String tel = null;
+	String email = null;
+	String picture = null;
+	if(mem != null){
+		id = mem.getId();
+		name = mem.getName();
+		gender = (mem.getGender() == 1) ? "남" : "여";
+		tel = mem.getTel();
+		email = mem.getEmail();
+		picture = mem.getPicture();
+	}
+	boolean owner = false;
+	if(!sessionId.equals(parameterId) && !sessionId.equals("admin")){
+		%>
+		alert("관리자만 사용할 수 있습니다...")
+		location.href = "main.jsp";
+		<%
+	}
+	
+	List<Member> list = mem.list();
+	
+	
+%>
+</script>
+</body>
+</html>

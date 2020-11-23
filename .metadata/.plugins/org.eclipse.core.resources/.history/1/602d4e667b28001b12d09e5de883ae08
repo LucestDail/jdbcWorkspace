@@ -1,0 +1,12 @@
+
+public class Member {
+	private String pic;
+	private String id;
+	private String pass;
+	private String name;
+	private int gendedr;
+	private int tel
+	private String email;
+	
+
+}

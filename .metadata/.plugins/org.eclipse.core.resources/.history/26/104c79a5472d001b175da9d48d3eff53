@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+
+<%request.setCharacterEncoding("euc-kr");%>
+<jsp:useBean id = "b" class = "model.Board"/>
+<jsp:setProperty property = "*" name = "b"/>
+<%
+	String msg = "답변등록시 오류 발생";
+	String url = "replyForm.jsp";
+
+%>
+<script type = "text/javascript">
+	alert("<%=msg%>");
+	location.href = "<%=url%>"
+</script>

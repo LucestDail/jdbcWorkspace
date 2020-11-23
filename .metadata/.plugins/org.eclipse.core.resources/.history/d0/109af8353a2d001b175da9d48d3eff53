@@ -1,0 +1,25 @@
+<%@page import="model.Board"%>
+<%@page import="model.BoardDao"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <%-- 
+    1. 원글의 num을 파라매터로 받는다.
+    2. db에서 num의 게시물을 조회하여 원글의 num, grp, grplevel, grpstep 정보를 저장
+    3. 입력 화면 표시
+     --%>
+     <%
+     String num = request.getParameter("num");
+     BoardDao dao = new BoardDao();
+     Board board = dao.selectOne(num);
+     
+     %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>

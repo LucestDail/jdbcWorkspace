@@ -1,0 +1,134 @@
+<%@page import="model.Board"%>
+<%@page import="java.util.List"%>
+<%@page import="model.BoardDao"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    <%-- 
+    1. 한페이지당 출력되는 게시글은 10개까지만 -> pageNum 파라매터값 저장, 없는 경우는 1로 설정
+    2. 최근 등록된 게시물이 가장 위에 배치
+    3. db에서 해당 페이지에 출력된 내용을 조회하여 호면에 출력, 게시물을 출력 부분, 페이지 구분 출력 부분
+     --%>
+     <%
+     	int pageNum = 1;
+     	try{
+     		pageNum = Integer.parseInt(request.getParameter("pageNum"));
+     	}catch(NumberFormatException e){
+     		//없엉...
+     	}
+     	int limit = 10;
+     	BoardDao dao = new BoardDao();
+     	int boardcount = dao.boardCount(); // 전체 게시물 등록 건수를 리턴
+     	//pageNum에 출력될 게시물 10개를 List 객체로 리턴
+     	/*
+     	startpage : 화면에 출력될 시작 페이지 번호
+     	현재 페이지 시작페이지
+     		2	:	1
+     	2/10.0 => 0.2 + 0.9 => (int)(1.1) - 1 => 0 * 10 => 0+1 => 1
+     		505	:	501
+     	505/10.0 => 50.5 + 0.9 => (int)(51.4) - 1 => 50*10 => 500 + 1
+     	
+     	
+     	첨부파일이 있는 경우 @ 표시하기 -> @ 누르면 사진 표시
+     	오늘 등록된 게시물은 시:분:초로 출력하기
+     	오늘 등록이 아닌 경우는 년-월-일 시:분으로 출력하기
+     	
+     	*/
+     	List<Board> list = dao.list(pageNum,limit);
+     	int maxpage = (int)((double)boardcount/limit + 0.95);
+     	int startpage = ((int)(pageNum/10.0 + 0.9) - 1) * 10 + 1;
+     	int endpage = startpage + 9;
+     	if(endpage > maxpage){
+     		endpage = maxpage;
+     	}
+     %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>게시물 목록 출력</title>
+<link rel = "stylesheet" href = "../../css/main.css">
+</head>
+<body>
+<table>
+	<caption>게시글 목록</caption>
+	<%if(boardcount == 0){ %>
+		<tr>
+			<td colspan = "5"> 등록된 게시글이 없습니다...
+			</td>
+		</tr>
+	<%}else{ %>
+		<tr>
+			<td colspan = "5" style = "text-align:right"> 글개수:<%=boardcount%>
+			</td>
+		</tr>
+		<tr>
+			<th width = "5%"> 번호</th>
+			<th width = "55%"> 제목</th>
+			<th width = "10%"> 작성자</th>
+			<th width = "20%"> 작성일자</th>
+			<th width = "10%"> 조회수</th>			
+		</tr>
+		<% for(Board b : list){ %>
+		<tr>
+			<td><%=b.getNum() %></td>
+			<td style = "text-align : left">
+			<% if(b.getFile1() != null){%>
+				<a href = "<%=b.getFile1() %>">@</a>
+			<%}else {%>
+			&nbsp;&nbsp;
+			<%} %>
+				<a href = "info.jsp?num=<%=b.getNum() %>"><%=b.getSubject() %></a>
+			</td>
+			<td><%=b.getName() %></td>
+			<td><%=b.getRegdate() %></td>
+			<td><%=b.getReadcnt() %></td>
+		</tr>
+		<%} %>
+		<tr>
+			<td colspan = "5">
+				<%
+				if(pageNum <= 1){
+				%>
+					[이전]
+				<%
+				} else {
+				%>
+					<a href = "list.jsp?pageNum=<%=pageNum - 1 %>">[이전]</a>
+				<%
+				} 
+				for(int a = startpage; a<=endpage; a++){
+					if(a == pageNum){
+					%>
+						[<%=a %>]
+					<%
+					} else{
+					%>
+						<a href = "list.jsp?pageNum=<%=a %>">[<%=a %>]</a>
+					<%
+					}
+				}
+				%>
+				<%
+				if(pageNum >= maxpage){ 
+				%>
+					[다음]
+				<%
+				} else{ 
+				%>
+					<a href = "list.jsp?pageNum=<%=pageNum + 1 %>">[다음]</a>
+				<%
+				}
+				%>
+			</td>
+		</tr>
+		<%
+		}
+		%>
+		<tr>
+			<td colspan = "5" style = "text-align:right">
+				<a href = "writeForm.jsp">[글쓰기]</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,53 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class BoardDao {
+	public int maxnum() {
+		Connection conn = DbConnection.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select ifnull(max(num),0) from board";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.close(conn, pstmt, null);
+		}
+		return 0;
+	}
+	
+	public boolean insert(Board board) {
+		Connection conn = DbConnection.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "insert into member () value";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mem.getId());
+			pstmt.setString(2, mem.getPass());
+			pstmt.setString(3, mem.getName());
+			pstmt.setInt(4, mem.getGender());
+			pstmt.setString(5, mem.getEmail());
+			pstmt.setString(6, mem.getTel());
+			pstmt.setString(7, mem.getPicture());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnection.close(conn, pstmt, null);
+		}
+		return false;
+	}
+
+}

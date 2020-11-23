@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<%request.setCharacterEncoding("euc-kr");%>
+<jsp:useBean id = "mem" class = "model.Member"/>
+<%-- 파라매터와 Member 객체의 프로퍼티가 같은 경우(property="*") setProperty 를 이용, Member 객체에 파라매터 저장 --%>
+<jsp:setProperty property = "*" name = "mem"/>
+
+</body>
+</html>

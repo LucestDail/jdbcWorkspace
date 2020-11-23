@@ -1,0 +1,66 @@
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="java.io.File"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<%--
+
+enctype = "multipart/form-data -> action 받았으므로
+request 객체 직접 사용이 불가능
+=> MultipartRequest 객체를 이용하여 사용됩니다...
+
+application.getRealPath("/") : 웹어플리케이션의 폴더 경로
+
+uploadPath : 웹어플리케이션 폴더 경로/upload/
+=> 서버의 업로드 파일이 저장되는 위치
+
+ new MultipartRequest(request, uploadPath, size, "euc-kr")
+request : 파라매터 정보, 파일정보, 파일내용 저장하고 있는 요청 객체(Request Object)
+uploadPath : 업로드 되는 폴더 정보
+size : 업로드되는 최대 파일의 크기
+euc-kr : 파라매터 인코딩 설정( -> utf-8 등으로 변경 가능!)
+
+
+ --%>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel = "stylesheet" href = "../css/main.css">
+</head>
+<body>
+<%
+	String uploadPath = application.getRealPath("/") + "upload/";
+	int size = 10*1024*1024;
+	File f = new File(uploadPath);
+	if(!f.exists()){
+		f.mkdirs();
+	}
+	MultipartRequest multi = new MultipartRequest(request, uploadPath, size, "euc-kr");
+	String name = multi.getParameter("name");
+	String title = multi.getParameter("title");
+	String fname = multi.getFilesystemName("file1");//uploadForm 의 name 값이 file1 이기 때문...
+%>
+<table>
+	<tr>
+		<th>업로드 위치</th>
+		<td> <%=uploadPath %></td>
+	</tr>
+	<tr>
+		<th>올린 사람</th>
+		<td><%=name %></td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td><%=title %></td>
+	</tr>
+	<tr>
+		<th>파일</th>
+		<td>
+			<img src = "<%=fname%>" width="100px" height = "100px">
+			<a href = "<%=fname %>"><%=fname %></a>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

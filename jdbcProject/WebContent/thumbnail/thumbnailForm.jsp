@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel = "stylesheet" href = "../css/main.css">
+</head>
+<body>
+<form action = "thumbnail.jsp" method = "post" enctype = "multipart/form-data">
+<table><caption> 썸네일 이미지 만들기</caption>
+	<tr>
+		<th>원본 이미지</th>
+		<td>
+			<input type = "file" name = "picture">
+		</td>
+	</tr>
+	<tr>
+		<td colspan = "2">
+			<input type = "submit" value = "썸네일이미지생성">
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

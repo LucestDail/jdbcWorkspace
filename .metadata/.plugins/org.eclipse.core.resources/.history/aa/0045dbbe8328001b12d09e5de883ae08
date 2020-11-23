@@ -1,0 +1,67 @@
+<%@page import="model.MemberDao"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<%-- 
+1. 파라매터 정보를 member 객체에 저장할 예정이므로 useBean 액션 태그를 사용합니다...
+2. member 객체에 저장된 정보를 db에 추가합니다...
+member table 만들어서 추가하기!
+3. db로부터 가입 성공, 가입 실패에 대한 조건을 만들어주기
+가입 성공 : loginForm.jsp 이동
+가입 실패 : joinForm.jsp 페이지로 이동
+ --%>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>201117, 11:06, join form source code</title>
+</head>
+<body>
+<%request.setCharacterEncoding("euc-kr");%>
+<jsp:useBean id = "mem" class = "model.Member"/>
+<jsp:setProperty property = "*" name = "mem"/>
+<%
+
+MemberDao dao = new MemberDao();
+int result = dao.insert(mem);
+String msg = "회원가입 실패";
+String url = "joinForm.jsp";
+if(result > 0){
+	msg = mem.getName() + "님 회원가입 완료";
+	url = "loginForm.jsp";
+}
+%>
+<script>
+	alert("<%=msg%>");
+	location.href = "<%=url%>";
+
+</script>
+<table><caption>정보 테스팅</caption>
+	<tr>
+		<td>id</td>
+		<td><jsp:getProperty property="id" name="mem"/>
+	</tr>
+	<tr>
+		<td>pass</td>
+		<td><jsp:getProperty property="pass" name="mem"/>
+	</tr>
+	<tr>
+		<td>name</td>
+		<td><jsp:getProperty property="name" name="mem"/>
+	</tr>
+	<tr>
+		<td>gender</td>
+		<td><jsp:getProperty property="gender" name="mem"/>
+	</tr>
+	<tr>
+		<td>tel</td>
+		<td><jsp:getProperty property="tel" name="mem"/>
+	</tr>
+	<tr>
+		<td>email</td>
+		<td><jsp:getProperty property="email" name="mem"/>
+	</tr>
+
+
+</table>
+</body>
+</html>

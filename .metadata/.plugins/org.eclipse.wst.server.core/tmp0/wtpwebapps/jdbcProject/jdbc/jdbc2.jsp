@@ -15,7 +15,7 @@
 <body>
 <%
 Class.forName("org.mariadb.jdbc.Driver");
-Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/classdb","scott","1234");
+Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/classdb","root","1234");
 Statement stmt = conn.createStatement();
 ResultSet rs = stmt.executeQuery("select * from emp");
 ResultSetMetaData rsmt = rs.getMetaData();
