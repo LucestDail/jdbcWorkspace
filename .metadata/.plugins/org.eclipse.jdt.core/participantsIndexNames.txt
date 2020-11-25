@@ -5,8 +5,12 @@ C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \jsptest\src
 C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\778361435.index
 \jsptest\src
+C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2078138425.index
+\jspstudy2\src
 C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2123747777.index
 \jdbcProject\src
+C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2725329013.index
+\jspstudy2\src
 C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\777171111.index
 \JavascriptStudy\jspProject\src
 C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3204522604.index
@@ -21,6 +25,8 @@ C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jsp
 \JavascriptStudy\jspProject\src
 C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2716120594.index
 \jsptest\src
+C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2768117831.index
+\jspWorkspace\src
 C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3703526449.index
 \jdbcProject\src
 C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\844559007.index
@@ -29,6 +35,8 @@ C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst
 \jdbcProject\src
 C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3076837079.index
 \jsptest\src
+C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\152393184.index
+\jspstudy2\src
 C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2123747777.index
 \jdbcProject\src
 C:\Users\dhtmd\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\977402493.index
