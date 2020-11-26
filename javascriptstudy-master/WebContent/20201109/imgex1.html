@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--  /WebContent/20201109/imgex1.html -->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>이미지 선택하기</title>
+<!-- 이미지 위치 : /WebContent/20201109/img/strawberry.gif-->
+<script type="text/javascript">
+  //sel : select 태그
+  //img : img 태그
+  function drawimg(sel, img) {
+	  img.src = "img/" + sel.value;
+  }
+</script>
+</head>
+<body>
+<form name="f">
+  <table>
+  <!-- onchange : 값이 변경될때 발생되는 이벤트
+     this : select 태그
+     document.img2 : img 태그는 form 하위 객체가 아님. img 태그 
+  -->
+  <tr><td><select name="s" onchange="drawimg(this,document.img2)">
+     <option value="strawberry.gif">딸기</option>
+     <option value="banana.jpg">바나나</option>
+     <option value="apple.gif">사과</option>
+  </select></td>
+  <td><img name="img2" src="img/strawberry.gif" width="100" height="120">
+  </td></tr></table>
+</form>
+</body>
+</html>

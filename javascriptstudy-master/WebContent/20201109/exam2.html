@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- /WebContent/20201109/exam2.html -->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>form 객체를 이용한 접근 방법</title>
+<script type="text/javascript">
+   function copyvalue() {
+	   document.f1.num2.value = document.f1.num1.value;
+   }
+   function sumall() {
+	   n = document.f2.num.value;
+	   s=0,evens=0,odds=0;
+	   for(var i=1;i<=n;i++) {
+		   s += i;             //전체합
+		   if(i%2==0) evens+=i;//짝수합
+		   else odds+=i;       //홀수합
+	   }
+	   document.f2.sum.value=s;
+	   document.f2.evensum.value=evens;
+	   document.f2.oddsum.value=odds;
+   }   
+</script>
+
+</head>
+<body>
+<h2>num1의 값을 num2 태그에 복사하기</h2>
+<form name="f1">
+<input type="text" name="num1">
+<input type="text" name="num2">
+<input type="button" value="복사" onclick="copyvalue()">
+</form>
+<h2>입력된 숫자까지의 합계 구하기</h2>
+<form name="f2">
+ <input type="text" name="num">
+ <input type="button" value="합계" onclick="sumall()"><br>
+  전체 합계 : <input type="text" name="sum"><br>
+  짝수 합계 : <input type="text" name="evensum"><br>
+  홀수 합계 : <input type="text" name="oddsum"><br>
+</form>
+</body>
+</html>

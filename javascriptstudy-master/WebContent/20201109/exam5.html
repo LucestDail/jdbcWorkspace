@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--  /WebContent/20201109/exam5.html
+    저축할 금액을 랜덤하게 1~10만원까지 할려고 함.
+  6만원이상이면 메세지창으로 '저축을 많이 하셨습니다. 잘하셨습니다.' alert 메세지를 출력하고
+  6만원 미만이면 '좀더 많이 하세요' alert 메세지를 출력하기 
+ -->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title></title>
+</head>
+<body>
+<script type="text/javascript">
+  money = Math.ceil(Math.random() * 10);
+  if(money >= 6) {
+	  msg = "저축을 많이 하셨습니다. 잘하셨습니다.:"
+  } else {
+	  msg = "좀더 많이 하세요.:"
+  }
+  alert(msg + money + "만원");
+</script>
+</body>
+</html>

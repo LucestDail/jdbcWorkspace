@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- /WebContent/test1110/test2.html -->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>구구단출력하기</title>
+<style type="text/css">
+ table { width:100%; border-collapse: collapse;}
+ th,td {border : 3px solid #bcbcbc; text-align: center; padding: 8px;}
+ th {background-color: #e2e2e2; color:#111111;}
+ td {background-color: #f2f2f2;}
+ caption {color:#111111; font-size: 20px; background-color: #ffffff;}
+</style>
+<script type="text/javascript">
+   function print1() {
+	  var html = "<table><caption>세로출력</caption>";
+	  for(var i=2;i<=9;i++) {
+		  html += "<tr><th>" + i + "단</th></tr>";
+		  for(var j=2;j <= 9;j++) {
+			  html += "<tr><td>" + i + "*" + j + "="+(i*j)+"</td></tr>";
+		  }
+	  }
+	  html += "</table>";
+	  gugudan.innerHTML = html;
+   }
+   function print2() {
+	  var html = "<table><caption>가로출력</caption><tr>";
+	  for(var i=2;i<=9;i++) {
+		  html += "<th>" + i + "단</th>";
+	  }
+	  html += "</tr>";
+	  for(var j=2;j<=9;j++) {
+		  html += "<tr>";
+		  for(var i=2;i <= 9;i++) {
+			  html += "<td>" + i + "*" + j + "="+(i*j)+"</td>";
+		  }
+		  html += "</tr>";
+	  }
+	  html += "</table>";
+	  gugudan.innerHTML = html;
+	}
+   function print3() {
+	  var html = "<table><caption>2단출력</caption>";
+	  for(i=2;i<=9;i+=4) { 
+		  html += "<tr>";
+		  for(var k=0;k<4;k++) {
+			  html += "<th>" + (i+k) + "단</th>";
+		  }
+		  html += "</tr>";
+		  for(var j=2;j<=9;j++) {
+			  html += "<tr>";
+			  for(var k=0;k<4;k++) {
+				  html += "<td>" + (i+k) + "*" + j + "=" + 
+				     ((i+k)*j) + "</td>";
+			  }
+			  html += "</tr>";
+		  }
+	  }
+	  html += "</table>";
+	  gugudan.innerHTML = html;
+   }
+   function print4() {
+	   var d = dan.value;
+		  var html = "<table>";
+		  html += "<tr><th>" +d + "단</th></tr>";
+		  for(var j=2;j <= 9;j++) {
+			  html += "<tr><td>" + d + "*" + j + "="+(d*j)+"</td></tr>";
+		  }
+	  html += "</table>";
+	  gugudan.innerHTML = html;
+   }
+</script>
+</head>
+<body>
+<input type="button" value="세로출력" onclick="print1()">
+<input type="button" value="가로출력" onclick="print2()">
+<input type="button" value="2단출력" onclick="print3()">
+<h3>2~9까지의 숫자를 선택하여 해당 단의 구구단을 출력하기</h3>
+<select id="dan" onchange="print4()">
+<option value="">선택하세요</option>
+<option value="2">&nbsp;&nbsp;2단</option><option value="3">&nbsp;&nbsp;3단</option>
+<option value="4">&nbsp;&nbsp;4단</option><option value="5">&nbsp;&nbsp;5단</option>
+<option value="6">&nbsp;&nbsp;6단</option><option value="7">&nbsp;&nbsp;7단</option>
+<option value="8">&nbsp;&nbsp;8단</option><option value="9">&nbsp;&nbsp;9단</option></select>
+<div id="gugudan"></div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--  /WebContent/20201110/gameex1.html
+  1. 자바스크립트에서 객체 생성하기
+  2. 태그 위치 지정
+  3. 이벤트 처리.
+  4. setInterval() : 지정된 시간 간격으로 계속 메서드 호출.
+     clearInterval()  
+-->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>글자잡기 게임</title>
+<script type="text/javascript">
+   function nextRandomInteger(limit) { //700
+	   return Math.round(Math.random() * limit); //0 ~ 700까지의 임의의 수
+   }
+   function randomSpeed(maxSpeed) { // -2 ~ 2까지의 임의의 값
+	   return Math.random() * maxSpeed - Math.random() * maxSpeed;
+   }
+   var canvasWidth = 700; //A 글자가 움직일수 있는 화면의 범위
+   var canvasHeight = 500;
+   var total = 10;        //글자의 갯수
+   function MovingText() { //생성자. 객체 클래스. new MovingText()호출
+	   //this.멤버
+	   this.x = nextRandomInteger(canvasWidth); //0~700사이의 임의의 값
+	   this.y = nextRandomInteger(canvasHeight);//0~500사이의 임의의 값
+	   this.vX = randomSpeed(2);                // -2 ~ 2 사이의 임의의 값
+	   this.vY = randomSpeed(2);                // -2 ~ 2 사이의 임의의 값
+	   // <h1 style="background-color:white;position:absolute">A</h1>
+	   this.body = document.createElement("h1"); //h1태그객체 생성.
+	   this.body.innerHTML = "A";
+	   //속성 등록.
+	   this.body.setAttribute("style","background-color:white");
+	   this.body.style.position = "absolute";
+	   var text = this.body;
+	   //=> 리스너에 등록.
+	   // 이벤트 핸들러 : 클릭되는 경우 호출되는 메서드
+	   this.body.onclick = function() { 
+		   --total;
+		   alert("남은 문자 수:" + total);
+		   text.innerHTML = "B";
+	   }
+	   //<body>
+	   // <h1 style="background-color:white;position:absolute">A</h1>
+	   //</body>
+	   document.body.appendChild(this.body); //=> 화면에 등록. 
+   }
+   //prototype : MovingText 객체에 메서드 구현. move() 메서드의 기능 구현
+   MovingText.prototype.move = function() {
+	   if(this.body.innerHTML == 'B') return;
+	   if(this.x < 0 || this.x > canvasWidth) { //A문자가 가로크기를 벋어나면
+		   this.vX *= -1;   
+	   }
+	   if(this.y < 0 || this.y > canvasHeight) {//A문자가 세로크기를 벋어나면
+		   this.vY *= -1;
+	   }
+	   this.x += this.vX; //x값을 변경
+	   this.y += this.vY; //y값을 변경
+	   this.body.style.left = this.x + "px"; //위치를 지정
+	   this.body.style.top = this.y + "px";  //위치를 지정
+   }
+   //화면 시작시.
+   window.onload = function() {
+	   var movingTexts = []; //new Array(10); 배열 생성.=> List 객체
+	   for(var i=0;i<10;i++) {
+		   movingTexts.push(new MovingText()); //MovingText 객체를 배열에 추가
+	   }
+	   var game = setInterval(function(){
+		   //movingTexts의 인덱스 값 : 0 ~ movingTexts 배열의 길이 -1  
+		   for (var i in movingTexts) { // i : 첨자
+			   if(total < 4) {
+				   alert("게임종료");
+				   clearInterval(game); //setInterval로 등록된 함수를 등록취소
+				   return;
+			   }
+			   movingTexts[i].move();
+		   }
+	   },1000/60); //  1/60 초마다 
+   }
+</script>
+</head>
+<body>
+</body>
+</html>

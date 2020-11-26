@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- /WebContent/20201109/mathex1.html -->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Math 클래스 예제</title>
+</head>
+<body>
+<script type="text/javascript">
+/*
+ * Math.random() : 0 ~ 1.0 미만 사이의 임의의 수
+ * Math.floor()  : 현재 값보다 작은 근사정수 
+ * Math.ceil()   : 현재 값보다 큰 근사정수 
+ */
+    function getNumber() { 
+    	return Math.floor(Math.random() * 1000) % 10; //0~9까지 중 임의의 정수
+    }
+    var op = new Array("+","-","*","/","%"); //배열로 생성
+    //op.length : 5
+    function getOp() { //0 ~ 4 사이의 임의의 정수를 인덱스로하는 op의 요소 리턴
+    	return op[Math.floor(Math.random()*op.length)]; 
+    }
+    str = getNumber() + getOp() + getNumber();
+    ans = prompt(str + "=",0) //기본값. 초기화값 
+    res = parseInt(eval(str)); //결과값. 정수로만 결과값을 저장하기
+    if(res != ans) {
+    	document.write("입력한 값:" + ans);
+    	document.write("<font color='red' size='5'>틀렸습니다.</font>")
+    	document.write("정답:"+res);
+    } else {
+    	document.write("<font color='blue' size='7'>정답입니다.</font>")
+    }
+</script>
+</body>
+</html>
