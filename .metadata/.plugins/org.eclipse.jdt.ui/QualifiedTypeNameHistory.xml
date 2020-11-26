@@ -12,13 +12,16 @@
     <fullyQualifiedTypeName name="javax.servlet.annotation.WebInitParam"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
-    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
-    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
     <fullyQualifiedTypeName name="controller.Action"/>
     <fullyQualifiedTypeName name="javax.servlet.ServletConfig"/>
     <fullyQualifiedTypeName name="java.util.Properties"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
-    <fullyQualifiedTypeName name="action.Action"/>
     <fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
+    <fullyQualifiedTypeName name="action.ActionForward"/>
+    <fullyQualifiedTypeName name="action.Action"/>
+    <fullyQualifiedTypeName name="model.MemberDao"/>
+    <fullyQualifiedTypeName name="model.Member"/>
 </qualifiedTypeNameHistroy>

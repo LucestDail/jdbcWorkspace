@@ -27,12 +27,12 @@
 	}
 	function win_open(page){
 		var op = "width = 500, height=350, left=50, top=150";
-		open(page + ".jsp","",op);
+		open(page + ".me","",op);
 	}
 </script>
 </head>
 <body>
-<form action = "login.jsp" method="post" name = "f" onsubmit = "return inputcheck(this)">
+<form action = "login.me" method="post" name = "f" onsubmit = "return inputcheck(this)">
 	<table><caption>로그인</caption>
 		<tr>
 			<th>아이디</th>
@@ -49,7 +49,7 @@
 		<tr>
 			<td colspan = "2">
 				<input type = "submit" value = "로그인">
-				<input type = "button" value = "회원가입" onclick = "location.href = 'joinForm.jsp'">
+				<input type = "button" value = "회원가입" onclick = "location.href = 'joinForm.me'">
 				<input type = "button" value = "아이디찾기" onclick = "win_open('idForm')">
 				<input type = "button" value = "비밀번호찾기" onclick = "win_open('pwForm')">
 			</td>

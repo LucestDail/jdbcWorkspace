@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type = "text/javascript">
+	var input = prompt("출력할 삼각형의 단을 입력하세요");
+	for(var i = 0; i < input; i++)  {
+		  for(var j=input; j > i; j--)  {
+		    document.write('&nbsp');
+		  }
+		  for(let j=0; j <= i; j++)  {
+		    document.write('*');
+		  }
+		  for(let j=1; j <= i; j++)  {
+		    document.write('*');
+		  }
+		  document.write('<br>');
+		}
+</script>
+</head>
+<body>
+
+</body>
+</html>

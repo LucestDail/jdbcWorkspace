@@ -15,5 +15,7 @@ C:\Users\dhtmd\jdbcWorkspace\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.js
 \jdbcProject\src
 C:\Users\dhtmd\jdbcWorkspace\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\325281795.index
 \jdbcProject\src
+C:\Users\dhtmd\jdbcWorkspace\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3609311819.index
+\jspstudy2\src
 C:\Users\dhtmd\jdbcWorkspace\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3703526449.index
 \jdbcProject\src
