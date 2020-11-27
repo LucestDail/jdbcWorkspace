@@ -49,7 +49,7 @@ function win_passchg(){
 			<tr><th>성별</th>
 				<td>
 					<input type = "radio" name = "gender" value = "1" ${member.gender==1?"checked":""}>남
-					<input type = "radio" name = "gender" value = "2" ${member.gender==1?"checked":""}>여
+					<input type = "radio" name = "gender" value = "2" ${member.gender==2?"checked":""}>여
 				</td>
 			</tr>
 			<tr>
@@ -64,7 +64,7 @@ function win_passchg(){
 				<td colspan = "3">
 					<input type = "submit" value = "회원수정">
 					<core:if test = "${sessionScope.login != 'admin' || param.id == 'admin' }">
-						<input type = "submit" value = "비밀번호수정" onclick="win_passchg()">
+						<input type = "button" value = "비밀번호수정" onclick="win_passchg()">
 					</core:if>
 					<input type = "button" value = "돌아가기" onclick="back()">
 				</td>

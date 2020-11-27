@@ -29,6 +29,10 @@ public class UpdateAction extends UserLoginAction{
 		if(member.getPass().equals(dbmember.getPass())) {
 			int result = dao.update(member);
 			if(result > 0) {
+				/*
+				 * msg = "수정성공"; url = "info.me?id="+member.getId(); return new
+				 * ActionForward(true, "../alert.jsp");
+				 */
 				return new ActionForward(true, "info.me?id="+member.getId());
 			}else {
 				msg = "수정 실패";

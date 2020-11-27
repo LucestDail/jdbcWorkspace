@@ -32,7 +32,7 @@
 </script>
 </head>
 <body>
-<form action = "login.me" method="post" name = "f" onsubmit = "return inputcheck(this)">
+<form action = "login.jsp" method="post" name = "f" onsubmit = "return inputcheck(this)">
 	<table><caption>로그인</caption>
 		<tr>
 			<th>아이디</th>
