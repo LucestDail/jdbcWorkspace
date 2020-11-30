@@ -28,6 +28,7 @@ public class BoardDao {
 	}
 	
 	public int maxgrp() {
+		System.out.println("maxgrp has been run");
 		Connection conn = DbConnection.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

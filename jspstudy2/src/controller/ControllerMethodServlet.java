@@ -39,6 +39,7 @@ public class ControllerMethodServlet extends HttpServlet {
     }
     public void init(ServletConfig config) throws ServletException{
     	FileInputStream f = null;
+    	//props : method.properties
     	String props = config.getInitParameter("properties");
     	try {
     		f = new FileInputStream(config.getServletContext().getRealPath("/") + "WEB-INF/" + props);
@@ -55,8 +56,12 @@ public class ControllerMethodServlet extends HttpServlet {
 		String command = null;
 		try {
 			command = request.getRequestURI().substring(request.getContextPath().length());
+			//methodName = hello
 			String methodName = pr.getProperty(command);
+			//action.getClass() : BoardAction Class 정보
+			//method : 메소드의 이름이 hello, 파라매터 정보가 request, response  메소드를 반환합니다...
 			Method method = action.getClass().getMethod(methodName, paramType);
+			//invoke : 메소드 호출, 실행
 			forward = (ActionForward)method.invoke(action, paramObjs);
 		}catch(NullPointerException e) {
 			forward = new ActionForward();
