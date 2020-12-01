@@ -8,7 +8,7 @@
 <head>
 <meta charset="EUC-KR">
 <title><decorator:title /></title>
-<decorator:head />
+<decorator:head /> <%-- 넣을 태  --%>
 <link rel="stylesheet" href="${path}/css/main.css">
 </head>
 <body>
@@ -35,7 +35,7 @@
 				<a href = "${path}/model2/chat/chatForm.do">채팅</a>
 			</td>
 			<td colspan = "2" style = "text-align: left; vertical-align:top;">
-			<decorator:body />
+			<decorator:body /><%-- <body> 태그 내용 추가 --%>
 			</td>
 		</tr>
 		<tr>

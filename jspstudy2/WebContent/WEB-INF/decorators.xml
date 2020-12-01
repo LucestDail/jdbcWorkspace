@@ -4,5 +4,11 @@
 	<decorator name = "main" page = "layout.jsp">
 		<pattern>/model2/*</pattern>
 		</decorator>
-	<excludes></excludes>
+		<!--  excluding sitemesh layout configuration -->
+	<excludes>
+		<pattern>/model2/member/id*</pattern>
+		<pattern>/model2/member/pw*</pattern>
+		<pattern>/model2/member/picture*</pattern>
+		<pattern>/model2/member/password*</pattern>
+	</excludes>
 </decorators>

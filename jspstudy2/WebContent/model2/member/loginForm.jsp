@@ -5,7 +5,6 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<link rel = "stylesheet" href="../../css/main.css">
 <script type = "text/javascript">
 	function inputcheck(f){
 		if(f.id.value == ''){

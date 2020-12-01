@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "member">
+<!--  id 속성은 반드시 유일해야 합니다! 중뵉되면 에러뜸... => sql 구문을 구분하는 식별자이기 때문!
+namespace 가 다르면 유일하지 않으므로 상관없음 => member.count / board.count => 가능!
+resultType = 결과의 자료형! => count 는 정수형이니 integer(객체입니다!!!)
+mybatisjava.Member : 컬럼명과 set프로퍼티가 같으면 자동으로 바인딩해줍니당...
+#{value} : 파라매터로 전달된 값의 자료형을 인식, string 이면 '' 랩핑해줌, 보안프로그래밍으로 권장, 거의다 이걸로 사용합니당...
+ex) where id = #{value} => where id = 'admin'
+ex) where id = #{value} => where id = 1
+${value} : 자료형 판단 안하고 값만 읽습니당...
+ -->
+	<select id = "count" resultType = "int">
+		select count(*) from member
+	</select>
+	
+	<select id = "count2" resultType = "int">
+		select count(*) from student
+	</select>
+	
+	<select id = "list" resultType = "Member">
+		select * from member
+	</select>
+	
+	<select id = "selectid" resultType = "Member" parameterType = "string">
+		select * from member where id = #{value}
+	</select>
+	
+	<select id = "selectname" resultType = "Member" parameterType = "string">
+		select * from member where name like '%${value}%'
+	</select>
+	
+	<select id = "selectnamegender" resultType = "Member" parameterType = "map">
+		select * from member where name like #{name} and gender = #{gender}
+	</select>
+</mapper>

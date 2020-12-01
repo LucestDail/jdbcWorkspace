@@ -50,6 +50,9 @@ public class Member {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "Member [picture=" + picture + ", id=" + id + ", pass=" + pass + ", name=" + name + ", gender=" + gender
+				+ ", tel=" + tel + ", email=" + email + "]";
+	}
 }
