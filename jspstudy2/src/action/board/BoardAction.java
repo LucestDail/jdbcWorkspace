@@ -114,8 +114,6 @@ public class BoardAction {
      	int boardnum = boardcount - (pageNum - 1) * limit;
      	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		String today = sf.format(new Date());
-		SimpleDateFormat todayFormat = new SimpleDateFormat("HH:mm:ss");
-		SimpleDateFormat notTodayFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
      	request.setAttribute("boardcount", boardcount);
      	request.setAttribute("list", list);
      	request.setAttribute("pageNum", pageNum);
@@ -241,7 +239,6 @@ public class BoardAction {
 		request.setCharacterEncoding("euc-kr");
 		String num = request.getParameter("num");
 		String pass = request.getParameter("pass");
-		Board board = new Board();
 		BoardDao dao = new BoardDao();
 		String msg = "게시글 삭제 실패";
 		String url = "info.do?num="+num;

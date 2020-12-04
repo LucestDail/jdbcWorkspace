@@ -1,204 +1,128 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+
+import model.mapper.MemberMapper;
 
 public class MemberDao {
+	
+	private Class<MemberMapper> cls = MemberMapper.class;
+	private Map<String, Object> map = new HashMap<>();
+	
 	public int insert(Member mem) {
-		// 연결 객체 생성
-		Connection conn = DbConnection.getConnection();
-		// 문장을 준비하는 객체
-		PreparedStatement pstmt = null;
-		String sql = "insert into member" + "(id,pass,name,gender,email,tel,picture)" + "values(?,?,?,?,?,?,?)";
+		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			// sql 구문을 dbms 에 전달.
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mem.getId());
-			pstmt.setString(2, mem.getPass());
-			pstmt.setString(3, mem.getName());
-			pstmt.setInt(4, mem.getGender());
-			pstmt.setString(5, mem.getEmail());
-			pstmt.setString(6, mem.getTel());
-			pstmt.setString(7, mem.getPicture());
-			return pstmt.executeUpdate();
-			// executeUpdate -> select 구문을 제외한 sql 구문 실행시 사용
-			// 레코드가 변경된 갯수 리턴 -> 1을 반환하게 됨.
-		} catch (SQLException e) {
+			return session.getMapper(cls).insert(mem);
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DbConnection.close(conn, pstmt, null);
+			MyBatisConnection.close(session);
 		}
 		return 0;
 	}
-
+	
 	public Member selectOne(String id) {
-		Connection conn = DbConnection.getConnection();
-		String sql = "select * from member where id = ?";
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id); // db에 전달할 쿼리문의 ? 값 설정
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				Member mem = new Member();
-				mem.setId(rs.getString("id"));
-				mem.setPass(rs.getString("pass"));
-				mem.setGender(rs.getInt("gender"));
-				mem.setName(rs.getString("name"));
-				mem.setEmail(rs.getString("email"));
-				mem.setTel(rs.getString("tel"));
-				mem.setPicture(rs.getString("picture"));
-				return mem;
-			}
-		} catch (SQLException e) {
+			map.clear();
+			map.put("id", id);
+			return session.getMapper(cls).select(map).get(0);
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DbConnection.close(conn, pstmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;
 	}
 
 	public int update(Member mem) {
-		// 연결 객체 생성
-		Connection conn = DbConnection.getConnection();
-		// 문장을 준비하는 객체
-		PreparedStatement pstmt = null;
-		String sql = "update member set name = ?," + " gender=?,email=?,tel=?,picture=? where id=?";
+		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			// sql 구문을 dbms 에 전달.
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mem.getName());
-			pstmt.setInt(2, mem.getGender());
-			pstmt.setString(3, mem.getEmail());
-			pstmt.setString(4, mem.getTel());
-			pstmt.setString(5, mem.getPicture());
-			pstmt.setNString(6, mem.getId());
-			return pstmt.executeUpdate();
-			// executeUpdate -> select 구문을 제외한 sql 구문 실행시 사용
-			// 레코드가 변경된 갯수 리턴 -> 1을 반환하게 됨.
-		} catch (SQLException e) {
+			return session.getMapper(cls).update(mem);
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DbConnection.close(conn, pstmt, null);
-		}
-		return 0;
-	}
-
-	public List<Member> list() {
-		List<Member> list = new ArrayList<>();
-		Connection conn = DbConnection.getConnection();
-		ResultSet rs = null;
-		PreparedStatement pstmt = null;
-		String sql = "select * from member";
-		try {
-			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				Member m = new Member();
-				m.setId(rs.getString("id"));
-				m.setPass(rs.getString("pass"));
-				m.setName(rs.getString("name"));
-				m.setGender(rs.getInt("gender"));
-				m.setTel(rs.getString("tel"));
-				m.setEmail(rs.getString("email"));
-				m.setPicture(rs.getString("picture"));
-				list.add(m);
-			}
-			return list;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.close(conn, pstmt, rs);
-		}
-		return null;
-	}
-
-	public int delete(String string) {
-		// 연결 객체 생성
-		Connection conn = DbConnection.getConnection();
-		// 문장을 준비하는 객체
-		PreparedStatement pstmt = null;
-		String sql = "delete from member where id = ?";
-		try {
-			// sql 구문을 dbms 에 전달.
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, string);
-			return pstmt.executeUpdate();
-			// executeUpdate -> select 구문을 제외한 sql 구문 실행시 사용
-			// 레코드가 변경된 갯수 리턴 -> 1을 반환하게 됨.
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.close(conn, pstmt, null);
-		}
-		return 0;
-	}
-	public int updatePass(String id, String chgpass) {
-		Connection conn = DbConnection.getConnection();
-		PreparedStatement pstmt = null;
-		String sql = "update member set pass = ? where id = ?";
-		try {
-			// sql 구문을 dbms 에 전달.
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, chgpass);
-			pstmt.setString(2, id);
-			return pstmt.executeUpdate();
-			// executeUpdate -> select 구문을 제외한 sql 구문 실행시 사용
-			// 레코드가 변경된 갯수 리턴 -> 1을 반환하게 됨.
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DbConnection.close(conn, pstmt, null);
+			MyBatisConnection.close(session);
 		}
 		return 0;
 	}
 	
+	public List<Member> list() {
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			map.clear();
+			return session.getMapper(cls).select(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			MyBatisConnection.close(session);
+		}
+		return null;
+	}
+	
+	public int delete(String id) {
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			return session.getMapper(cls).delete(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			MyBatisConnection.close(session);
+		}
+		return 0;
+	}
+
+	public int updatePass(String id, String chgpass) {
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			map.clear();
+			map.put("id", id);
+			Member mem = session.getMapper(cls).select(map).get(0);
+			mem.setPass(chgpass);
+			return session.getMapper(cls).update(mem);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			MyBatisConnection.close(session);
+		}
+		return 0;
+	}
+	
+	
 	public String idSearch(String email, String tel) {
-		Connection conn = DbConnection.getConnection();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select id from member where email = ? and tel = ?";
+		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			// sql 구문을 dbms 에 전달.
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, email);
-			pstmt.setString(2, tel);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getString("id");
-			}
-		} catch (SQLException e) {
+			map.clear();
+			map.put("email", email);
+			map.put("tel", tel);
+			return session.getMapper(cls).select(map).get(0).getId();
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DbConnection.close(conn, pstmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;
 	}
+	
 	public String pwSearch(String id, String email, String tel) {
-		Connection conn = DbConnection.getConnection();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select pass from member where id = ? and email = ? and tel = ?";
+		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			// sql 구문을 dbms 에 전달.
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			pstmt.setString(2, email);
-			pstmt.setString(3, tel);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getString("pass");
-			}
-		} catch (SQLException e) {
+			map.clear();
+			map.put("id", id);
+			map.put("email", email);
+			map.put("tel", tel);
+			return session.getMapper(cls).select(map).get(0).getPass();
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DbConnection.close(conn, pstmt, rs);
+			MyBatisConnection.close(session);
 		}
 		return null;
 	}
+	
+	
 }
