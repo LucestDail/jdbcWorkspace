@@ -24,12 +24,14 @@ public class LoginAction implements Action{
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
 		Member member = new MemberDao().selectOne(id);
+		String picture = new MemberDao().selectOne(id).getPicture();
 		if(member == null) {
 			request.setAttribute("msg", "아이디를 확인하세요");
 			request.setAttribute("url", "loginForm.me");
 		}else {
 			if(pass.equals(member.getPass())) {
 				request.getSession().setAttribute("login", id);
+				request.getSession().setAttribute("picture", picture);
 				request.setAttribute("msg", member.getName() + "님 환영합니다!");
 				request.setAttribute("url","main.me");
 			}else{

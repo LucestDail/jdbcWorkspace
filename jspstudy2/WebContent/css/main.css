@@ -10,16 +10,16 @@ th,td{
 	padding: 8px;
 }
 th{
-	background-color: #F0A44D;
-	color: #353535;
+	background-color: #6E6E6E;
+	color: #EDEDED;
 }
 td{
-	background-color: #F2C796;
+	background-color: #ADADAD;
 }
 caption{
 	color:#111111;
 	font-size: 20px;
-	background-color: #704D24;
+	background-color: #808080;
 }
 input[type=text], input[type=password]{
 	width: 100%;
@@ -36,5 +36,5 @@ textarea {
 }
 
 input{
-	background-color: #BD813D;
+	background-color: #D4D4D4;
 }

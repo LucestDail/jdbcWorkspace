@@ -8,7 +8,7 @@
 <head>
 <meta charset="EUC-KR">
 <title><decorator:title /></title>
-<decorator:head /> <%-- 넣을 태  --%>
+<decorator:head />
 <link rel="stylesheet" href="${path}/css/main.css">
 </head>
 <body>

@@ -50,10 +50,23 @@ public class BoardDao {
 		return false;
 	}
 	
-	public int boardCount() {
+	public int boardCount(String column, String find) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).boardCount();
+			map.clear();
+			if(column != null) {
+				String[] cols = column.split(",");
+//				for(int i = 0; i < cols.length; i++) {
+//					map.put("col"+(i+1), cols[i]);
+//				}
+				switch(cols.length) {
+				case 3 : map.put("col3", cols[2]);
+				case 2 : map.put("col2", cols[1]);
+				case 1 : map.put("col1", cols[0]);
+				}
+			}
+			map.put("find", find);
+			return session.getMapper(cls).boardCount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -63,10 +76,22 @@ public class BoardDao {
 	}
 	
 	
-	public List<Board> list(int pageNum, int limit){
+	public List<Board> list(int pageNum, int limit, String column, String find){
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
+			if(column != null) {
+				String[] cols = column.split(",");
+//				for(int i = 0; i < cols.length; i++) {
+//					map.put("col"+(i+1), cols[i]);
+//				}
+				switch(cols.length) {
+				case 3 : map.put("col3", cols[2]);
+				case 2 : map.put("col2", cols[1]);
+				case 1 : map.put("col1", cols[0]);
+				}
+			}
+			map.put("find", find);
 			map.put("start", (pageNum - 1) * limit);
 			map.put("limit", limit);
 			return session.getMapper(cls).select(map);

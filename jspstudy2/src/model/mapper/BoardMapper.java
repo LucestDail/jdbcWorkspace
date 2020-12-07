@@ -34,11 +34,23 @@ public interface BoardMapper {
 	int maxgrp();
 	
 	
-	@Select(" select "+
-				"count(*) "+
-			" from "+
-				" board ")
-	int boardCount();
+	@Select({"<script>",
+			" select ",
+				"count(*) ",
+			" from ",
+				" board ",
+			"<if test = 'col1 != null'>",
+				"where ${col1} like '%${find}%'",
+			"</if>",
+			"<if test = 'col2 != null'>",
+				"or ${col2} like '%${find}%'",
+			"</if>",
+			"<if test = 'col3 != null'>",
+				"or ${col3} like '%${find}%'",
+			"</if>",
+			"</script>"
+	})
+	int boardCount(Map map);
 	
 	
 	@Select({"<script> ",
@@ -46,6 +58,15 @@ public interface BoardMapper {
 				"* ",
 			"from ",
 				"board ",
+			"<if test = 'col1 != null'>",
+				"where ${col1} like '%${find}%'",
+			"</if>",
+			"<if test = 'col2 != null'>",
+				"or ${col2} like '%${find}%'",
+			"</if>",
+			"<if test = 'col3 != null'>",
+				"or ${col3} like '%${find}%'",
+			"</if>",
 			"<if test = 'num != null'> ",
 				"where num = #{num}",
 			"</if>",

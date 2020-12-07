@@ -85,10 +85,16 @@ public class BoardAction {
      	}catch(NumberFormatException e){
      		//없엉...
      	}
+     	String column = request.getParameter("column");
+     	String find = request.getParameter("find");
+     	if(column == null || column.trim().equals("")||find == null || find.trim().equals("")) {
+     		column = null;
+     		find = null;
+     	}
      	int limit = 10;
-     	int boardcount = dao.boardCount(); // 전체 게시물 등록 건수를 리턴
+     	int boardcount = dao.boardCount(column, find); // 전체 게시물 등록 건수를 리턴
      	//pageNum에 출력될 게시물 10개를 List 객체로 리턴
-     	List<Board> list = dao.list(pageNum,limit);
+     	List<Board> list = dao.list(pageNum,limit, column, find);
      	/*
      	startpage : 화면에 출력될 시작 페이지 번호
      	현재 페이지 시작페이지
