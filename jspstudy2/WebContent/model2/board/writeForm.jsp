@@ -24,18 +24,18 @@
 			f.subject.focus();
 			return;
 		}
-		if(f.content.value == ""){
-			alert("내용을 입력하세요");
-			f.content.focus();
-			return;
-		}
+		//if(f.content.value == ""){
+		//	alert("내용을 입력하세요");
+		//	f.content.focus();
+		//	return;
+		//}
 		f.submit();
 	}
 </script>
 </head>
 <body>
 <form action = "write.do" method = "post" enctype = "multipart/form-data" name = "f">
-	<table>
+	<table class="w3-table-all">
 		<caption>게시판 글쓰기</caption>
 		<tr>
 			<th>
@@ -66,9 +66,14 @@
 				내용
 			</th>
 			<td>
-				<textarea rows = "15" name = "content"></textarea>
+				<textarea rows = "15" name = "content" id = "content1" class = "w3-input w3-border"></textarea>
 			</td>
 		</tr>
+		<script>
+			CKEDITOR.replace("content1", {
+				filebrowserImageUploadUrl : "imgupload.do"
+				})
+		</script>
 		<tr>
 			<th>
 				첨부파일

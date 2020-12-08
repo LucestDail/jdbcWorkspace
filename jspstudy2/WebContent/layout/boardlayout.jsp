@@ -24,7 +24,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   height: inherit;
 }
 </style>
+
+<script type = "text/javascript" src = "http://cdn.ckeditor.com/4.5.7/full/ckeditor.js">
+</script>
 </head>
+
 
 <body>
 

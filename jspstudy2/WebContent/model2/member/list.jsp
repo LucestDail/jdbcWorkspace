@@ -13,9 +13,19 @@
 	<meta charset = "euc-kr">
 	<title>회원 목록</title>
 	<link rel = "stylesheet" href="../../css/main.css">
+	<script type="text/javascript">
+		function allchkbox(allcheck) {
+			for (var i in document.f.mailchk) {
+				if (!isNaN(i)) {
+					document.f.mailchk[i].checked = allcheck.checked;
+				}
+			}
+		}
+	</script>
 </head>
 <body>
-<table>
+<form action = "mailform.me" method = "post" name = "f">
+<table class="w3-table-all w3-border">
 	<caption>회원 목록</caption>
 		<tr>
 			<th>아이디</th>
@@ -23,7 +33,9 @@
 			<th>이름</th>
 			<th>성별</th>
 			<th>전화</th>
-			<th>&nbsp;</th>
+			<th>회원관리</th>
+			<th>이메일</th>
+			<th><input type = "checkbox" name = "allchk" onchange = "allchkbox(this)"></th>
 		</tr>
 		<core:forEach var = "member" items = "${list}">
 		<tr>
@@ -41,13 +53,19 @@
 			<a href = "deleteForm.me?id=${member.id}">[강제탈퇴]</a>
 			</core:if>
 			</td>
+			<td>${member.email}</td>
+			<td><input type="checkbox" name="mailchk" value="${member.email}" onchange = "clickit(this)"></td>
 		</tr>
 		</core:forEach>
 		<tr>
-			<td colspan = "6">
+			<td colspan = "6" class = "w3-center">
 				<input type = "button" value = "돌아가기" onclick="location.href='main.me'">
+			</td>
+			<td colspan = "2" class = "w3-center">
+				<input type = "submit" value = "메일전송">
 			</td>
 		</tr>
 </table>
+</form>
 </body>
 </html>

@@ -1,5 +1,3 @@
-<%@page import="model.Board"%>
-<%@page import="model.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     <%-- 
@@ -20,7 +18,7 @@
 <input type = "hidden" name = "grp" value = "${b.grp}">
 <input type = "hidden" name = "grplevel" value = "${b.grplevel}">
 <input type = "hidden" name = "grpstep" value = "${b.grpstep}">
-	<table>
+	<table class = "w3-table-all">
 		<caption>게시판 답글 등록</caption>
 		<tr>
 			<th>
@@ -51,9 +49,14 @@
 				내용
 			</th>
 			<td>
-				<textarea rows = "15" name = "content"></textarea>
+				<textarea rows = "15" name = "content" id = "content1" class = "w3-input w3-border"></textarea>
 			</td>
 		</tr>
+		<script>
+			CKEDITOR.replace("content1", {
+				filebrowserImageUploadUrl : "imgupload.do"
+				})
+		</script>
 		<tr>
 			<th>
 				첨부파일
