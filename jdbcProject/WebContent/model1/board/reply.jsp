@@ -1,9 +1,11 @@
-<%@page import="model.BoardDao"%>
-<%@page import="model.Board"%>
+<%@page import="osh.model.BoardDao"%>
+<%@page import="osh.model.Board"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<% request.setCharacterEncoding("euc-kr"); %>
-<jsp:useBean id = "b" class = "model.Board"/>
+<%
+	request.setCharacterEncoding("euc-kr");
+%>
+<jsp:useBean id = "b" class = "osh.model.Board"/>
 <jsp:setProperty property = "*" name = "b"/>
 <%
 	BoardDao dao = new BoardDao();

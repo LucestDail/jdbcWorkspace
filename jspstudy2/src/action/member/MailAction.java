@@ -29,12 +29,15 @@ public class MailAction extends AdminLoginAction{
 			String title = request.getParameter("title");
 			String mtype = request.getParameter("mtype");
 			String contents = request.getParameter("contents");
+			//메일 서버 환경 변수 설정
 			Properties prop = new Properties();
+			//메일 전송 서버 설정
 			prop.put("mail.smtp.host", "smtp.naver.com");
 			prop.put("mail.smtp.port", "465");
 			prop.put("mail.smtp.starttls.enable", "true");
+			// 인증
 			prop.put("mail.smtp.auth", "true");
-			prop.put("mail.debug", "true");
+			prop.put("mail.debug", "true"); // 실제 운용 서버에서는 false 할것!
 			prop.put("mail.smtp.user", sendid);
 			prop.put("mail.smtp.socketFactory.port", "465");
 			prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -57,7 +60,7 @@ public class MailAction extends AdminLoginAction{
 			body.setContent(contents, mtype);
 			multipart.addBodyPart(body);
 			mail.setContent(multipart);
-			Transport.send(mail);;
+			Transport.send(mail); //슝~
 			request.setAttribute("msg", String.join("\\n", recaddr));
 			
 		}catch (Exception e) {

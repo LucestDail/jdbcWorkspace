@@ -1,8 +1,8 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="model.Board"%>
+<%@page import="osh.model.Board"%>
 <%@page import="java.util.List"%>
-<%@page import="model.BoardDao"%>
+<%@page import="osh.model.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     <%-- 

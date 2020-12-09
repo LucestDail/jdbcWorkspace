@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
-<%@page import="model.MemberDao"%>
-<%@page import="model.Member"%>
+<%@page import="osh.model.MemberDao"%>
+<%@page import="osh.model.Member"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 

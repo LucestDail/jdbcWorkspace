@@ -1,5 +1,5 @@
-<%@page import="model.Board"%>
-<%@page import="model.BoardDao"%>
+<%@page import="osh.model.Board"%>
+<%@page import="osh.model.BoardDao"%>
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"

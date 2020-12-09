@@ -1,5 +1,5 @@
-<%@page import="model.Member"%>
-<%@page import="model.MemberDao"%>
+<%@page import="osh.model.Member"%>
+<%@page import="osh.model.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
@@ -18,8 +18,10 @@ int MemberDao.update(Member)
 <title>Insert title here</title>
 </head>
 <body>
-<%request.setCharacterEncoding("euc-kr");%>
-<jsp:useBean id = "mem" class = "model.Member"/>
+<%
+	request.setCharacterEncoding("euc-kr");
+%>
+<jsp:useBean id = "mem" class = "osh.model.Member"/>
 <%-- 1. 모든 파라매터 정보를 Member 객체에 저장 --%>
 <jsp:setProperty property = "*" name = "mem"/>
 <%

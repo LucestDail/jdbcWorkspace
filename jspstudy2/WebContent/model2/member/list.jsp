@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
-<%@page import="model.MemberDao"%>
-<%@page import="model.Member"%>
+<%@page import="osh.model.MemberDao"%>
+<%@page import="osh.model.Member"%>
 
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
@@ -14,12 +14,18 @@
 	<title>회원 목록</title>
 	<link rel = "stylesheet" href="../../css/main.css">
 	<script type="text/javascript">
-		function allchkbox(allcheck) {
-			for (var i in document.f.mailchk) {
-				if (!isNaN(i)) {
-					document.f.mailchk[i].checked = allcheck.checked;
+		function allchkbox(chk){
+			var allchk = chk.checked // 전체 석택 값, true, false
+			//getElementsByName(name) : name 속성 값이 mailchk 인 태그들
+			//input name = "mailchk"
+			document.getElementsByName("mailchk").forEach(function(item,index){
+				//item : name = "mailchk" 인 태그 한개
+				if(allchk){ // 전체 선택 값이 true 인 경우
+					item.setAttribute("checked",true);
+				}else{// 전체 선택이 안된 경우(false 인 경우)
+					item.removeAttribute("checked");
 				}
-			}
+			})
 		}
 	</script>
 </head>

@@ -19,7 +19,11 @@ C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst
 \jspstudy2\src
 C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2725329013.index
 \jspstudy2\src
+C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2103716609.index
+\ajaxstudy\src
 C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2441169865.index
 \jdbcProject\src
 C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\852782925.index
 \jspstudy2\src
+C:\Users\dhtmd\Documents\GitHub\jdbcWorkspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4006877414.index
+\osh\src

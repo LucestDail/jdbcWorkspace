@@ -1,4 +1,4 @@
-<%@page import="model.MemberDao"%>
+<%@page import="osh.model.MemberDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
@@ -16,8 +16,10 @@ member table 만들어서 추가하기!
 <title>201117, 11:06, join form source code</title>
 </head>
 <body>
-<%request.setCharacterEncoding("euc-kr");%>
-<jsp:useBean id = "mem" class = "model.Member"/>
+<%
+	request.setCharacterEncoding("euc-kr");
+%>
+<jsp:useBean id = "mem" class = "osh.model.Member"/>
 <%-- 파라매터와 Member 객체의 프로퍼티가 같은 경우(property="*") setProperty 를 이용, Member 객체에 파라매터 저장 --%>
 <jsp:setProperty property = "*" name = "mem"/>
 <%

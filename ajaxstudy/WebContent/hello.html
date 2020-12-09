@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--  /WebContent/hello.html -->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type = "text/javascript" src = "ajax.js"></script>
+<script type = "text/javascript">
+	function helloToServer(){
+		sendRequest("hello.jsp","name="+document.f.name.value,helloFromServer,"POST");
+	}
+	function helloFromServer(){
+		if(ajax.readyState == 4){
+			if(ajax.status == 200){
+				hello.innerHTML = ajax.responseText;
+			}
+		}
+	}
+</script>
+
+</head>
+<body>
+<form name = "f">
+	<input type = "text" name = "name" value = "홍길동">
+	<input type = "button" value = "인사하기" onclick = "helloToServer()">
+</form>
+<div id = "hello">
+</div>
+</body>
+</html>

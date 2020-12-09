@@ -1,5 +1,5 @@
-<%@page import="model.MemberDao"%>
-<%@page import="model.Member"%>
+<%@page import="osh.model.MemberDao"%>
+<%@page import="osh.model.Member"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix = "core" uri = "http://java.sun.com/jsp/jstl/core" %>
