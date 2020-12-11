@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>css 함수</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+	$(function() {
+		var color = [ "red", "orange", "yellow", "green", "blue", "navy",
+				"purple" ];
+		/* $.each(colors,function(i,c){
+			$("h1:eq(" + i + ")").css("background",c)
+			$("h1:eq(" + i + ")").css("background",$('h1').text().substring(12))
+			$("h1:eq(" + i + ")").css("color","white")
+		}) */
+		$("h1").css("color", function(index) {
+			return color[index]
+		})
+		
+		$("h1").css({"color":function(index){
+			return color[index]
+		},"background":"black"})
+	})
+</script>
+</head>
+<body>
+	<h1>Header - 0 : red</h1>
+	<h1>Header - 1 : orange</h1>
+	<h1>Header - 2 : yellow</h1>
+	<h1>Header - 3 : green</h1>
+	<h1>Header - 4 : blue</h1>
+	<h1>Header - 5 : navy</h1>
+	<h1>Header - 6 : purple</h1>
+</body>
+</html>

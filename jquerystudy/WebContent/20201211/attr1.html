@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+	$(function() {
+		/* $("img").attr("width",200) */
+		$("img").attr({"width":function(i){
+			return (i + 1) * 100
+		},"height":200})
+		alert($("img:eq(1)").attr("width"))
+		$("img").removeAttr("src")
+	})
+</script>
+</head>
+<body>
+	<img src = "Jellyfish.jpg"/>
+	<img src = "Desert.jpg" />
+	<img src = "Hydrangeas.jpg" />
+	<img src = "Chrysanthemum.jpg" />
+</body>
+</html>

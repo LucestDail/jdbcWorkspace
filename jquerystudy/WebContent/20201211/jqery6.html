@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type = "text/javascript">
+$(function(){
+	$("h3:nth-child(2n)").css({"background":"yellow","color":"blue"})
+	$("h3:nth-child(2n-1)").css({"background":"black","color":"yellow"})
+	
+	$("h2:nth-of-type(3n)").css({"background":"black","color":"white"})
+	$("h2:nth-of-type(3n-1)").css({"background":"yellow","color":"blue"})
+	$("h2:nth-of-type(3n-2)").css({"background":"blue","color":"yellow"})
+	
+/* 	$("h1:eq(0)").css({"background":"red","color":"white"})
+	$("h1:eq(1)").css({"background":"orange","color":"white"})
+	$("h1:eq(2)").css({"background":"yellow","color":"white"})
+	$("h1:eq(3)").css({"background":"green","color":"white"})
+	$("h1:eq(4)").css({"background":"blue","color":"white"})
+	$("h1:eq(5)").css({"background":"navy","color":"white"})
+	$("h1:eq(6)").css({"background":"purple","color":"white"}) */
+	
+	var colors = ["red","orange","yellow","green","blue","navy","purple"];
+	/* $("h1").each(function(i,item){
+		$(this).css("background",colors[i])
+		$(this).css("color","white")
+	}) */
+	
+	$.each(colors,function(i,c){
+		$("h1:eq(" + i + ")").css("background",c)
+		$("h1:eq(" + i + ")").css("color","white")
+	})
+})
+</script>
+</head>
+<body>
+h3 태그의 홀수 번째를 노랑 바탕에 파란 글씨, 짝수 번째 검정 바탕에 노랑 글씨로 설정
+<h3>H3:Header_0</h3>
+<h3>H3:Header_1</h3>
+<h3>H3:Header_2</h3>
+<h3>H3:Header_3</h3>
+<h3>H3:Header_4</h3>
+<h3>H3:Header_5</h3>
+<h3>H3:Header_6</h3>
+h2 태그 중 3의 배수인 경우 검정 바탕에 흰글씨,
+3의 배수의 나머지가 1인 경우 노랑 바탕에 파랑 글씨
+3의 배수의 나머지가 2인 경우 파랑 바탕에 노랑 글씨
+<h2>H2:Header_0</h2>
+<h2>H2:Header_1</h2>
+<h2>H2:Header_2</h2>
+<h2>H2:Header_3</h2>
+<h2>H2:Header_4</h2>
+<h2>H2:Header_5</h2>
+<h2>H2:Header_6</h2>
+
+<h1>H1:Header_0</h1>
+<h1>H1:Header_1</h1>
+<h1>H1:Header_2</h1>
+<h1>H1:Header_3</h1>
+<h1>H1:Header_4</h1>
+<h1>H1:Header_5</h1>
+<h1>H1:Header_6</h1>
+</body>
+</html>

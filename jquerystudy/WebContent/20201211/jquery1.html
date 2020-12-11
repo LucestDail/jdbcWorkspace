@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!-- /jquerystudy/WebContent/20201211/jquery1.html -->
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Jquery 예제</title>
+<script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type = "text/javascript">
+	$(document).ready(function(){
+		$("*").css("color","blue");
+		$("p").css("color","red");
+		$("h1").css("color","yellow");
+		$(".item").css("color","green");
+		$("#selected").css("color","orange");
+	})
+</script>
+</head>
+<body>
+<h1>
+	Jquery1
+	<p>
+		Jquery1
+	</p>
+</h1>
+<h1>
+	Jquery1
+</h1>
+<p>
+	jquery1
+</p>
+<h1 class = "item">Jqueryt1 class=item</h1>
+<h1 id = "selected">Jquery1 id = selected</h1>
+<h2>Jquery2</h2>
+<h3>jquery3</h3>
+</body>
+</html>

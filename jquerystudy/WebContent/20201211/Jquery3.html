@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type = "text/javascript">
+$(function(){
+	$("ul").css("color","red")
+	$("div ul").css("color","green")
+	$("div > ul").css("color","blue")
+})
+</script>
+</head>
+<body>ul태그의 글자색을 빨강색으로 설정
+<div>
+	<ul>
+		<li>사과</li>
+		<li>복숭아</li>
+		<li>감</li>
+		<li>참외</li>
+	</ul>
+</div>
+<div>
+<span>
+	<ul>
+		<li>사과</li>
+		<li>복숭아</li>
+		<li>감</li>
+		<li>참외</li>
+	</ul>
+</span>
+</div>
+	<ul>
+		<li>사과</li>
+		<li>복숭아</li>
+		<li>감</li>
+		<li>참외</li>
+	</ul>
+	<hr>
+	input 태그 중 type 속성값이 text 인 태그의 value 속성값에 hello jquery 값 추가하기<br>
+	<input type = "text"><br>
+	<script type = "text/javascript">
+		$("input[type=text]").val("hello jquery")
+		alert($("input[type=text]").val())
+		$("input[type^=te]").css("color","blue")
+		$("input[type$=xt]").css("color","yellow")
+	</script>
+	<hr>
+	input 태그 중 type 속성 값이 button 인 태그의 value 값을 '등록' 으로 설정하기<br>
+	<input type = "button" value = "버튼"><br>
+	<script type = "text/javascript">
+	$("input[type=button]").val("등록")
+	</script>
+	<hr>
+	input 태그의 radio, checkbox 를 선택하기<br>
+	<input type = "radio"> 라디오버튼<br>
+	<input type = "checkbox"> 선택 박스 버튼<br>
+	<script type = "text/javascript">
+		$("input:radio").attr("checked","checked")
+		$("input:checkbox").attr("checked","checked")
+	</script>
+</body>
+</html>

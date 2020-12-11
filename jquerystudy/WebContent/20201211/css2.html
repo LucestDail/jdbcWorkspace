@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>css 함수 : style 속성 담당</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+	$(function() {
+		alert($("h1").css("color")) //h1 tag color attribute return
+		alert($("h1:eq(2)").css("color"))
+	})
+</script>
+<style type = "text/css">
+	.first{color : red; background : yellow}
+	
+	.second{color : pink;}
+
+	.third{color : orange;}
+</style>
+</head>
+<body>
+<h1 class = "first">Header - first</h1>
+<h1 class = "second">Header - second</h1>
+<h1 class = "third">Header - third</h1>
+</body>
+</html>
