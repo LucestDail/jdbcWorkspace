@@ -66,7 +66,7 @@
 			<core:if test = "${empty board.file1}">
 				&nbsp;
 			</core:if>
-				<a href = "info.do?num=${board.num }">${board.subject }</a>
+				<a href = "info.do?num=${board.num }&&boardname=${param.boardname}">${board.subject }</a>
 			</td>
 			<td>${board.name}</td>
 			<fmt:formatDate var = "rdate" value="${board.regdate}" pattern = "yyyy-MM-dd"/>
@@ -116,7 +116,7 @@
 		</core:if>
 		<tr>
 			<td colspan = "5" style = "text-align:right">
-				<a href = "writeForm.do">[글쓰기]</a>
+				<a href = "writeForm.do?boardname=${param.boardname}">[글쓰기]</a>
 			</td>
 		</tr>
 	</table>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+	$(function(){
+		//h1 태그 생성 ->  Hello World 문자열 내부 html 설정 -> 현재 태그를 obdy 태그에 추가
+		$("<h1></h1>").html("Hello World").appendTo("body")
+		//img 태그 생성 -> attr : 속성 등록
+		$("<img>").attr("src","Jellyfish.jpg").appendTo("body")
+		$("<img>",{"src":"Jellyfish.jpg",
+			width:300, height:200}).appendTo("body")
+			var h1 = "<h1>Header1</h1>"
+			var h2 = "<h2>Header2</h2>"
+			//append : body 태그에 h1, h2, h1, h2 순으로 태그 추가
+			$("body").append(h1,h2,h1,h2)
+	})
+</script>
+</head>
+<body>
+
+</body>
+</html>

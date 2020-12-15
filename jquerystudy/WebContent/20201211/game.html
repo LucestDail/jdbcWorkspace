@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type = "text/css">
+	table, td{
+	border : 1px solid gray;
+	}
+	table{
+		border-collapse: collapse;
+	}
+</style>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+var level = 4;
+$(function(){
+	shuffle();
+	editHtml();
+	game();
+})
+function shuffle(){
+	model = [
+		"S_1.jpg",
+		"S_1.jpg",
+		"S_2.jpg",
+		"S_2.jpg",
+		"S_3.jpg",
+		"S_3.jpg",
+		"S_4.jpg",
+		"S_4.jpg",
+		"S_5.jpg",
+		"S_5.jpg",
+		"S_6.jpg",
+		"S_7.jpg",
+		"S_7.jpg",
+		"S_8.jpg",
+		"S_8.jpg",
+		"S_9.jpg",
+		"S_9.jpg",
+		"S_10.jpg",
+		"S_10.jpg",
+		"pic00.png",
+		"pic00.png",
+		"pic01.png",
+		"pic01.png",
+		"pic02.png",
+		"pic02.png",
+		"pic03.png",
+		"pic03.png",
+		"pic04.png",
+		"pic04.png",
+		"pic05.png",
+		"pic05.png",
+		"pic06.png",
+		"pic06.png",
+		"pic07.png",
+		"pic07.png",
+	];
+	cnt = level * level;
+	for(var a=0; a<10000; a++){
+		var ran = Math.floor(Math.random()*cnt);
+		var tmp = model[0];
+		model[0] = model[ran];
+		model[ran] = tmp;
+	}
+}
+function editHtml(){
+	var board = "<table>";
+	for(var i = 0; i < cnt; i ++){
+		if((i%level) == 0){
+			board += "<tr>";
+		}
+		board += "<td><img class = 'pic' src = './imgs/" + model[i] + "' value='"+model[i] + "' width='100' height='100'></td>";
+		if((i%level) == (level-1)){
+			board += "</tr>";
+		}
+	}
+	$("#board").html(board+"</table>");
+}
+function game(){
+	setTimeout(function(){
+		$(".pic").each(function(i,item){
+			$(this).css("opacity","0.01");
+		})
+	},2000);
+	var total = 0;
+	var count = 0;
+	var success = 0;
+	var onePic = null;
+	var twoPic = null;
+	var onex = null;
+	var oney = null;
+	var twox = null;
+	var twoy = null;
+	$(".pic").click(function(){
+		if(!$(this).is(".diepic")){
+			total++;
+			$(this).css("opacity",1);
+			count++;
+			if(count == 1){
+				onePic = $(this);
+				onex = onePic.parent().parent().index();
+				oney = onePic.parent().index();
+			}else if(count == 2){
+				twoPic = $(this);
+				twox = twoPic.parent().parent().index();
+				twoy = twoPic.parent().index();
+				if((onePic.attr("src") == twoPic.attr("src")) && (onex != twox || oney != twoy)){
+					success++;
+					onePic.addClass("diepic");
+					twoPic.addClass("diepic");
+					onePic.disable = true;
+					twoPic.disable = true;
+					if(cnt / 2 == success){
+						alert(total + " 번 만에 성공. 게임 종료");
+						setTimeout(function(){
+							if(confirm("게임을 계속하시겠습니까?")){
+								location.reload();
+							}
+						},2000)
+					}
+				}else{
+					setTimeout(function(){
+						onePic.css("opacity","0.01");
+						twoPic.css("opacity","0.01");
+					},50);
+				}
+				count = 0;
+			}else{
+				alert("프로그램 오류 발생");
+			}
+		}
+	})
+}
+function gamestart(sel){
+	level = parseInt(sel.value);
+	shuffle();
+	editHtml();
+	game();
+}
+</script>
+</head>
+<body>
+<select id = "level" onchange = "gamestart(this)">
+	<option value = "2">2X2</option>
+	<option value = "4" selected = "selected">4X4</option>
+	<option value = "6">6X6</option>
+</select>
+<div id = "board"></div>
+
+</body>
+</html>

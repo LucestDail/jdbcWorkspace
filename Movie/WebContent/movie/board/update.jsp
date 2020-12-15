@@ -1,3 +1,4 @@
+<%-- 
 <%@page import="model.Board"%>
 <%@page import="model.BoardDao"%>
 <%@page import="java.io.File"%>
@@ -41,3 +42,4 @@
 alert("<%=msg%>");
 location.href = "<%=url%>"
 </script>
+--%>

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import model.mapper.BoardMapper;
 
+
 public class BoardDao {
 	
 	private Class<BoardMapper> cls = BoardMapper.class;

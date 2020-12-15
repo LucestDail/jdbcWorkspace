@@ -10,6 +10,7 @@
 <body>
 <form action="delete.do" method="post" name = "f">
 <input type = "hidden" name = "num" value = "${b.num}">
+<input type = "hidden" name = "boardname" value = "${param.boardname}">
 	<table>
 		<caption>게시글 삭제 화면</caption>
 		<tr>

@@ -35,6 +35,7 @@
 </head>
 <body>
 <form action = "write.do" method = "post" enctype = "multipart/form-data" name = "f">
+	<input type = "hidden" name = "boardname" value = "${param.boardname}">
 	<table class="w3-table-all">
 		<caption>게시판 글쓰기</caption>
 		<tr>

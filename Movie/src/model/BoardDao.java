@@ -13,10 +13,10 @@ public class BoardDao {
 	private Class<BoardMapper> cls = BoardMapper.class;
 	private Map<String, Object> map = new HashMap<>();
 	
-	public int maxnum() {
+	public int maxnum(String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).maxnum();
+			return session.getMapper(cls).maxnum(boardname);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -25,10 +25,10 @@ public class BoardDao {
 		return 0;
 	}
 	
-	public int maxgrp() {
+	public int maxgrp(String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).maxnum();
+			return session.getMapper(cls).maxnum(boardname);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -38,10 +38,23 @@ public class BoardDao {
 	}
 	
 	
-	public boolean insert(Board board) {
+	public boolean insert(Board board, String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).insert(board)>0 ? true : false;
+			map.clear();
+			map.put("num", board.getNum());
+			map.put("name", board.getName());
+			map.put("pass", board.getPass());
+			map.put("subject", board.getSubject());
+			map.put("content", board.getContent());
+			map.put("file1", board.getFile1());
+			map.put("readcnt", board.getReadcnt());
+			map.put("grp", board.getGrp());
+			map.put("grplevel", board.getGrplevel());
+			map.put("grpstep", board.getGrpstep());
+			map.put("boardname", boardname);
+			System.out.println(map);
+			return session.getMapper(cls).insert(map)>0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -50,7 +63,7 @@ public class BoardDao {
 		return false;
 	}
 	
-	public int boardCount(String column, String find) {
+	public int boardCount(String column, String find, String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
@@ -65,6 +78,7 @@ public class BoardDao {
 				case 1 : map.put("col1", cols[0]);
 				}
 			}
+			map.put("boardname", boardname);
 			map.put("find", find);
 			return session.getMapper(cls).boardCount(map);
 		} catch (Exception e) {
@@ -76,7 +90,7 @@ public class BoardDao {
 	}
 	
 	
-	public List<Board> list(int pageNum, int limit, String column, String find){
+	public List<Board> list(int pageNum, int limit, String column, String find, String boardname){
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
@@ -94,6 +108,7 @@ public class BoardDao {
 			map.put("find", find);
 			map.put("start", (pageNum - 1) * limit);
 			map.put("limit", limit);
+			map.put("boardname", boardname);
 			return session.getMapper(cls).select(map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,11 +118,13 @@ public class BoardDao {
 		return null;
 	}
 	
-	public Board selectOne(String num) {
+	public Board selectOne(String num, String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
 			map.put("num", num);
+			map.put("boardname", boardname);
+			System.out.println(map);
 			return session.getMapper(cls).select(map).get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,10 +135,15 @@ public class BoardDao {
 		return null;
 	}
 	
-	public void readcntAdd(String num) {
+	public void readcntAdd(String num, String boardname) {
+		System.out.println("readcntAdd function : " + num + "," + boardname);
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			session.getMapper(cls).readcntAdd(num);
+			map.clear();
+			map.put("num", num);
+			map.put("boardname", boardname);
+			System.out.println(map);
+			session.getMapper(cls).readcntAdd(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -129,10 +151,14 @@ public class BoardDao {
 		}
 	}
 	
-	public void grpStepAdd(int grp, int grpstep) {
+	public void grpStepAdd(int grp, int grpstep, String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			session.getMapper(cls).grpStepAdd(grp, grpstep);
+			map.clear();
+			map.put("grp", grp);
+			map.put("grpstep", grpstep);
+			map.put("boardname", boardname);
+			session.getMapper(cls).grpStepAdd(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -140,10 +166,17 @@ public class BoardDao {
 		}
 	}
 	
-	public boolean update(Board board) {
+	public boolean update(Board board, String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).update(board)>0 ? true : false;
+			map.clear();
+			map.put("name", board.getName());
+			map.put("subject", board.getSubject());
+			map.put("content", board.getContent());
+			map.put("file1", board.getFile1());
+			map.put("num", board.getNum());
+			map.put("boardname", boardname);
+			return session.getMapper(cls).update(map)>0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -152,10 +185,13 @@ public class BoardDao {
 		return false;
 	}
 	
-	public boolean delete(String num) {
+	public boolean delete(String num, String boardname) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).delete(num)>0 ? true : false;
+			map.clear();
+			map.put("num", num);
+			map.put("boardname", boardname);
+			return session.getMapper(cls).delete(map)>0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

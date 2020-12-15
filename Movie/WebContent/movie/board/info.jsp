@@ -35,10 +35,10 @@
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<a href = "replyForm.do?num=${infoBoard.num}">[답변]</a>
-				<a href = "updateForm.do?num=${infoBoard.num}">[수정]</a>
-				<a href = "deleteForm.do?num=${infoBoard.num}">[삭제]</a>
-				<a href = "list.do">[목록]</a>
+				<a href = "replyForm.do?num=${infoBoard.num}&&boardname=${param.boardname}">[답변]</a>
+				<a href = "updateForm.do?num=${infoBoard.num}&&boardname=${param.boardname}">[수정]</a>
+				<a href = "deleteForm.do?num=${infoBoard.num}&&boardname=${param.boardname}">[삭제]</a>
+				<a href = "list.do?boardname=${param.boardname}">[목록]</a>
 			</td>
 		</tr>
 	</table>

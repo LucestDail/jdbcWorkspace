@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+	$(function(){
+		var info = [
+			{name : "홍길동", address : "서울시 강서구"},
+			{name : "김삿갓", address : "서울시 종로구"},
+			{name : "이몽룡", address : "서울시 금천구"}
+		]
+		
+		$("div").append(function(index){
+			var item = info[index]
+			var output = ""
+			output += "<h1>" + item.name + "</h1>"
+			output += "<h2>" + item.address + "</h2>"
+			return output;
+		})
+		
+		//setInterval(function,interval) : function 을 2000 단위로 실행
+		setInterval(function(){
+			//$("img").first() : img 태그 중 첫번째 -> body 에 붙여라 : 즉 순환하는 것처럼 보임
+			$("div").first().appendTo("body");
+		},1000)
+	})
+</script>
+</head>
+<body>
+<div>0.</div>
+<div>1.</div>
+<div>2.</div>
+</body>
+</html>

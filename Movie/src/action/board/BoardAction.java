@@ -15,6 +15,7 @@ import action.ActionForward;
 import model.Board;
 import model.BoardDao;
 
+
 public class BoardAction {
 	BoardDao dao = new BoardDao();
 	public ActionForward hello(HttpServletRequest request, HttpServletResponse response) {
@@ -43,6 +44,8 @@ public class BoardAction {
 		MultipartRequest multi;
 		try {
 			multi = new MultipartRequest(request, path, size, "euc-kr");
+			String boardname = multi.getParameter("boardname");
+			System.out.println(boardname);
 			String noticecheck = multi.getParameter("notice");
 			Board board = new Board();
 			board.setName(multi.getParameter("name"));
@@ -53,14 +56,14 @@ public class BoardAction {
 			}
 			board.setContent(multi.getParameter("content"));
 			board.setFile1(multi.getFilesystemName("file1"));
-			int num = dao.maxnum();
+			int num = dao.maxnum(boardname);
 			board.setNum(++num);
 			board.setGrp(num);
 			if (noticecheck != null) {
 				board.setGrp(9999);
 			}
-			if (dao.insert(board)) {
-				return new ActionForward(true, "list.do");
+			if (dao.insert(board,boardname)) {
+				return new ActionForward(true, "list.do?boardname="+boardname);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -85,6 +88,7 @@ public class BoardAction {
      	}catch(NumberFormatException e){
      		//없엉...
      	}
+     	String boardname = request.getParameter("boardname");
      	String column = request.getParameter("column");
      	String find = request.getParameter("find");
      	if(column == null || column.trim().equals("")||find == null || find.trim().equals("")) {
@@ -92,9 +96,9 @@ public class BoardAction {
      		find = null;
      	}
      	int limit = 10;
-     	int boardcount = dao.boardCount(column, find); // 전체 게시물 등록 건수를 리턴
+     	int boardcount = dao.boardCount(column, find, boardname); // 전체 게시물 등록 건수를 리턴
      	//pageNum에 출력될 게시물 10개를 List 객체로 리턴
-     	List<Board> list = dao.list(pageNum,limit, column, find);
+     	List<Board> list = dao.list(pageNum,limit, column, find, boardname);
      	/*
      	startpage : 화면에 출력될 시작 페이지 번호
      	현재 페이지 시작페이지
@@ -133,9 +137,11 @@ public class BoardAction {
 	
 	public ActionForward info(HttpServletRequest request, HttpServletResponse response) {
     	String num = request.getParameter("num");
+    	String boardname = request.getParameter("boardname");
+    	System.out.println(boardname);
     	BoardDao dao = new BoardDao();
-    	Board infoBoard = dao.selectOne(num);
-    	dao.readcntAdd(num);
+    	Board infoBoard = dao.selectOne(num, boardname);
+    	dao.readcntAdd(num, boardname);
     	request.setAttribute("infoBoard", infoBoard);
 		return new ActionForward();
 	}
@@ -143,8 +149,9 @@ public class BoardAction {
 	
 	public ActionForward replyForm(HttpServletRequest request, HttpServletResponse response){
 		String num = request.getParameter("num");
+		String boardname = request.getParameter("boardname");
 		BoardDao dao = new BoardDao();
-		Board b = dao.selectOne(num);
+		Board b = dao.selectOne(num, boardname);
 		request.setAttribute("b", b);
 		return new ActionForward();
 	}
@@ -158,6 +165,7 @@ public class BoardAction {
 		int size = 10*1024*1024;
 		MultipartRequest multi = new MultipartRequest(request, path, size, "euc-kr");
 		Board board = new Board();
+		String boardname = multi.getParameter("boardname");
 		board.setNum(Integer.parseInt(multi.getParameter("num")));
 		board.setName(multi.getParameter("name"));
 		board.setPass(multi.getParameter("pass"));
@@ -167,19 +175,19 @@ public class BoardAction {
 		board.setGrp(Integer.parseInt(multi.getParameter("grp")));
 		board.setGrplevel(Integer.parseInt(multi.getParameter("grplevel")));
 		board.setGrpstep(Integer.parseInt(multi.getParameter("grpstep")));
-		dao.grpStepAdd(board.getGrp(),board.getGrpstep());
+		dao.grpStepAdd(board.getGrp(),board.getGrpstep(), boardname);
 		int grplevel = board.getGrplevel();
 		int grpstep = board.getGrpstep();
-		int num = dao.maxnum();
+		int num = dao.maxnum(boardname);
 		String msg = "답변등록시 오류 발생";
-		String url = "replyForm.do?num="+board.getNum();
+		String url = "replyForm.do?num="+board.getNum() + "&&boardname=" + boardname;
 		
 		board.setNum(++num);
 		board.setGrplevel(grplevel + 1);
 		board.setGrpstep(grpstep + 1);
-		if(dao.insert(board)){
+		if(dao.insert(board,boardname)){
 			msg = "답변등록 완료";
-			url = "list.do";
+			url = "list.do" + "?boardname=" + boardname;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
@@ -188,9 +196,11 @@ public class BoardAction {
 	
 	public ActionForward updateForm(HttpServletRequest request, HttpServletResponse response){
 		String num = request.getParameter("num");
+		String boardname = request.getParameter("boardname");
 		BoardDao dao = new BoardDao();
-		Board b = dao.selectOne(num);
+		Board b = dao.selectOne(num, boardname);
 		request.setAttribute("b", b);
+		request.setAttribute("boardname", boardname);
 		return new ActionForward();
 	}
 	
@@ -217,13 +227,14 @@ public class BoardAction {
 		}
 		BoardDao dao = new BoardDao();
 		String numString = board.getNum() + "";
-		Board dbBoard = dao.selectOne(numString);
+		String boardname = multi.getParameter("boardname");
+		Board dbBoard = dao.selectOne(numString, boardname);
 		String msg = "비밀번호가 틀렸습니다.";
 		String url = "updateForm.do?num="+board.getNum();
 		if(board.getPass().equals(dbBoard.getPass())){
-			if(dao.update(board)){
+			if(dao.update(board, boardname)){
 				msg = "게시물 수정 완료";
-				url = "info.do?num=" + board.getNum();
+				url = "info.do?num=" + board.getNum() + "&&boardname=" + boardname;
 			}else{
 				msg = "게시물 수정 실패";
 			}
@@ -235,9 +246,11 @@ public class BoardAction {
 	
 	public ActionForward deleteForm(HttpServletRequest request, HttpServletResponse response){
 		String num = request.getParameter("num");
+		String boardname = request.getParameter("boardname");
 		BoardDao dao = new BoardDao();
-		Board b = dao.selectOne(num);
+		Board b = dao.selectOne(num, boardname);
 		request.setAttribute("b", b);
+		request.setAttribute("boardname", boardname);
 		return new ActionForward();
 	}
 	
@@ -245,17 +258,18 @@ public class BoardAction {
 		request.setCharacterEncoding("euc-kr");
 		String num = request.getParameter("num");
 		String pass = request.getParameter("pass");
+		String boardname = request.getParameter("boardname");
 		BoardDao dao = new BoardDao();
 		String msg = "게시글 삭제 실패";
-		String url = "info.do?num="+num;
-		Board curBoard = dao.selectOne(num);
+		String url = "info.do?num="+num + "&&boardname=" + boardname;
+		Board curBoard = dao.selectOne(num, boardname);
 		if(!pass.equals(curBoard.getPass())){
 			msg = "비밀번호가 틀렸습니다.";
-			url = "info.do?num="+num;
+			url = "info.do?num="+num + "&&boardname=" + boardname;
 		}else{
-			if(dao.delete(num)){
+			if(dao.delete(num, boardname)){
 				msg = "게시글 삭제 성공!";
-				url = "list.do";
+				url = "list.do" + "?boardname=" + boardname;
 			}
 		}
 		request.setAttribute("msg", msg);

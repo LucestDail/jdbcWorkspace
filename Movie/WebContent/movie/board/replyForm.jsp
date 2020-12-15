@@ -18,6 +18,7 @@
 <input type = "hidden" name = "grp" value = "${b.grp}">
 <input type = "hidden" name = "grplevel" value = "${b.grplevel}">
 <input type = "hidden" name = "grpstep" value = "${b.grpstep}">
+<input type = "hidden" name = "boardname" value = "${param.boardname}">
 	<table class = "w3-table-all">
 		<caption>게시판 답글 등록</caption>
 		<tr>

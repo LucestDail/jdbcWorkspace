@@ -13,32 +13,32 @@ import model.Board;
 
 public interface BoardMapper {
 	
-	@Insert(" insert into board "+
+	@Insert(" insert into ${boardname} "+
 				" (num, name, pass, subject, content, file1, regdate, readcnt, grp, grplevel, grpstep) "+
 			" values "+
-				" (#{num}, #{name}, #{pass}, #{subject}, #{content}, #{file1}, now(), #{readcnt}, #{grp}, #{grplevel}, #{grpstep}) "
+				" (${num}, '${name}', '${pass}', '${subject}', '${content}', '${file1}', now(), ${readcnt}, ${grp}, ${grplevel}, ${grpstep}) "
 		)
-	int insert(Board board);
+	int insert(Map map);
 	
 	@Select(" select "+
 				" ifnull(max(num),0) "+
 			" from "+
-				" board ")
-	int maxnum();
+				" ${boardname} ")
+	int maxnum(@Param("boardname") String boardname);
 	
 	
 	@Select(" select "+
 				" ifnull(max(grp),0) "+
 			" from "+
-				" board ")
-	int maxgrp();
+				" ${boardname} ")
+	int maxgrp(@Param("boardname") String boardname);
 	
 	
 	@Select({"<script>",
 			" select ",
 				"count(*) ",
 			" from ",
-				" board ",
+				" ${boardname} ",
 			"<if test = 'col1 != null'>",
 				"where ${col1} like '%${find}%'",
 			"</if>",
@@ -57,7 +57,7 @@ public interface BoardMapper {
 			"select ",
 				"* ",
 			"from ",
-				"board ",
+				"${boardname} ",
 			"<if test = 'col1 != null'>",
 				"where ${col1} like '%${find}%'",
 			"</if>",
@@ -68,28 +68,28 @@ public interface BoardMapper {
 				"or ${col3} like '%${find}%'",
 			"</if>",
 			"<if test = 'num != null'> ",
-				"where num = #{num}",
+				"where num = ${num}",
 			"</if>",
 			"<if test = 'start != null'> ",
-				"order by grp desc, grpstep asc limit #{start},#{limit}",
+				"order by grp desc, grpstep asc limit ${start},${limit}",
 			"</if>",
 			"</script>"
 			})
 	List<Board> select(Map map);
 	
 	
-	@Update("update board set readcnt = (readcnt+1) where num = #{num}")
-	void readcntAdd(@Param("num") String num);
+	@Update("update ${boardname} set readcnt = (readcnt+1) where num = ${num}")
+	void readcntAdd(Map map);
 	
 	
-	@Update("update board set grpstep = grpstep + 1 where grp = #{grp} and grpstep > #{grpstep}")
-	void grpStepAdd(@Param("grp") int grp, @Param("grpstep") int grpstep);
+	@Update("update ${boardname} set grpstep = grpstep + 1 where grp = #{grp} and grpstep > ${grpstep}")
+	void grpStepAdd(Map map);
 
 
 	
 	@Update({"<script> ",
 		" update ",
-			" board ",
+			" ${boardname} ",
 		"<trim prefix = 'set' prefixOverrides = ','>",
 			", regdate = now()",
 		"<if test = 'name != null'> ",
@@ -106,15 +106,15 @@ public interface BoardMapper {
 		"</if>",
 		"</trim>",
 		" where ",
-			" num = #{num} ",
+			" num = ${num} ",
 		"</script>"})
-	int update(Board board);
+	int update(Map map);
 	
 	
 	@Delete(" delete from "+
-				" board "+
+				" ${boardname} "+
 			" where "+
-				" num = #{num}")
-	int delete(@Param("num") String num);
+				" num = ${num}")
+	int delete(Map map);
 
 }

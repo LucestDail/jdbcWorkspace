@@ -19,6 +19,7 @@
 <body>
 <form action="update.do" method="post" enctype = "multipart/form-data" name = "f">
 <input type = "hidden" name = "num" value = "${b.num}">
+<input type = "hidden" name = "boardname" value = "${param.boardname}">
 <input type = "hidden" name = "file2" value = "${b.file1}">
 	<table class = "w3-table-all">
 		<caption>게시글 수정</caption>
