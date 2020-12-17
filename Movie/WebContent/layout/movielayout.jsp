@@ -20,7 +20,6 @@
     <title><decorator:title /></title>
 	<decorator:head />
 	
-	
 	<!--  link configuration  -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -33,7 +32,6 @@
     <link rel="stylesheet" href="${path}/resource/assets/css/templatemo-style.css">
     <link rel="stylesheet" href="${path}/resource/assets/css/owl.css">
     <link rel="stylesheet" href="${path}/resource/main.css">
-    
     
     <!--  script configuration  -->
     <script src="${path}/resource/vendor/jquery/jquery.min.js"></script>
@@ -95,7 +93,7 @@
             <!-- Menu Configuration -->
             <nav id="menu">
               <ul>
-                <li><a href="${path}/movie/member/main.me">메인</a></li>
+                <li><a href="${path}/movie/Movie/MovieGet.jsp">메인</a></li>
                 <li><a href="${path}/movie/chat/chatform.do">영화 검색</a></li>
                 <li><a href="${path}/movie/board/list.do?boardname=reviewmovie">리뷰 게시판</a></li>
                 <li><a href="${path}/movie/board/list.do?boardname=recommandmovie">추천 게시판</a></li>

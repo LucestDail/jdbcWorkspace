@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+$(function(){
+	$("tr").hover(function(){
+		if($(this).index() != 0){
+			$(this).addClass("reverse");
+		}
+	},function(){
+		$(this).removeClass("reverse");
+	})
+	$("th").hover(function(){
+		var len = $(this).parent().children().length;
+		select = $(this).parent().children().index(this) + 1;
+		$("td:nth-of-type(" + len + "n+" + select + ")").addClass("hover");
+	},function(){
+		var len = $(this).parent().children().length;
+		select = $(this).parent().children().index(this) + 1;
+		$("td:nth-of-type(" + len + "n+" + select + ")").removeClass("hover");
+	})
+})
+</script>
+
+<style type = "text/css">
+	table,th,td {
+		border : 3px solid #222222;
+		border-collapse: collapse;
+	}
+	.header{
+		background : green;
+		color : yellow;
+	}
+	.reverse{
+		background : blue;
+		color : white;
+	}
+	.hover{
+		background : skyblue;
+		color: blue;
+	}
+</style>
+</head>
+<body>
+	<table>
+		<tr class = "header">
+			<th>1
+			</th>
+			<th>2
+			</th>
+			<th>3
+			</th>
+			<th>4
+			</th>
+		</tr>
+		<tr>
+			<td>11
+			</td>
+			<td>12
+			</td>
+			<td>13
+			</td>
+			<td>14
+			</td>
+		</tr>
+		<tr>
+			<td>21
+			</td>
+			<td>22
+			</td>
+			<td>23
+			</td>
+			<td>24
+			</td>
+		</tr>
+		<tr>
+			<td>31
+			</td>
+			<td>32
+			</td>
+			<td>33
+			</td>
+			<td>34
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

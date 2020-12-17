@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>입력된 숫자</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+$(function(){
+	$("#inbtn").click(function(){
+		inputarr = $("#userNum").val().split("");
+		html = "";
+		var i = 0;
+		for(i = 0; i < inputarr.length; i++){
+			html += "<img width = '100' height = '100' border = '1' />";
+		}
+		$("#card").html(html);
+		$("#card img").each(function(index){
+			$(this).attr("src","./nums/num" + inputarr[index] + ".jpg");
+		})
+	})
+	//enter (key value 13) => click event occured
+	$("userNum").keyup(function(event){
+		if(event.keyCode == 13){
+			$("#inbtn").click();
+		}
+	})
+})
+</script>
+<style type = "text/css">
+	* {
+		text-align : center;
+		margin : 0px;
+		padding : 0px;
+	}
+</style>
+</head>
+<body>
+	<div>
+		<input type = "text" id = "userNum">
+		<input type = "button" value = "입력" id = "inbtn">
+	</div>
+	<div id = "card">
+		<img src = "" width = "100" hegiht = "100">
+	</div>
+</body>
+</html>

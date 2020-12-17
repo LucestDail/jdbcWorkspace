@@ -940,7 +940,7 @@ section.buttons .container-fluid {
 }
 
 #sidebar > .inner > #search  {
-    background-color: #2d2e39;
+    background-color: rgb(255, 255, 255);
     height: 100px;
     width: 420px;
     display: inline-block;
@@ -1017,7 +1017,7 @@ section.buttons .container-fluid {
 }
 
 #sidebar.inactive {
-    margin-left: -420px;
+    margin-left: 0px;
 }
 
 @media screen and (max-width: 1680px) {
@@ -1093,7 +1093,7 @@ section.buttons .container-fluid {
     }
 }
 
-@media screen and (max-width: 845px) {
+@media screen and (max-width: 55px) {
     #header .logo a {
         margin-right: 30px!important;
     }
