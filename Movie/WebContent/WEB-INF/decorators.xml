@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="euc-kr"?>
 <!--  /WEB-INF/decorators.xml -->
 <decorators defaultdir = "/layout">
-	<decorator name = "board" page = "movielayout.jsp">
+	<decorator name = "board" page = "samplelayout.jsp">
 		<pattern>/movie/Movie/*</pattern>
 		<pattern>/movie/board/*</pattern>
 		<pattern>/movie/member/*</pattern>

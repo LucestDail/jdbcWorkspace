@@ -13,6 +13,9 @@
 	<meta charset = "euc-kr">
 	<title>회원 목록</title>
 	<link rel = "stylesheet" href="../../css/main.css">
+	<script type="text/javascript"
+			src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	</script>
 	<script type="text/javascript">
 		function allchkbox(chk){
 			var allchk = chk.checked // 전체 석택 값, true, false
@@ -26,6 +29,10 @@
 					item.removeAttribute("checked");
 				}
 			})
+		}
+		
+		function allchkbox2(chk){
+			$("input[name=mailchk]").prop("checked",chk.checked)
 		}
 	</script>
 </head>
@@ -41,7 +48,7 @@
 			<th>전화</th>
 			<th>회원관리</th>
 			<th>이메일</th>
-			<th><input type = "checkbox" name = "allchk" onchange = "allchkbox(this)"></th>
+			<th><input type = "checkbox" name = "allchk" onchange = "allchkbox2(this)"></th>
 		</tr>
 		<core:forEach var = "member" items = "${list}">
 		<tr>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+$(function(){
+	$("#btn1").click(function(){
+		$.ajax("ajax1-1.jsp",{
+			success: function(data){
+				$("body").append(data);
+			},
+			error : function(e){
+				alert("서버 오류 : " + e.status);
+			}
+		})
+	})
+	$("#rmbtn1").click(function(){
+		//$("h1:last").remove();
+		//$("h1").get(-1).remove();
+		$("h1").eq(-1).remove();
+	})
+	$("#btn2").click(function(){
+		var param = "name=홍길동&age=20"
+		$.ajax({
+			url : "ajax1-2.jsp",
+			type : "POST",
+			data : param,
+			success : function(data){
+				$("body").append(data);
+			},
+			error : function(e){
+				alert("서버 오류 : " + e.status);
+			}
+		})
+	})
+	$("#rmbtn2").click(function(){
+		$("h2").eq(-1).remove();
+	})
+})
+</script>
+</head>
+<body>
+<button id = "btn1"> invoke ajax1-1 </button>
+<button id = "rmbtn1"> remove ajax1-1</button>
+<button id = "btn2">invoke ajax1-2</button>
+<button id = "rmbtn2"> remove ajax1-2</button>
+</body>
+</html>

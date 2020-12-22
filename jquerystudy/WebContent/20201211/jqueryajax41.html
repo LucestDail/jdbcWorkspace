@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script type = "text/javascript">
+$(function(){
+	$("#allbtn").click(function(){
+		$("#state").html("");
+		$.ajax("address.xml",{
+			success : function(data){
+				console.log(data);
+				$("#state").append("<ul>");
+				$(data).find("state").each(function(){
+					$("#state").append("<li>" + $(this).text() + "</li>")
+				})
+				$("#state").append("</ul>")
+			},
+			error : function(e){
+				alert("서버 오류 : " + e.status);
+			}
+		})
+	})
+})
+	function stateprint(st){
+		$("#state").html("");
+		$.ajax("address.xml",{
+			success : function(data){
+				$("#state").append("<ul>");
+				$(data).find(st).find("state").each(function(){
+					$("#state").append("<li>" + $(this).text() + "</li>");
+				})
+				$("#state").append("</ul>");
+			},
+			error : function(e){
+				alert("서버 오류 : " + e.status);
+			}
+		})
+	}
+</script>
+</head>
+<body>
+<button id = "allbtn"> 전체구 </button>
+<button onclick = "stateprint('east')"> east</button>
+<button onclick = "stateprint('west')"> west</button>
+<button onclick = "stateprint('north')"> north</button>
+<button onclick = "stateprint('south')"> south</button>
+<div id = "state"></div>
+</body>
+</html>

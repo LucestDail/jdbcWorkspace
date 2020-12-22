@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="sidebar"/>
+		<item key="selection" value="header"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="header"/>
+			<item value="preload"/>
 			<item value="sidebar"/>
 			<item value="side"/>
 			<item value="slide"/>
@@ -21,8 +23,6 @@
 			<item value="update"/>
 			<item value="readcnt"/>
 			<item value="cnt"/>
-			<item value="maxnum"/>
-			<item value="dao"/>
 		</list>
 		<list key="replacehistory">
 			<item value="movie"/>

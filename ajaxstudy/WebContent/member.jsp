@@ -4,7 +4,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix = "sql" uri = "http://java.sun.com/jsp/jstl/sql" %>
 <fmt:requestEncoding value = "utf-8"/>
-<sql:setDataSource var = "conn" driver = "org.mariadb.jdbc.Driver" url = "jdbc:mariadb://localhost:3306/classdb" user = "root" password = "1234" />
+<sql:setDataSource var = "conn" driver = "org.mariadb.jdbc.Driver" url = "jdbc:mariadb://localhost:59753/classdb" user = "root" password = "159753" />
 <sql:query var = "rs" dataSource = "${conn}">
 	select * from member where name like ?
 	<sql:param>%${param.name}%</sql:param>

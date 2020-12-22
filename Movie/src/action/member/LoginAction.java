@@ -34,6 +34,7 @@ public class LoginAction implements Action{
 				request.getSession().setAttribute("picture", picture);
 				request.setAttribute("msg", member.getName() + "님 환영합니다!");
 				request.setAttribute("url","main.me");
+				return new ActionForward(false,"../Movie/index.jsp");
 			}else{
 				request.setAttribute("msg", "비밀번호가 틀립니다");
 				request.setAttribute("url", "loginForm.me");
