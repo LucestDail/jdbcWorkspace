@@ -16,6 +16,4 @@ public class InfoAction extends UserLoginAction {
 		request.setAttribute("member", member);
 		return new ActionForward();
 	}
-
-
 }

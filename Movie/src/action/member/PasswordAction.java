@@ -19,19 +19,19 @@ public class PasswordAction extends UserLoginAction {
 		String chgpass = request.getParameter("chgpass");
 		MemberDao dao = new MemberDao();
 		Member mem = dao.selectOne(login);
-		if (pass.equals(mem.getPass())) {
+		if (pass.equals(mem.getMember_password())) {
 			if (dao.updatePass(login, chgpass) > 0) {
 				msg = "비밀번호가 변경되었습니당!";
-				url = "info.me?id="+login;
+				url = "../member/info.me?id="+login;
 			} else {
 				msg = "비밀번호 변경 실패";
-				url = "updateForm.me?id="+login;
+				url = "../member/updateForm.me?id="+login;
 			}
 		} else {
 			opener = false;
 			closer = false;
 			msg = "비밀번호 오류입니당... ";
-			url = "passwordForm.me";
+			url = "../memberpasswordForm.me";
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);

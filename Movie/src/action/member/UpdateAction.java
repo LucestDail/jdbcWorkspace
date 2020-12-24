@@ -12,28 +12,29 @@ public class UpdateAction extends UserLoginAction{
 	@Override
 	public ActionForward doExecute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Member member = new Member();
-		member.setId(request.getParameter("id"));
-		member.setPass(request.getParameter("pass"));
-		member.setName(request.getParameter("name"));
-		member.setGender(Integer.parseInt(request.getParameter("gender")));
-		member.setTel(request.getParameter("tel"));
-		member.setEmail(request.getParameter("email"));
-		member.setPicture(request.getParameter("picture"));
-		
+		System.out.println(request.getParameter("id"));
+		member.setMember_picture(request.getParameter("picture"));
+		member.setMember_id(request.getParameter("id"));
+		member.setMember_password(request.getParameter("password"));
+		member.setMember_nickname(request.getParameter("nickname"));
+		member.setMember_gender(Integer.parseInt(request.getParameter("gender")));
+		member.setMember_age(Integer.parseInt(request.getParameter("age")));
+		member.setMember_email(request.getParameter("email"));
+		member.setMember_email_receive_ok(Integer.parseInt(request.getParameter("emailreceive")));
+		member.setMember_introduction(request.getParameter("introduction"));
+		member.setMember_genre(request.getParameter("genre"));
+		System.out.println(member);
 		String msg = "비밀번호가 틀렸습니다...";
-		String url = "updateForm.me?id=" + member.getId();
+		String url = "../member/info.me?id=" + request.getSession().getAttribute("login");
 		
 		MemberDao dao = new MemberDao();
 		Member dbmember = dao.selectOne(login);
 		
-		if(member.getPass().equals(dbmember.getPass())) {
+		if(member.getMember_password().equals(dbmember.getMember_password())) {
+			System.out.println("current type 1");
 			int result = dao.update(member);
 			if(result > 0) {
-				/*
-				 * msg = "수정성공"; url = "info.me?id="+member.getId(); return new
-				 * ActionForward(true, "../alert.jsp");
-				 */
-				return new ActionForward(true, "info.me?id="+member.getId());
+				return new ActionForward(true, "../member/info.me?id="+member.getMember_id());
 			}else {
 				msg = "수정 실패";
 			}

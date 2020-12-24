@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix = "core" uri = "http://java.sun.com/jsp/jstl/core" %>
+<core:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<link rel = "stylesheet" href = "../../css/main.css">
+<link rel="stylesheet" href="${path}/resource/mycss.css">
 <script type = "text/javascript">
 	function inchk(f){
 		if(f.chgpass.value != f.chgpass2.value){
@@ -41,7 +43,7 @@
 		</tr>
 		<tr>
 			<td colspan = "2">
-				<input type = "submit" value = "비밀번호 변경">
+				<input type = "submit" value = "비밀번호 변경" class = "redbutton">
 			</td>
 		</tr>
 	</table>

@@ -12,7 +12,7 @@ public class DbConnection {
 		Connection conn = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:59753/classdb","root","159753");
+			conn = DriverManager.getConnection("jdbc:mariadb://localhost:59753/movie","root","159753");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

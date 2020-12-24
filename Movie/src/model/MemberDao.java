@@ -29,7 +29,8 @@ public class MemberDao {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("id", id);
+			map.put("member_id", id);
+			System.out.println(session.getMapper(cls).select(map).get(0));
 			return session.getMapper(cls).select(map).get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,6 +41,7 @@ public class MemberDao {
 	}
 
 	public int update(Member mem) {
+		System.out.println("update has been activated");
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			return session.getMapper(cls).update(mem);
@@ -80,9 +82,9 @@ public class MemberDao {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("id", id);
+			map.put("member_id", id);
 			Member mem = session.getMapper(cls).select(map).get(0);
-			mem.setPass(chgpass);
+			mem.setMember_password(chgpass);
 			return session.getMapper(cls).update(mem);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,13 +95,12 @@ public class MemberDao {
 	}
 	
 	
-	public String idSearch(String email, String tel) {
+	public String idSearch(String email) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("email", email);
-			map.put("tel", tel);
-			return session.getMapper(cls).select(map).get(0).getId();
+			map.put("member_email", email);
+			return session.getMapper(cls).select(map).get(0).getMember_id();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -108,14 +109,13 @@ public class MemberDao {
 		return null;
 	}
 	
-	public String pwSearch(String id, String email, String tel) {
+	public String pwSearch(String id, String email) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("id", id);
-			map.put("email", email);
-			map.put("tel", tel);
-			return session.getMapper(cls).select(map).get(0).getPass();
+			map.put("member_id", id);
+			map.put("member_email", email);
+			return session.getMapper(cls).select(map).get(0).getMember_password();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

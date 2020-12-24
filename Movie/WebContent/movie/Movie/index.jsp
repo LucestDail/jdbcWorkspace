@@ -70,6 +70,10 @@
 	top: -31px;
 }
 </style>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<table style="width: 100%; table-layout: fixed;" >
@@ -222,7 +226,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td align = "center"><input type="password" name="pass" onfocus="this.value=''" value = "비밀번호를 입력하세요"></td>
+								<td align = "center"><input type="password" name="password" onfocus="this.value=''" value = "비밀번호를 입력하세요"></td>
 							</tr>
 							<tr>
 								<td>
@@ -242,7 +246,62 @@
 				</td>
 		</tr>
 		<tr>
-			<td colspan="2" rowspan="2">우수회원 그래프 표시</td>
+			<!--  graph configuration area -->
+			<td colspan="2" rowspan="2">
+			<!--  
+				<div id = "piecontainer" style = "width : 80%; border : 1px solid #FFFFFF">
+					<canvas id = "canvas1" style = "width:100%;"></canvas>
+				</div>
+				<script type = "text/javascript">
+var randomColorFactor = function(){
+	return Math.round(Math.random() * 255);
+}
+var randomColor = function(opa){
+	return "rgba(" + randomColorFactor() + "," + randomColorFactor() + "," + randomColorFactor() + "," + (opa || '.3')+")";
+};
+$(function(){
+	piegraph();
+})
+function piegraph(){
+	$.ajax("${path}/movie/ajax/graph.do",{
+		success : function(data){
+			console.log(data);
+			pieGraphPrint(data);
+		},
+		error : function(e){
+			alert("서버 오류 : " + e.status);
+		}
+	})
+}
+function pieGraphPrint(data){
+	var rows = JSON.parse(data);
+	var names = [];
+	var datas = [];
+	var colors = [];
+	$.each(rows,function(index,item){
+			names[index] = item.name;
+			datas[index] = item.cnt;
+			colors[index] = randomColor(0.7);
+	})
+	var config = {
+		type : "pie",
+		data : {
+			datasets : [{
+				data : datas,
+				backgroundColor : colors
+			}],
+			labels : names
+		},
+		options : {
+			responsive : true,
+			legend : {position : "top"},
+		}
+	}
+	var ctx = document.getElementById("canvas1").getContext("2d");
+	new Chart(ctx, config);
+}
+</script>-->
+			</td>
 		</tr>
 		<tr>
 			<td>조회수 정렬 내림차순 10개 표시</td>

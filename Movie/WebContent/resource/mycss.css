@@ -6,6 +6,12 @@ a {
 	text-decoration:none
 } 
 
+body{
+    margin: 0;
+    font-family : '¸¼Àº °íµñ',
+        'Apple SD Gothic Neo',
+        sans-serif;
+}
 
 #header {
 	background-color: #B53B38;
@@ -124,4 +130,44 @@ ul {
 	line-height: 10px;
 	font-size: 20px;
 	color: #FFFFFF;
+}
+
+
+footer{
+    color: #FFFFFF;
+    background-color: #B53B38;
+}
+
+footer .container{
+    padding: 40px 20px;
+}
+
+.footerMain{
+    margin-bottom: 30px;
+}
+
+.footerMain h2{
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 30px;
+    letter-spacing: 0.2em;
+}
+
+.footerMain p{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+}
+
+.footerMain a{
+    color: inherit;
+    text-decoration: none;
+}
+
+.footerCopyright{
+    font-size: 12px;
+    text-align: center;
+    font-family: 'Nanum Myeongjo', serif;
 }

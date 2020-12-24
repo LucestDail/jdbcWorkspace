@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
+<core:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>Login Page</title>
 <script type = "text/javascript">
 	function inputcheck(f){
 		if(f.id.value == ''){
@@ -44,26 +46,26 @@
 </head>
 <body>
 <div id = "centerPosition">
-<form action = "login.me" method="post" name = "f" onsubmit = "return inputcheck(this)">
+<form action="${path}/movie/member/login.me" method="post" name="f" onsubmit="return inputcheck(this)">
 	<table>
 		<tr>
-			<td align = "center">
-				<input type = "text" name = "id" onfocus="this.value=''" value = "아이디를 입력하세요">
-			</td>
-			<td rowspan = "2">
-				<input type = "submit" class = "normalbutton" value = "로그인">
+			<td align = "center"><input type="text" name="id" onfocus="this.value=''" value = "아이디를 입력하세요"></td>
+			<td rowspan = "2" align = "center">
+				<input type="submit" class="normalbutton" value="로  그  인" style = "width:100%;">
 			</td>
 		</tr>
 		<tr>
-			<td align = "center">
-				<input type = "password" name = "pass" onfocus="this.value=''" value = "비밀번호를 입력하세요">
-			</td>
+			<td align = "center"><input type="password" name="password" onfocus="this.value=''" value = "비밀번호를 입력하세요"></td>
 		</tr>
 		<tr>
-			<td colspan = "2">
-				<input type = "button" class = "redbutton" value = "회원가입" onclick = "location.href = 'joinForm.me'">
-				<input type = "button" class = "normalbutton" value = "아이디찾기" onclick = "win_open('idForm')">
-				<input type = "button" class = "normalbutton" value = "비밀번호찾기" onclick = "win_open('pwForm')">
+			<td>
+				<input type="button" class="redbutton" value="회원가입" style = "width:100%;" onclick="location.href = '${path}/movie/member/joinForm.me'">
+			</td>
+			<td>
+				<input type="button" class="normalbutton" value="아이디찾기" style = "width:100%;" onclick="win_open('idForm')">
+			</td>
+			<td>
+				<input type="button" class="normalbutton" value="비밀번호찾기" style = "width:100%;" onclick="win_open('pwForm')">
 			</td>
 		</tr>
 	</table>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -290,5 +291,33 @@ public class BoardAction {
 		request.setAttribute("fileName",  fileName);
 		request.setAttribute("CKEditorFuncNum", request.getParameter("CKEditorFuncNum"));
 		return new ActionForward(false, "ckeditor.jsp");
+	}
+	
+	public ActionForward graph(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		System.out.println("BoardAction - graph activated");
+		List<Map<String, Object>> list = dao.boardgraph();
+		System.out.println(list);
+		StringBuilder json = new StringBuilder("[");
+		int i = 0;
+		int sizecheck = list.size();
+		for(Map<String,Object> m : list) {
+			for(Map.Entry<String, Object> map : m.entrySet()) {
+				if(map.getKey().equals("name")) {
+					json.append("{\"name\":\"" + map.getValue() + "\"");
+				}
+				if(map.getKey().equals("cnt")) {
+					json.append("\"cnt\":" + map.getValue() + "}");
+				}
+				i++;
+				if(i/2 < list.size()) {
+					json.append(",");
+				}
+				
+			}
+			
+		}
+		json.append("]");
+		request.setAttribute("json", json.toString().trim());
+		return new ActionForward();
 	}
 }

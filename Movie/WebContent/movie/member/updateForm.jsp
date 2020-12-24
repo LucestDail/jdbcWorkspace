@@ -11,6 +11,21 @@
 <meta charset="EUC-KR">
 <title>회원수정</title>
 <link rel = "stylesheet" href="../../css/main.css">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<style>
+   #centerPosition {  
+     position:absolute;
+     height:800px;
+     width:550px;
+     margin:-150px 0px 0px -200px;
+     top: 50%;
+     left: 50%;
+     padding: 5px;
+   }
+
+</style>
 </head>
 <body>
 <script type = "text/javascript">
@@ -33,43 +48,106 @@ function win_passchg(){
 	var op = "width = 500, height=250, left=50, top=150";
 	open("passwordForm.me","",op);
 }
+$(function(){
+	if($("#emailcheck").prop("checked")){
+		$("#emailreceive").val("1");
+	}else{
+		$("#emailreceive").val("0");
+	}
+})
 </script>
+<div id = "centerPosition">
 <form action="update.me" name = "f" method="post" onsubmit="return inputcheck(this)">
-	<input type = "hidden" name="picture" value ="${member.picture}">
+	<input type = "hidden" name="picture" value ="${member.member_picture}">
 	<input type = "hidden" name="kbn">
-	<input type = "hidden" name = "id" value = "${param.id}">
+	<input type = "hidden" name = "emailreceive" id = "emailreceive" value = "0">
 	<table><caption>회원정보 수정</caption>
 		<tr>
-			<td rowspan = "4" valign = "bottom">
-				<img src = "picture/${member.picture}" width="100" height="120" id="picture"><br>
-				<font size="1"><a href = "javascript:win_upload()">사진등록</a></font>
-			</td><th>아이디</th><td><input type = "text" name = "id" readonly value = "${member.id}"></td></tr>
-			<tr><th>비밀번호</th><td><input type = "password" name = "pass"></td></tr>
-			<tr><th>이름</th><td><input type = "text" name = "name" value = "${member.name}"></td></tr>
-			<tr><th>성별</th>
+			<td rowspan = "10" valign = "middle">
+				<img src = "picture/${member.member_picture}" width="100" height="120" id="picture"><br>
+				<font size="1"><a href = "javascript:win_upload()" class = "normalbutton">사진등록</a></font>
+			</td>
+				<th>아이디</th>
 				<td>
-					<input type = "radio" name = "gender" value = "1" ${member.gender==1?"checked":""}>남
-					<input type = "radio" name = "gender" value = "2" ${member.gender==2?"checked":""}>여
+					<input type = "text" name = "id" readonly value = "${member.member_id}">
 				</td>
 			</tr>
 			<tr>
-				<th>전화번호</th>
-				<td colspan="2"><input type = "text" name = "tel" value = "${member.tel }"></td>
+				<th>비밀번호</th>
+				<td>
+					<input type = "password" name = "password">
+				</td>
+			</tr>
+			<tr>
+				<th>닉네임</th>
+				<td>
+					<input type = "text" name = "nickname" value = "${member.member_nickname}">
+				</td>
+			</tr>
+			<tr>
+				<th>성별</th>
+				<td>
+					<input type = "radio" name = "gender" value = "1" ${member.member_gender==1?"checked":""}>남
+					<input type = "radio" name = "gender" value = "2" ${member.member_gender==2?"checked":""}>여
+				</td>
+			</tr>
+			<tr>
+				<th>
+					나이(만)
+				</th>
+				<td>
+					<input type = "text" name = "age" value = "${member.member_age}">
+				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td colspan="2"><input type = "text" name = "email" value = "${member.email}"></td>
+				<td colspan="2"><input type = "text" name = "email" value = "${member.member_email}">
+				<input type = "checkbox" id = "emailcheckbox"></td>
+			</tr>
+			<tr>
+			<th>대표 선호 장르</th>
+			<td>
+				<select name = "genre">
+					<option value = "horror">코미디</option>
+					<option value = "crime">범죄</option>
+					<option value = "thriller">스릴러</option>
+					<option value = "adventure">어드벤처</option>
+					<option value = "sports">스포츠</option>
+					<option value = "family">가족영화</option>
+					<option value = "fantasy">판타지</option>
+					<option value = "action">액션</option>
+					<option value = "detective">수사물</option>
+					<option value = "horror">공포</option>
+					<option value = "romance">로맨스</option>
+					<option value = "biograpy">자서전</option>
+					<option value = "history">역사</option>
+					<option value = "mystery">미스테리</option>
+					<option value = "musical">뮤지컬</option>
+					<option value = "drama">드라마</option>
+					<option value = "scifi">공상과학</option>
+					<option value = "war">전쟁</option>
+					<option value = "animation">애니메이션</option>
+					<option value = "western">서부</option>
+				</select>
+			</td>
+			</tr>
+			<tr>
+			<th>자기소개</th>
+			<td>
+				<textarea name = "introduction" style = "width:170px; height:100px;">${member.member_introduction}</textarea>
+			</td>
 			</tr>
 			<tr>
 				<td colspan = "3">
-					<input type = "submit" value = "회원수정">
+					<input type = "submit" value = "회원수정" class = "redbutton">
 					<core:if test = "${sessionScope.login != 'admin' || param.id == 'admin' }">
-						<input type = "button" value = "비밀번호수정" onclick="win_passchg()">
+						<input type = "button" value = "비밀번호수정" onclick="win_passchg()" class = "normalbutton">
 					</core:if>
-					<input type = "button" value = "돌아가기" onclick="back()">
+					<input type = "button" value = "돌아가기" class = "normalbutton" onclick="back()">
 				</td>
 			</tr>
 	</table>
 </form>
+</div>
 </body>
 </html>

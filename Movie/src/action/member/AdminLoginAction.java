@@ -24,11 +24,11 @@ public abstract class AdminLoginAction implements Action{
 		login = (String)request.getSession().getAttribute("login");
 		if(login == null) {
 			request.setAttribute("msg", "로그인 하세요...");
-			request.setAttribute("url", "loginForm.me");
+			request.setAttribute("url", "../member/loginForm.me");
 			return new ActionForward(false,"../alert.jsp");
 		}else if(!login.equals("admin")) {
 			request.setAttribute("msg", "관리자만 확인 가능합니다...");
-			request.setAttribute("url", "main.me");
+			request.setAttribute("url", "../Movie/index.jsp");
 			return new ActionForward(false,"../alert.jsp");
 		}else {
 			return doExecute(request,response);

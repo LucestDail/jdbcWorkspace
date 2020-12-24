@@ -22,19 +22,18 @@ public class LoginAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
-		String pass = request.getParameter("pass");
-		Member member = new MemberDao().selectOne(id);
-		String picture = new MemberDao().selectOne(id).getPicture();
+		String password = request.getParameter("password");
+		Member member = new MemberDao().selectOne(request.getParameter("id"));
+		String picture = new MemberDao().selectOne(id).getMember_picture();
 		if(member == null) {
 			request.setAttribute("msg", "아이디를 확인하세요");
 			request.setAttribute("url", "loginForm.me");
 		}else {
-			if(pass.equals(member.getPass())) {
+			if(password.equals(member.getMember_password())) {
 				request.getSession().setAttribute("login", id);
 				request.getSession().setAttribute("picture", picture);
-				request.setAttribute("msg", member.getName() + "님 환영합니다!");
-				request.setAttribute("url","main.me");
-				return new ActionForward(false,"../Movie/index.jsp");
+				request.setAttribute("msg", member.getMember_nickname() + "님 환영합니다!");
+				request.setAttribute("url","../Movie/index.jsp");
 			}else{
 				request.setAttribute("msg", "비밀번호가 틀립니다");
 				request.setAttribute("url", "loginForm.me");

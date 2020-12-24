@@ -116,5 +116,9 @@ public interface BoardMapper {
 			" where "+
 				" num = ${num}")
 	int delete(Map map);
+	
+	
+	@Select(" select name, count(*) cnt from board group by name having count(*) >= 1 order by cnt desc")
+	List<Map<String, Object>> graph();
 
 }

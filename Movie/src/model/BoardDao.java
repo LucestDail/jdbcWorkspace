@@ -199,4 +199,19 @@ public class BoardDao {
 		}
 		return false;
 	}
+
+	public List<Map<String, Object>> boardgraph() {
+		System.out.println("BoardDao boardgraph activated");
+		// TODO Auto-generated method stub
+		SqlSession session = MyBatisConnection.getConnection();
+		List<Map<String, Object>> list = null;
+		try {
+			list = session.getMapper(cls).graph();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			MyBatisConnection.close(session);
+		}
+		return list;
+	}
 }

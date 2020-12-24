@@ -97,6 +97,7 @@ public class ControllerServlet extends HttpServlet {
 			//command : /model1/hello.me
 			command = request.getRequestURI().substring(request.getContextPath().length());
 			action = commandMap.get(command);
+			System.out.println(request.getSession().getAttribute("login") + " : " + command);
 			forward = action.execute(request, response);
 		}catch(NullPointerException e) {
 			forward = new ActionForward();

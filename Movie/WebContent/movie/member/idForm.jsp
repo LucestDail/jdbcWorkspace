@@ -17,12 +17,6 @@
 			</td>
 		</tr>
 		<tr>
-			<th>전화번호</th>
-			<td>
-				<input type = "text" name = "tel">
-			</td>
-		</tr>
-		<tr>
 			<td colspan = "2">
 				<input type = "submit" value = "아이디찾기">
 			</td>

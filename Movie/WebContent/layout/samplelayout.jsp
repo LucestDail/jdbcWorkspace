@@ -11,8 +11,10 @@
 <title><decorator:title /></title>
 <decorator:head />
 <link rel="stylesheet" href="${path}/resource/mycss.css">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -58,12 +60,29 @@
 		</div>
 	</div>
 	<!-- main content configuration, this will be decorator activating -->
-	<div id="container">
+	<div id="container" style = "height : 50%">
 	<decorator:body />
 	</div>
 	<!-- footer information configuration -->
-	<div id="footer">footer</div>
+	<div id="footer" style = "height : 15%">
+		 <footer>
+            <div class="container">
+                <div class="footerMain">
+                <h2>
+                    OH SEUNG HYUN
+                </h2>
+                    <p>
+                        CheongRa, Incheon, Republic of Korea
+                        <br>
+                        <a href="https://github.com/LucestDail">Goodee Company, Web-Server dept, Junior Backend Developer</a>
+                    </p>
+                </div>
+                <div class="footerCopyright">
+                DevHyun All rights reserved
+                </div>
+            </div>
+        </footer>
 	</div>
-
+	</div>
 </body>
 </html>

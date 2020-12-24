@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="decorator"
-	uri="http://www.opensymphony.com/sitemesh/decorator"%>
-	
 <core:set var="path" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -14,11 +11,47 @@
 <link rel="stylesheet" href="${path}/resource/mycss.css">
 <link rel = "shortcut icon" href="#">
 <link rel = "icon" href = "#" type = "image/x-icon">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
 <script type="text/javascript">
 	function win_upload(){
 		var op = "width = 500, height = 500, left = 50, top = 150";
 		open("pictureForm.me","",op);
 	}
+$(function(){
+	
+	if($("#emailcheck").prop("checked")){
+		$("#emailreceive").val("1");
+	}else{
+		$("#emailreceive").val("0");
+	}
+	
+	$("#idcheck").click(function(){
+		var param = {id:$("#id").val()};
+		$.ajax({
+			url : "idcheck.jsp",
+			type : "POST",
+			data : param,
+			success : function(data){
+				console.log(data);
+				$("#idchecker").html(data);
+				if($("h1").is(".find")){
+					$("#id").val("");
+					alert("중복되는 아이디가 있습니다!");
+				}else{
+					alert($("#id").val() + " 사용 가능합니다!");
+					$("#idcheckconfirm").val("1");
+					$("#id").attr("readonly",true);
+				}
+			},
+			error : function(e){
+				console.log(e);
+				alert("서버 오류 : " + e.status);
+			}
+		})
+	})
+})
 
 </script>
 <style>
@@ -38,6 +71,9 @@
 <div id = "centerPosition">
 <form action="join.me" name = "f" method="post">
 	<input type = "hidden" name="picture" value ="">
+	<input type = "hidden" id = "idcheckconfirm" value = "0">
+	<input type = "hidden" name = "emailreceive" id = "emailreceive" value = "0">
+	<div id = "idchecker"></div>
 	<table>
 		<tr>
 			<td rowspan = "8" valign = "middle" align = "center">
@@ -49,17 +85,20 @@
 			</td>
 			<th>아이디</th>
 			<td>
-				<input type = "text" name = "id">
+				<input type = "text" name = "id" id = "id">
+				<input type = "button" id = "idcheck" value = "아이디 중복 체크" class = "normalbutton">
 			</td>
 		</tr>
 		
 		<tr>
 			<th>비밀번호</th>
-			<td><input type = "password" name = "pass"></td>
+			<td><input type = "password" name = "password"></td>
 		</tr>
 		<tr>
 			<th>닉네임</th>
-			<td><input type = "text" name = "nickname"></td>
+			<td>
+				<input type = "text" name = "nickname" id = "nickname">
+			</td>
 		</tr>
 		<tr>
 			<th>성별</th>
@@ -74,7 +113,9 @@
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td><input type = "text" name = "email"></td>
+			<td><input type = "text" name = "email">
+			<input type = "checkbox" id = "emailcheckbox">
+			</td>
 		</tr>
 		<tr>
 			<th>대표 선호 장르</th>
@@ -112,7 +153,7 @@
 		<tr>
 			<td colspan = "3" align = "center">
 				<input type = "submit" class = "redbutton" value = "회원가입">
-				<a href = "${path}/movie/Movie/index.jsp" class = "graybutton">취소</a>
+				<a href = "${path}/movie/Movie/index.jsp" class = "normalbutton">취소</a>
 			</td>
 		</tr>
 	</table>

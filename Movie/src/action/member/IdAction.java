@@ -12,11 +12,10 @@ public class IdAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String email = request.getParameter("email");
-		String tel = request.getParameter("tel");
 		MemberDao dao = new MemberDao();
-		String id = dao.idSearch(email,tel);
+		String id = dao.idSearch(email);
 		String msg = "알수없는 에러 발생";
-		String url = "idForm.me";
+		String url = "../member/idForm.me";
 		if(id == null) {
 			msg = "정보에 맞는 id를 찾을 수 없습니당...";
 			request.setAttribute("msg", msg);
@@ -25,7 +24,7 @@ public class IdAction implements Action{
 		}else {
 			request.setAttribute("id", id.substring(0,2) + "**");
 			msg = "id를 찾았습니다!";
-			url = "id.me";
+			url = "../member/id.me";
 			return new ActionForward();
 		}
 	}

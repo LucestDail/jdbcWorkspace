@@ -11,7 +11,7 @@ public class DeleteFormAction extends UserLoginAction{
 	public ActionForward doExecute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if(id.equals("admin")) {
 			request.setAttribute("msg", "관리자는 탈퇴 할 수 없습니다.");
-			request.setAttribute("url", "main.me");
+			request.setAttribute("url", "../member/main.me");
 			return new ActionForward(false, "../alert.jsp");
 			}
 		return new ActionForward();

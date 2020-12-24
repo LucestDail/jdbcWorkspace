@@ -14,5 +14,6 @@
 		<pattern>/movie/member/picture*</pattern>
 		<pattern>/movie/member/password*</pattern>
 		<pattern>/movie/board/imgupload*</pattern>
+		<pattern>/movie/ajax/*</pattern>
 	</excludes>
 </decorators>

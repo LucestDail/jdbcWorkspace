@@ -14,25 +14,26 @@ public class DeleteAction extends UserLoginAction{
 		
 		if(id.equals("admin")) {
 			request.setAttribute("msg", "관리자는 탈퇴가 불가능합니다...");
-			request.setAttribute("url", "main.me");
+			request.setAttribute("url", "../Movie/index.jsp");
 			return new ActionForward(false, "../alert.jsp");
 		}
 		
-		String pass = request.getParameter("pass");
+		String pass = request.getParameter("password");
+		System.out.println(id + "," + pass);
 		String msg = null;
 		String url = null;
 		
 		if(login.equals("admin")) {
-			url = "list.me";
+			url = "../member/list.me";
 		}else {
-			url = "loginForm.me";
+			url = "../Movie/index.jsp";
 		}
 		
 		MemberDao dao = new MemberDao();
 		Member dbmember =null;
 		dbmember = dao.selectOne(login);
 		
-		if(pass.equals(dbmember.getPass())) {
+		if(pass.equals(dbmember.getMember_password())) {
 			if(dao.delete(id) > 0) {
 				if(login.equals("admin")) {
 					msg = id + " 사용자 강제 탈퇴 성공";
@@ -43,12 +44,12 @@ public class DeleteAction extends UserLoginAction{
 			}else {
 				msg = id + "님의 탈퇴시 오류 발생...";
 				if(!login.equals("admin")) {
-					url = "info.me?id=" + id;
+					url = "../member/info.me?id=" + id;
 				}
 			}
 		}else {
 			msg = login + "님의 비밀번호가 틀립니다...";
-			url = "deleteForm.me?id="+id;
+			url = "../member/deleteForm.me?id="+id;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
