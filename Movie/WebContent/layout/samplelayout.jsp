@@ -51,11 +51,11 @@
 		<div id="headerNavi">
 			<ul class="headerNaviMenubar">
 				<li><a href="${path}/movie/Movie/introductionpage.jsp">사이트 소개</a></li>
-				<li><a href="${path}/movie/board/movielist.jsp">영화 세상</a></li>
-				<li><a href="${path}/movie/board/theaterlist.jsp">극장 마실</a></li>
-				<li><a href="${path}/movie/board/informationlist.jsp">정보 바다</a></li>
-				<li><a href="${path}/movie/board/givelist.jsp">나눔 누리</a></li>
-				<li><a href="${path}/movie/board/activitylist.jsp">활동 마당</a></li>
+				<li><a href="${path}/movie/board/moviepage.jsp">영화 세상</a></li>
+				<li><a href="${path}/movie/board/theaterpage.jsp">극장 마실</a></li>
+				<li><a href="${path}/movie/board/informationpage.jsp">정보 바다</a></li>
+				<li><a href="${path}/movie/board/givepage.jsp">나눔 누리</a></li>
+				<li><a href="${path}/movie/board/activitypage.jsp">활동 마당</a></li>
 			</ul>
 		</div>
 	</div>

@@ -171,3 +171,38 @@ footer .container{
     text-align: center;
     font-family: 'Nanum Myeongjo', serif;
 }
+
+
+.introductionWrap{
+	text-align : center;
+	width : 40%;
+}
+
+.introductionHead{
+	margin-top: 0;
+    margin-bottom: 10px;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 28px;
+    letter-spacing: 0.2em;
+}
+
+.introductionContent{
+	margin-top: 0;
+    margin-bottom: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+}
+
+.introductionimg{
+	border: 1px solid #FFFFFF;
+}
+
+.introductionimgsrc{
+	width : 640px;
+	height : 480px;
+	border: 10px solid #FFFFFF;
+	border-radius: 20px;
+	-moz-border-radius: 7px;
+	-khtml-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
