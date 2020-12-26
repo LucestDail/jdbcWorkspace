@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="content1"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="content1"/>
+			<item value="select"/>
+			<item value="boardnum"/>
 			<item value="admin"/>
 			<item value="member_password"/>
 			<item value="password"/>
@@ -20,9 +23,6 @@
 			<item value="search"/>
 			<item value="alt"/>
 			<item value="inactive"/>
-			<item value="selectOne"/>
-			<item value="grpstep"/>
-			<item value="info"/>
 		</list>
 		<list key="replacehistory">
 			<item value="movie"/>

@@ -13,112 +13,223 @@ import model.Board;
 
 public interface BoardMapper {
 	
-	@Insert(" insert into ${boardname} "+
-				" (num, name, pass, subject, content, file1, regdate, readcnt, grp, grplevel, grpstep) "+
+	@Insert(" insert into board "+
+				" (board_num, member_id, board_notice_able, board_subject, board_content, board_attached_file, board_regdate, board_readcnt, board_type, activity_able, activity_type, give_state, give_type, information_type, give_information_type, area_name, area_xpoint, area_ypoint, area_name_specific, date_start_date, date_end_date, score_category_a, score_category_b, score_category_c, score_category_d, alert_count, recommand_count, not_recommand_count, movie_subject, movie_id) "+
 			" values "+
-				" (${num}, '${name}', '${pass}', '${subject}', '${content}', '${file1}', now(), ${readcnt}, ${grp}, ${grplevel}, ${grpstep}) "
+				" (#{board_num}, #{member_id}, #{board_notice_able}, #{board_subject}, #{board_content}, #{board_attached_file}, now(), #{board_readcnt}, #{board_type}, #{activity_able}, #{activity_type}, #{give_state}, #{give_type}, #{information_type}, #{give_information_type}, #{area_name}, #{area_xpoint}, #{area_ypoint}, #{area_name_specific}, #{date_start_date}, #{date_end_date}, #{score_category_a}, #{score_category_b}, #{score_category_c}, #{score_category_d}, #{alert_count}, #{recommand_count}, #{not_recommand_count}, #{movie_subject}, #{movie_id}) "
 		)
 	int insert(Map map);
 	
 	@Select(" select "+
-				" ifnull(max(num),0) "+
+				" ifnull(max(board_num),0) "+
 			" from "+
-				" ${boardname} ")
+				" board ")
 	int maxnum(@Param("boardname") String boardname);
 	
-	
-	@Select(" select "+
-				" ifnull(max(grp),0) "+
-			" from "+
-				" ${boardname} ")
-	int maxgrp(@Param("boardname") String boardname);
-	
-	
-	@Select({"<script>",
-			" select ",
-				"count(*) ",
-			" from ",
-				" ${boardname} ",
-			"<if test = 'col1 != null'>",
-				"where ${col1} like '%${find}%'",
-			"</if>",
-			"<if test = 'col2 != null'>",
-				"or ${col2} like '%${find}%'",
-			"</if>",
-			"<if test = 'col3 != null'>",
-				"or ${col3} like '%${find}%'",
-			"</if>",
-			"</script>"
-	})
+	@Select({"<script> ",
+		"select ",
+			" count(*) ",
+		" from ",
+			" board ",
+		"<trim prefix = 'where' prefixOverrides = 'AND || OR'>",
+		"<if test = 'board_type != null'> ",
+			"and board_type = #{board_type}",
+		"</if>",
+		"<if test = 'col1 != null'>",
+			"intersect select * from board ",
+			" where ${col1} like '%${find}%' ",
+		"</if>",
+		"<if test = 'col2 != null'>",
+			" or ${col2} like '%${find}%'",
+		"</if>",
+		"<if test = 'col3 != null'>",
+			" or ${col3} like '%${find}%'",
+		"</if>",
+		"</trim>",
+		"</script>"
+		})
 	int boardCount(Map map);
 	
 	
 	@Select({"<script> ",
 			"select ",
-				"* ",
-			"from ",
-				"${boardname} ",
+				" * ",
+			" from ",
+				" board ",
+			"<trim prefix = 'where' prefixOverrides = 'AND || OR'>",
+			"<if test = 'board_type != null'> ",
+				"and board_type = #{board_type}",
+			"</if>",
+			"<if test = 'board_num != null'> ",
+				"and board_num = #{board_num}",
+			"</if>",
 			"<if test = 'col1 != null'>",
-				"where ${col1} like '%${find}%'",
+				"intersect select * from board ",
+				" where ${col1} like '%${find}%' ",
 			"</if>",
 			"<if test = 'col2 != null'>",
-				"or ${col2} like '%${find}%'",
+				" or ${col2} like '%${find}%'",
 			"</if>",
 			"<if test = 'col3 != null'>",
-				"or ${col3} like '%${find}%'",
-			"</if>",
-			"<if test = 'num != null'> ",
-				"where num = ${num}",
+				" or ${col3} like '%${find}%'",
 			"</if>",
 			"<if test = 'start != null'> ",
-				"order by grp desc, grpstep asc limit ${start},${limit}",
+				"order by board_num asc limit ${start},${limit}",
 			"</if>",
+			"</trim>",
 			"</script>"
 			})
 	List<Board> select(Map map);
 	
+	@Select({"<script> ",
+		"select ",
+			" * ",
+		"from ",
+			" board ",
+		"<if test = 'board_type != null'>",
+			"where board_type = #{board_type}",
+		"</if>",
+		"<if test = 'start != null'> ",
+			"order by num asc limit ${start},${limit}",
+		"</if>",
+		"</script>"
+		})
+	List<Board> selectboardList(Map map);
 	
-	@Update("update ${boardname} set readcnt = (readcnt+1) where num = ${num}")
+	
+	@Update("update board set board_readcnt = (board_readcnt+1) where board_num = #{board_num}")
 	void readcntAdd(Map map);
-	
-	
-	@Update("update ${boardname} set grpstep = grpstep + 1 where grp = #{grp} and grpstep > ${grpstep}")
-	void grpStepAdd(Map map);
 
 
 	
 	@Update({"<script> ",
 		" update ",
-			" ${boardname} ",
+			" board ",
 		"<trim prefix = 'set' prefixOverrides = ','>",
-			", regdate = now()",
-		"<if test = 'name != null'> ",
-			", name = #{name}",
+			", board_regdate = now()",
+		"<if test = 'board_notice_able != null'> ",
+			", board_notice_able = #{board_notice_able}",
 		"</if>",
-		"<if test = 'subject != null'> ",
-			", subject = #{subject}",
+		"<if test = 'board_subject != null'> ",
+			", board_subject = #{board_subject}",
 		"</if>",
-		"<if test = 'content != null'> ",
-			", content = #{content}",
+		"<if test = 'board_content != null'> ",
+			", board_content = #{board_content}",
+		"</if>",
+		"<if test = 'board_attached_file != null'> ",
+			", board_attached_file = #{board_attached_file}",
+		"</if>",
+		"<if test = 'board_ != null'> ",
+		", file1 = #{file1}",
 		"</if>",
 		"<if test = 'file1 != null'> ",
-			", file1 = #{file1}",
+		", file1 = #{file1}",
 		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+		"<if test = 'file1 != null'> ",
+		", file1 = #{file1}",
+		"</if>",
+
 		"</trim>",
 		" where ",
-			" num = ${num} ",
+			" board_num = ${board_num} ",
+		" and ",
+			" board_type = ${board_type} ",
 		"</script>"})
 	int update(Map map);
 	
 	
 	@Delete(" delete from "+
-				" ${boardname} "+
+				" board "+
 			" where "+
-				" num = ${num}")
+				" board_num = ${board_num} ")
 	int delete(Map map);
 	
 	
-	@Select(" select name, count(*) cnt from board group by name having count(*) >= 1 order by cnt desc")
+	@Select(" select member_id, count(*) cnt from board group by member_id having count(*) >= 1 order by cnt desc")
 	List<Map<String, Object>> graph();
 
 }

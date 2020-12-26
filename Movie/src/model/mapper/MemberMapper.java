@@ -20,8 +20,8 @@ public interface MemberMapper {
 	int insert(Member mem);
 
 	@Select({"<script> ",
-			"select",
-				" *",
+			"select ",
+				" * ",
 			" from",
 				" member ",
 			"<trim prefix = 'where' prefixOverrides = 'AND || OR'>",

@@ -3,13 +3,12 @@
 <%@ taglib prefix = "core" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix = "functions" uri = "http://java.sun.com/jsp/jstl/functions" %>
-<core:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>게시물 목록 출력</title>
-<link rel="stylesheet" href="${path}/resource/mycss.css">
+<link rel = "stylesheet" href = "../../css/main.css">
 <script type = "text/javascript">
 	function listdo(page){
 		f = document.sf;
@@ -53,23 +52,37 @@
 			<td>${boardnum}</td>
 			<core:set var = "boardnum" value = "${boardnum -1 }"/>
 			<td style = "text-align : left">
-				<a href = "info.do?board_num=${board.board_num }&&board_type=${param.board_type}">${board.board_subject}</a>
+			<!-- 답글이므로 여백이랑 └ 을 줘서 답글처럼 보이게... 이때 grplevel 사용! -->
+			<core:forEach var = "i" begin = "1" end = "${board.grplevel}">
+				&nbsp;&nbsp;&nbsp;
+			</core:forEach>
+			<core:if test = "${board.grplevel > 0}">
+				└
+			</core:if>
+			<!--  첨부파일이 있으면 표시하겠습니당... -->
+			<core:if test = "${!empty board.file1}">
+				<a href = "file/${board.file1}" style="text-decoration: none;">@</a>
+			</core:if>
+			<core:if test = "${empty board.file1}">
+				&nbsp;
+			</core:if>
+				<a href = "info.do?num=${board.num }&&boardname=${param.boardname}">${board.subject }</a>
 			</td>
-			<td>${board.member_id}</td>
-			<fmt:formatDate var = "rdate" value="${board.board_regdate}" pattern = "yyyy-MM-dd"/>
+			<td>${board.name}</td>
+			<fmt:formatDate var = "rdate" value="${board.regdate}" pattern = "yyyy-MM-dd"/>
 			<core:if test = "${today == rdate}">
 				<!-- 오늘일 경우 -->
 				<td>
-				<fmt:formatDate value = "${board.board_regdate}" pattern = "HH:mm:ss"/>
+				<fmt:formatDate value = "${board.regdate}" pattern = "HH:mm:ss"/>
 				</td>
 			</core:if>
 			<core:if test = "${today != rdate}">
 				<!--  오늘이 아닌 경우 -->
 				<td>
-				<fmt:formatDate value = "${board.board_regdate}" pattern = "yyyy-MM-dd HH:mm"/>
+				<fmt:formatDate value = "${board.regdate}" pattern = "yyyy-MM-dd HH:mm"/>
 				</td>
 			</core:if>
-			<td>${board.board_readcnt}</td>
+			<td>${board.readcnt}</td>
 		</tr>
 		</core:forEach>
 		
@@ -103,10 +116,12 @@
 		</core:if>
 		<tr>
 			<td colspan = "5" style = "text-align:right">
-				<a href = "writeForm.do?board_type=${param.board}">[글쓰기]</a>
+				<a href = "writeForm.do?boardname=${param.boardname}">[글쓰기]</a>
 			</td>
 		</tr>
 	</table>
+	${find}<br>
+	${column}
 	<form action = "list.do" method = "post" name = "sf">
 		<div style = "display : flex; justify-content : center;">
 			<input type = "hidden" name = "pageNum" value = "1">

@@ -2,6 +2,7 @@ package action.board;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -45,26 +46,49 @@ public class BoardAction {
 		MultipartRequest multi;
 		try {
 			multi = new MultipartRequest(request, path, size, "euc-kr");
-			String boardname = multi.getParameter("boardname");
-			System.out.println(boardname);
-			String noticecheck = multi.getParameter("notice");
+			int board_type = Integer.parseInt(multi.getParameter("board_type"));
+			String member_id = (String) request.getSession().getAttribute("login");
+			System.out.println("request board type : " + board_type);
 			Board board = new Board();
-			board.setName(multi.getParameter("name"));
-			board.setPass(multi.getParameter("pass"));
-			board.setSubject(multi.getParameter("subject"));
-			if (noticecheck != null) {
-				board.setSubject("<b>[NOTICE]</b>" + multi.getParameter("subject"));
+			int num = dao.maxnum(board_type);
+			board.setBoard_num(++num);
+			board.setMember_id(member_id);
+			board.setBoard_notice_able(Integer.parseInt(multi.getParameter("board_notice_able")));
+			board.setBoard_subject(multi.getParameter("board_subject"));
+			board.setBoard_content(multi.getParameter("board_content"));
+			board.setBoard_attached_file(multi.getFilesystemName("board_attached_file"));
+			//regdate : now()
+			//readcnt : default 0
+			board.setBoard_type(board_type);
+			board.setActivity_able(Integer.parseInt(multi.getParameter("activity_able")));
+			board.setActivity_type(multi.getParameter("activity_type"));
+			board.setGive_state(Integer.parseInt(multi.getParameter("give_state")));
+			board.setGive_type(Integer.parseInt(multi.getParameter("give_type")));
+			board.setInformation_type(Integer.parseInt("information_type"));
+			board.setGive_information_type(Integer.parseInt(multi.getParameter("give_information_type")));
+			board.setArea_name(multi.getParameter("area_name"));
+			board.setArea_xpoint(multi.getParameter("area_xpoint"));
+			board.setArea_ypoint(multi.getParameter("area_ypoint"));
+			board.setArea_name_specific(multi.getParameter("area_name_specific"));
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				board.setDate_start_date(sf.parse(multi.getParameter("date_start_date")));
+				board.setDate_end_date(sf.parse(multi.getParameter("date_end_date")));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			board.setContent(multi.getParameter("content"));
-			board.setFile1(multi.getFilesystemName("file1"));
-			int num = dao.maxnum(boardname);
-			board.setNum(++num);
-			board.setGrp(num);
-			if (noticecheck != null) {
-				board.setGrp(9999);
-			}
-			if (dao.insert(board,boardname)) {
-				return new ActionForward(true, "list.do?boardname="+boardname);
+			board.setScore_category_a(Integer.parseInt(multi.getParameter("setScore_category_a")));
+			board.setScore_category_b(Integer.parseInt(multi.getParameter("setScore_category_b")));
+			board.setScore_category_c(Integer.parseInt(multi.getParameter("setScore_category_c")));
+			board.setScore_category_d(Integer.parseInt(multi.getParameter("setScore_category_d")));
+			board.setAlert_count(Integer.parseInt(multi.getParameter("alert_count")));
+			board.setRecommand_count(Integer.parseInt(multi.getParameter("recommand_count")));
+			board.setNot_recommand_count(Integer.parseInt(multi.getParameter("not_recommand_count")));
+			board.setMovie_subject(multi.getParameter("movie_subject"));
+			board.setMovie_id(Integer.parseInt(multi.getParameter("movie_id")));
+			if (dao.insert(board)) {
+				return new ActionForward(true, "list.do?board_type="+multi.getParameter("board_type"));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -84,12 +108,12 @@ public class BoardAction {
     		3. db에서 해당 페이지에 출력된 내용을 조회하여 호면에 출력, 게시물을 출력 부분, 페이지 구분 출력 부분
 		 */
 		int pageNum = 1;
+		String board_type = request.getParameter("board_type");
      	try{
      		pageNum = Integer.parseInt(request.getParameter("pageNum"));
      	}catch(NumberFormatException e){
      		//없엉...
      	}
-     	String boardname = request.getParameter("boardname");
      	String column = request.getParameter("column");
      	String find = request.getParameter("find");
      	if(column == null || column.trim().equals("")||find == null || find.trim().equals("")) {
@@ -97,9 +121,9 @@ public class BoardAction {
      		find = null;
      	}
      	int limit = 10;
-     	int boardcount = dao.boardCount(column, find, boardname); // 전체 게시물 등록 건수를 리턴
+     	int boardcount = dao.boardCount(column, find, board_type); // 전체 게시물 등록 건수를 리턴
      	//pageNum에 출력될 게시물 10개를 List 객체로 리턴
-     	List<Board> list = dao.list(pageNum,limit, column, find, boardname);
+     	List<Board> list = dao.list(pageNum,limit, column, find, board_type);
      	/*
      	startpage : 화면에 출력될 시작 페이지 번호
      	현재 페이지 시작페이지
@@ -133,16 +157,17 @@ public class BoardAction {
      	request.setAttribute("endpage", endpage);
      	request.setAttribute("boardnum", boardnum);
      	request.setAttribute("today", today);
+     	request.getSession().setAttribute("board_type",board_type);
+     	System.out.println("current board type : " + board_type);
 		return new ActionForward();
 	}
 	
 	public ActionForward info(HttpServletRequest request, HttpServletResponse response) {
-    	String num = request.getParameter("num");
-    	String boardname = request.getParameter("boardname");
-    	System.out.println(boardname);
+    	String board_num = request.getParameter("board_num");
+    	System.out.println("info Action activated -> " + board_num);
     	BoardDao dao = new BoardDao();
-    	Board infoBoard = dao.selectOne(num, boardname);
-    	dao.readcntAdd(num, boardname);
+    	Board infoBoard = dao.selectOne(board_num);
+    	dao.readcntAdd(board_num);
     	request.setAttribute("infoBoard", infoBoard);
 		return new ActionForward();
 	}
@@ -150,13 +175,12 @@ public class BoardAction {
 	
 	public ActionForward replyForm(HttpServletRequest request, HttpServletResponse response){
 		String num = request.getParameter("num");
-		String boardname = request.getParameter("boardname");
 		BoardDao dao = new BoardDao();
-		Board b = dao.selectOne(num, boardname);
+		Board b = dao.selectOne(num);
 		request.setAttribute("b", b);
 		return new ActionForward();
 	}
-	
+	/*
 	public ActionForward reply(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String path = request.getServletContext().getRealPath("/") + "movie/board/file/";
 		File f = new File(path);
@@ -194,14 +218,14 @@ public class BoardAction {
 		request.setAttribute("url", url);
 		return new ActionForward(false,"../alert.jsp");
 	}
+	*/
 	
 	public ActionForward updateForm(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("updateForm ActionForward activated");
 		String num = request.getParameter("num");
-		String boardname = request.getParameter("boardname");
 		BoardDao dao = new BoardDao();
-		Board b = dao.selectOne(num, boardname);
+		Board b = dao.selectOne(num);
 		request.setAttribute("b", b);
-		request.setAttribute("boardname", boardname);
 		return new ActionForward();
 	}
 	
@@ -215,30 +239,26 @@ public class BoardAction {
 		
 		int size = 10*1024*1024;
 		MultipartRequest multi = new MultipartRequest(request, path, size, "euc-kr");
-		
-		board.setNum(Integer.parseInt(multi.getParameter("num")));
-		board.setName(multi.getParameter("name"));
-		board.setPass(multi.getParameter("pass"));
-		board.setSubject(multi.getParameter("subject"));
-		board.setContent(multi.getParameter("content"));
-		board.setFile1(multi.getFilesystemName("file1"));
-		
-		if(board.getFile1() == null || board.getFile1().equals("")){
-			board.setFile1(multi.getParameter("file2"));
+		String board_num = multi.getParameter("board_num");
+		System.out.println("update activated -> " + board_num + " from " + (String) request.getSession().getAttribute("board_type"));
+		board.setBoard_num(Integer.parseInt(board_num));
+		String member_id = (String) request.getSession().getAttribute("login");
+		board.setMember_id(member_id);
+		board.setBoard_notice_able(Integer.parseInt(multi.getParameter("board_notice_able")));
+		board.setBoard_subject(multi.getParameter("board_subject"));
+		board.setBoard_content(multi.getParameter("board_content"));
+		board.setBoard_attached_file(multi.getFilesystemName("board_attached_file"));
+		if(board.getBoard_attached_file() == null || board.getBoard_attached_file().equals("")){
+			board.setBoard_attached_file(multi.getParameter("board_attached_file_temp"));
 		}
 		BoardDao dao = new BoardDao();
-		String numString = board.getNum() + "";
-		String boardname = multi.getParameter("boardname");
-		Board dbBoard = dao.selectOne(numString, boardname);
-		String msg = "비밀번호가 틀렸습니다.";
-		String url = "updateForm.do?num="+board.getNum();
-		if(board.getPass().equals(dbBoard.getPass())){
-			if(dao.update(board, boardname)){
-				msg = "게시물 수정 완료";
-				url = "info.do?num=" + board.getNum() + "&&boardname=" + boardname;
-			}else{
-				msg = "게시물 수정 실패";
-			}
+		Board dbBoard = dao.selectOne(board_num);
+		int board_type = dbBoard.getBoard_type();
+		String msg = "게시물 수정 실패.";
+		String url = "updateForm.do?board_num="+board_num;
+		if(dao.update(board)){
+			msg = "게시물 수정 완료";
+			url = "info.do?board_num=" + board_num + "&&board_type=" + board_type;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
@@ -247,31 +267,22 @@ public class BoardAction {
 	
 	public ActionForward deleteForm(HttpServletRequest request, HttpServletResponse response){
 		String num = request.getParameter("num");
-		String boardname = request.getParameter("boardname");
 		BoardDao dao = new BoardDao();
-		Board b = dao.selectOne(num, boardname);
+		Board b = dao.selectOne(num);
 		request.setAttribute("b", b);
-		request.setAttribute("boardname", boardname);
 		return new ActionForward();
 	}
 	
 	public ActionForward delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		request.setCharacterEncoding("euc-kr");
-		String num = request.getParameter("num");
-		String pass = request.getParameter("pass");
-		String boardname = request.getParameter("boardname");
+		String board_type = request.getParameter("board_type");
+		String board_num = request.getParameter("board_num");
 		BoardDao dao = new BoardDao();
 		String msg = "게시글 삭제 실패";
-		String url = "info.do?num="+num + "&&boardname=" + boardname;
-		Board curBoard = dao.selectOne(num, boardname);
-		if(!pass.equals(curBoard.getPass())){
-			msg = "비밀번호가 틀렸습니다.";
-			url = "info.do?num="+num + "&&boardname=" + boardname;
-		}else{
-			if(dao.delete(num, boardname)){
-				msg = "게시글 삭제 성공!";
-				url = "list.do" + "?boardname=" + boardname;
-			}
+		String url = "info.do?num="+board_num + "&&board_type=" + board_type;
+		if(dao.delete(board_num)){
+			msg = "게시글 삭제 성공!";
+			url = "list.do" + "?board_type=" + board_type;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
@@ -299,7 +310,6 @@ public class BoardAction {
 		System.out.println(list);
 		StringBuilder json = new StringBuilder("[");
 		int i = 0;
-		int sizecheck = list.size();
 		for(Map<String,Object> m : list) {
 			for(Map.Entry<String, Object> map : m.entrySet()) {
 				if(map.getKey().equals("name")) {

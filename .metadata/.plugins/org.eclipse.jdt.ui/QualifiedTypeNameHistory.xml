@@ -54,10 +54,10 @@
     <fullyQualifiedTypeName name="model.mapper.BoardMapper"/>
     <fullyQualifiedTypeName name="model.BoardDao"/>
     <fullyQualifiedTypeName name="model.Board"/>
-    <fullyQualifiedTypeName name="action.board.BoardAction"/>
     <fullyQualifiedTypeName name="action.ActionForward"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="model.MyBatisConnection"/>
+    <fullyQualifiedTypeName name="action.board.BoardAction"/>
 </qualifiedTypeNameHistroy>

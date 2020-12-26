@@ -13,10 +13,10 @@ public class BoardDao {
 	private Class<BoardMapper> cls = BoardMapper.class;
 	private Map<String, Object> map = new HashMap<>();
 	
-	public int maxnum(String boardname) {
+	public int maxnum(int board_type) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).maxnum(boardname);
+			return session.getMapper(cls).maxnum(board_type + "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -25,34 +25,40 @@ public class BoardDao {
 		return 0;
 	}
 	
-	public int maxgrp(String boardname) {
-		SqlSession session = MyBatisConnection.getConnection();
-		try {
-			return session.getMapper(cls).maxnum(boardname);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			MyBatisConnection.close(session);
-		}
-		return 0;
-	}
-	
-	
-	public boolean insert(Board board, String boardname) {
+	public boolean insert(Board board) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("num", board.getNum());
-			map.put("name", board.getName());
-			map.put("pass", board.getPass());
-			map.put("subject", board.getSubject());
-			map.put("content", board.getContent());
-			map.put("file1", board.getFile1());
-			map.put("readcnt", board.getReadcnt());
-			map.put("grp", board.getGrp());
-			map.put("grplevel", board.getGrplevel());
-			map.put("grpstep", board.getGrpstep());
-			map.put("boardname", boardname);
+			map.put("board_num",board.getBoard_num());
+			map.put("member_id",board.getMember_id());
+			map.put("board_notice_able",board.getBoard_notice_able());
+			map.put("board_subject",board.getBoard_subject());
+			map.put("board_content",board.getBoard_content());
+			map.put("board_attached_file",board.getBoard_attached_file());
+			map.put("board_regdate",board.getBoard_regdate());
+			map.put("board_readcnt",board.getBoard_readcnt());
+			map.put("board_type",board.getBoard_type());
+			map.put("activity_able",board.getActivity_able());
+			map.put("activity_type",board.getActivity_type());
+			map.put("give_state",board.getGive_state());
+			map.put("give_type",board.getGive_type());
+			map.put("information_type",board.getInformation_type());
+			map.put("give_information_type",board.getGive_information_type());
+			map.put("area_name",board.getArea_name());
+			map.put("area_xpoint",board.getArea_xpoint());
+			map.put("area_ypoint",board.getArea_ypoint());
+			map.put("area_name_specific",board.getArea_name_specific());
+			map.put("date_start_date",board.getDate_start_date());
+			map.put("date_end_date",board.getDate_end_date());
+			map.put("score_category_a",board.getScore_category_a());
+			map.put("score_category_b",board.getScore_category_b());
+			map.put("score_category_c",board.getScore_category_c());
+			map.put("score_category_d",board.getScore_category_d());
+			map.put("alert_count",board.getAlert_count());
+			map.put("recommand_count",board.getRecommand_count());
+			map.put("not_recommand_count",board.getNot_recommand_count());
+			map.put("movie_subject",board.getMovie_subject());
+			map.put("movie_id",board.getMovie_id());
 			System.out.println(map);
 			return session.getMapper(cls).insert(map)>0 ? true : false;
 		} catch (Exception e) {
@@ -63,7 +69,7 @@ public class BoardDao {
 		return false;
 	}
 	
-	public int boardCount(String column, String find, String boardname) {
+	public int boardCount(String column, String find, String board_type) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
@@ -78,8 +84,8 @@ public class BoardDao {
 				case 1 : map.put("col1", cols[0]);
 				}
 			}
-			map.put("boardname", boardname);
 			map.put("find", find);
+			map.put("board_type", board_type);
 			return session.getMapper(cls).boardCount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,7 +96,12 @@ public class BoardDao {
 	}
 	
 	
-	public List<Board> list(int pageNum, int limit, String column, String find, String boardname){
+	public List<Board> list(int pageNum, int limit, String column, String find, String board_type){
+		if(column == null) {
+			System.out.println("list initialization...");
+		}else {
+			System.out.println("selectlist : " + column + "," + find);
+		}
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
@@ -108,7 +119,7 @@ public class BoardDao {
 			map.put("find", find);
 			map.put("start", (pageNum - 1) * limit);
 			map.put("limit", limit);
-			map.put("boardname", boardname);
+			map.put("board_type", board_type);
 			return session.getMapper(cls).select(map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,13 +129,13 @@ public class BoardDao {
 		return null;
 	}
 	
-	public Board selectOne(String num, String boardname) {
+	public Board selectOne(String board_num) {
+		System.out.println("selectOne function : board_num value ->" + board_num);
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("num", num);
-			map.put("boardname", boardname);
-			System.out.println(map);
+			map.put("board_num", board_num);
+			System.out.println("map presentation -> " + map);
 			return session.getMapper(cls).select(map).get(0);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,13 +146,12 @@ public class BoardDao {
 		return null;
 	}
 	
-	public void readcntAdd(String num, String boardname) {
-		System.out.println("readcntAdd function : " + num + "," + boardname);
+	public void readcntAdd(String board_num) {
+		System.out.println("readcntAdd function : " + board_num);
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("num", num);
-			map.put("boardname", boardname);
+			map.put("board_num", board_num);
 			System.out.println(map);
 			session.getMapper(cls).readcntAdd(map);
 		} catch (Exception e) {
@@ -151,31 +161,42 @@ public class BoardDao {
 		}
 	}
 	
-	public void grpStepAdd(int grp, int grpstep, String boardname) {
+	public boolean update(Board board) {
+		System.out.println("update function : " + board.getBoard_num());
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("grp", grp);
-			map.put("grpstep", grpstep);
-			map.put("boardname", boardname);
-			session.getMapper(cls).grpStepAdd(map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			MyBatisConnection.close(session);
-		}
-	}
-	
-	public boolean update(Board board, String boardname) {
-		SqlSession session = MyBatisConnection.getConnection();
-		try {
-			map.clear();
-			map.put("name", board.getName());
-			map.put("subject", board.getSubject());
-			map.put("content", board.getContent());
-			map.put("file1", board.getFile1());
-			map.put("num", board.getNum());
-			map.put("boardname", boardname);
+			map.put("board_num",board.getBoard_num());
+			map.put("member_id",board.getMember_id());
+			map.put("board_notice_able",board.getBoard_notice_able());
+			map.put("board_subject",board.getBoard_subject());
+			map.put("board_content",board.getBoard_content());
+			map.put("board_attached_file",board.getBoard_attached_file());
+			map.put("board_regdate",board.getBoard_regdate());
+			map.put("board_readcnt",board.getBoard_readcnt());
+			map.put("board_type",board.getBoard_type());
+			map.put("activity_able",board.getActivity_able());
+			map.put("activity_type",board.getActivity_type());
+			map.put("give_state",board.getGive_state());
+			map.put("give_type",board.getGive_type());
+			map.put("information_type",board.getInformation_type());
+			map.put("give_information_type",board.getGive_information_type());
+			map.put("area_name",board.getArea_name());
+			map.put("area_xpoint",board.getArea_xpoint());
+			map.put("area_ypoint",board.getArea_ypoint());
+			map.put("area_name_specific",board.getArea_name_specific());
+			map.put("date_start_date",board.getDate_start_date());
+			map.put("date_end_date",board.getDate_end_date());
+			map.put("score_category_a",board.getScore_category_a());
+			map.put("score_category_b",board.getScore_category_b());
+			map.put("score_category_c",board.getScore_category_c());
+			map.put("score_category_d",board.getScore_category_d());
+			map.put("alert_count",board.getAlert_count());
+			map.put("recommand_count",board.getRecommand_count());
+			map.put("not_recommand_count",board.getNot_recommand_count());
+			map.put("movie_subject",board.getMovie_subject());
+			map.put("movie_id",board.getMovie_id());
+			System.out.println(map);
 			return session.getMapper(cls).update(map)>0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,12 +206,11 @@ public class BoardDao {
 		return false;
 	}
 	
-	public boolean delete(String num, String boardname) {
+	public boolean delete(String board_num) {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
 			map.clear();
-			map.put("num", num);
-			map.put("boardname", boardname);
+			map.put("board_num", board_num);
 			return session.getMapper(cls).delete(map)>0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
