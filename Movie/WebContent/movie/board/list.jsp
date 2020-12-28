@@ -115,13 +115,13 @@
 			<input type = "hidden" name = "board_type" value = "${sessionScope.board_type}">
 				<select name = "column">
 					<option value = ""> 선택하세요</option>
-					<option value = "subject"> 제목</option>
-					<option value = "name"> 작성자</option>
-					<option value = "content"> 내용</option>
-					<option value = "subject, name"> 제목 + 작성자</option>
-					<option value = "subject, content"> 제목 + 내용</option>
-					<option value = "name, content"> 작성자 + 내용</option>
-					<option value = "subject, name, content"> 제목 + 작성자 + 내용</option>
+					<option value = "board_subject"> 제목</option>
+					<option value = "member_id"> 작성자</option>
+					<option value = "board_content"> 내용</option>
+					<option value = "board_subject, member_id"> 제목 + 작성자</option>
+					<option value = "board_subject, board_content"> 제목 + 내용</option>
+					<option value = "member_id, board_content"> 작성자 + 내용</option>
+					<option value = "board_subject, member_id, board_content"> 제목 + 작성자 + 내용</option>
 				</select>
 				<script>
 					document.sf.column.value = "${param.column}";

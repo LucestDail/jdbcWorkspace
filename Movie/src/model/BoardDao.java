@@ -75,9 +75,6 @@ public class BoardDao {
 			map.clear();
 			if(column != null) {
 				String[] cols = column.split(",");
-//				for(int i = 0; i < cols.length; i++) {
-//					map.put("col"+(i+1), cols[i]);
-//				}
 				switch(cols.length) {
 				case 3 : map.put("col3", cols[2]);
 				case 2 : map.put("col2", cols[1]);
@@ -100,7 +97,7 @@ public class BoardDao {
 		if(column == null) {
 			System.out.println("list initialization...");
 		}else {
-			System.out.println("selectlist : " + column + "," + find);
+			System.out.println("select list : " + column + "," + find);
 		}
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
@@ -120,6 +117,8 @@ public class BoardDao {
 			map.put("start", (pageNum - 1) * limit);
 			map.put("limit", limit);
 			map.put("board_type", board_type);
+			System.out.println("select map specific details -> " + map);
+			System.out.println(session.getMapper(cls).select(map));
 			return session.getMapper(cls).select(map);
 		} catch (Exception e) {
 			e.printStackTrace();
