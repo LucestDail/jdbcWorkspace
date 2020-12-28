@@ -18,18 +18,16 @@ table, td, th{
 </head>
 <body>
 <%
-	//String url = "https://www.koreaexim.go.kr/site/program/financial/exchange?menuid=001001004002001";
-	String url = "http://fx.kebhana.com/FER1101M.web";
+	String url = "https://www.doosanbears.com/players/batters/20";
 	String line = "";
+	String title = "";
 	Document doc = null;
 	try{
 		doc = Jsoup.connect(url).get();
-		Elements e1 = doc.select("table");
-		for(Element ele : e1){
-			String temp = ele.html();
-			System.out.println("==========");
-			System.out.println(temp);
-			line += temp;
+		Elements div = doc.select(".table_l > .tableBWrite1");
+		for(Element src : div){
+			out.println(src.toString());
+			System.out.println(src.toString());
 		}
 	}catch(IOException e){
 		e.printStackTrace();

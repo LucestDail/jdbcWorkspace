@@ -53,7 +53,7 @@
 			<td>${boardnum}</td>
 			<core:set var = "boardnum" value = "${boardnum -1 }"/>
 			<td style = "text-align : left">
-				<a href = "info.do?board_num=${board.board_num }&&board_type=${param.board_type}">${board.board_subject}</a>
+				<a href = "info.do?board_num=${board.board_num }&&board_type=${param.board_type}">${board.board_subject}(${board.counter})</a>
 			</td>
 			<td>${board.member_id}</td>
 			<fmt:formatDate var = "rdate" value="${board.board_regdate}" pattern = "yyyy-MM-dd"/>
@@ -103,7 +103,7 @@
 		</core:if>
 		<tr>
 			<td colspan = "5" style = "text-align:right">
-				<a href = "writeForm.do?board_type=${param.board}">[글쓰기]</a>
+				<a href = "writeForm.do?board_type=${sessionScope.board_type}">[글쓰기]</a>
 			</td>
 		</tr>
 	</table>
@@ -112,6 +112,7 @@
 			<input type = "hidden" name = "pageNum" value = "1">
 			<input type = "hidden" name = "Paramfind" value = "${find}">
 			<input type = "hidden" name = "Paramcolumn" value = "${column}">
+			<input type = "hidden" name = "board_type" value = "${sessionScope.board_type}">
 				<select name = "column">
 					<option value = ""> 선택하세요</option>
 					<option value = "subject"> 제목</option>

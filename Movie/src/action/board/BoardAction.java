@@ -16,6 +16,8 @@ import com.oreilly.servlet.MultipartRequest;
 import action.ActionForward;
 import model.Board;
 import model.BoardDao;
+import model.Comment;
+import model.CommentDao;
 
 
 public class BoardAction {
@@ -46,7 +48,7 @@ public class BoardAction {
 		MultipartRequest multi;
 		try {
 			multi = new MultipartRequest(request, path, size, "euc-kr");
-			int board_type = Integer.parseInt(multi.getParameter("board_type"));
+			int board_type = Integer.parseInt((String)request.getSession().getAttribute("board_type"));
 			String member_id = (String) request.getSession().getAttribute("login");
 			System.out.println("request board type : " + board_type);
 			Board board = new Board();
@@ -60,16 +62,17 @@ public class BoardAction {
 			//regdate : now()
 			//readcnt : default 0
 			board.setBoard_type(board_type);
-			board.setActivity_able(Integer.parseInt(multi.getParameter("activity_able")));
+			//board.setActivity_able(Integer.parseInt(multi.getParameter("activity_able")));
 			board.setActivity_type(multi.getParameter("activity_type"));
-			board.setGive_state(Integer.parseInt(multi.getParameter("give_state")));
-			board.setGive_type(Integer.parseInt(multi.getParameter("give_type")));
-			board.setInformation_type(Integer.parseInt("information_type"));
-			board.setGive_information_type(Integer.parseInt(multi.getParameter("give_information_type")));
+			//board.setGive_state(Integer.parseInt(multi.getParameter("give_state")));
+			//board.setGive_type(Integer.parseInt(multi.getParameter("give_type")));
+			//board.setInformation_type(Integer.parseInt("information_type"));
+			//board.setGive_information_type(Integer.parseInt(multi.getParameter("give_information_type")));
 			board.setArea_name(multi.getParameter("area_name"));
 			board.setArea_xpoint(multi.getParameter("area_xpoint"));
 			board.setArea_ypoint(multi.getParameter("area_ypoint"));
 			board.setArea_name_specific(multi.getParameter("area_name_specific"));
+			/*
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
 				board.setDate_start_date(sf.parse(multi.getParameter("date_start_date")));
@@ -78,24 +81,26 @@ public class BoardAction {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			board.setScore_category_a(Integer.parseInt(multi.getParameter("setScore_category_a")));
-			board.setScore_category_b(Integer.parseInt(multi.getParameter("setScore_category_b")));
-			board.setScore_category_c(Integer.parseInt(multi.getParameter("setScore_category_c")));
-			board.setScore_category_d(Integer.parseInt(multi.getParameter("setScore_category_d")));
-			board.setAlert_count(Integer.parseInt(multi.getParameter("alert_count")));
-			board.setRecommand_count(Integer.parseInt(multi.getParameter("recommand_count")));
-			board.setNot_recommand_count(Integer.parseInt(multi.getParameter("not_recommand_count")));
+			*/
+			//board.setScore_category_a(Integer.parseInt(multi.getParameter("score_category_a")));
+			//board.setScore_category_b(Integer.parseInt(multi.getParameter("score_category_b")));
+			//board.setScore_category_c(Integer.parseInt(multi.getParameter("score_category_c")));
+			//board.setScore_category_d(Integer.parseInt(multi.getParameter("score_category_d")));
+			//board.setAlert_count(Integer.parseInt(multi.getParameter("alert_count")));
+			//board.setRecommand_count(Integer.parseInt(multi.getParameter("recommand_count")));
+			//board.setNot_recommand_count(Integer.parseInt(multi.getParameter("not_recommand_count")));
 			board.setMovie_subject(multi.getParameter("movie_subject"));
-			board.setMovie_id(Integer.parseInt(multi.getParameter("movie_id")));
+			//board.setMovie_id(Integer.parseInt(multi.getParameter("movie_id")));
 			if (dao.insert(board)) {
-				return new ActionForward(true, "list.do?board_type="+multi.getParameter("board_type"));
+				dao.addPoint(member_id, board_type, 10);
+				return new ActionForward(true, "list.do?board_type="+request.getSession().getAttribute("board_type"));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String msg = "게시물 등록 실패";
-		String url = "writeForm.do";
+		String url = "writeForm.do?board_type="+request.getSession().getAttribute("board_type");
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
 		return new ActionForward(false, "../alert.jsp");
@@ -124,6 +129,7 @@ public class BoardAction {
      	int boardcount = dao.boardCount(column, find, board_type); // 전체 게시물 등록 건수를 리턴
      	//pageNum에 출력될 게시물 10개를 List 객체로 리턴
      	List<Board> list = dao.list(pageNum,limit, column, find, board_type);
+     	System.out.println(list);
      	/*
      	startpage : 화면에 출력될 시작 페이지 번호
      	현재 페이지 시작페이지
@@ -169,6 +175,11 @@ public class BoardAction {
     	Board infoBoard = dao.selectOne(board_num);
     	dao.readcntAdd(board_num);
     	request.setAttribute("infoBoard", infoBoard);
+    	
+    	
+    	CommentDao cdao = new CommentDao();
+    	List<Comment> listComment = cdao.select(board_num);
+    	request.setAttribute("listComment", listComment);
 		return new ActionForward();
 	}
 	
@@ -266,7 +277,7 @@ public class BoardAction {
 	}
 	
 	public ActionForward deleteForm(HttpServletRequest request, HttpServletResponse response){
-		String num = request.getParameter("num");
+		String num = request.getParameter("board_num");
 		BoardDao dao = new BoardDao();
 		Board b = dao.selectOne(num);
 		request.setAttribute("b", b);
@@ -279,10 +290,10 @@ public class BoardAction {
 		String board_num = request.getParameter("board_num");
 		BoardDao dao = new BoardDao();
 		String msg = "게시글 삭제 실패";
-		String url = "info.do?num="+board_num + "&&board_type=" + board_type;
+		String url = "info.do?board_num="+board_num + "&&board_type=" + board_type;
 		if(dao.delete(board_num)){
 			msg = "게시글 삭제 성공!";
-			url = "list.do" + "?board_type=" + board_type;
+			url = "list.do?board_type=" + board_type;
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
@@ -329,5 +340,60 @@ public class BoardAction {
 		json.append("]");
 		request.setAttribute("json", json.toString().trim());
 		return new ActionForward();
+	}
+	
+	public ActionForward commentwrite(HttpServletRequest request, HttpServletResponse response) {
+		Comment comment = new Comment();
+		String member_id = request.getParameter("member_id");
+		String board_num = request.getParameter("board_num");
+		int board_type = Integer.parseInt(request.getParameter("board_type"));
+		System.out.println("commentwrite function -> " + member_id + " : " + board_num);
+		comment.setBoard_num(Integer.parseInt(board_num));
+		comment.setMember_id(member_id);
+		comment.setComment_content(request.getParameter("comment_content"));
+		
+		String msg = "댓글 등록 실패";
+		String url = "info.do?board_num="+board_num+"&&board_type="+board_type;
+		
+		if(new CommentDao().insert(comment)) {
+			new CommentDao().addPoint(member_id, board_type, 5);
+			msg = "댓글 등록 성공";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward updateComment(HttpServletRequest request, HttpServletResponse response) {
+		Comment comment = new Comment();
+		String comment_num = request.getParameter("comment_num");
+		String comment_content = request.getParameter("comment_content");
+		System.out.println("commentUpdate function -> " + comment_num + " : " + comment_content);
+		comment.setComment_num(Integer.parseInt(comment_num));
+		comment.setComment_content(comment_content);
+		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
+		String msg = "댓글 수정 실패";
+		String url = "info.do?board_num=" + curComment.getBoard_num();
+		if(new CommentDao().update(comment)) {
+			msg = "댓글 수정 성공";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward deleteComment(HttpServletRequest request, HttpServletResponse response) {
+		Comment comment = new Comment();
+		String comment_num = request.getParameter("comment_num");
+		System.out.println("commentDelete function -> " + comment_num);
+		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
+		String msg = "댓글 삭제 실패";
+		String url = "info.do?board_num=" + curComment.getBoard_num();
+		if(new CommentDao().delete(comment_num)) {
+			msg = "댓글 삭제 성공";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
 	}
 }

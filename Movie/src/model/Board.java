@@ -33,6 +33,7 @@ public class Board {
 	private int not_recommand_count;
 	private String movie_subject;
 	private int movie_id;
+	private int counter;
 	public int getBoard_num() {
 		return board_num;
 	}
@@ -227,6 +228,12 @@ public class Board {
 				+ ", score_category_d=" + score_category_d + ", alert_count=" + alert_count + ", recommand_count="
 				+ recommand_count + ", not_recommand_count=" + not_recommand_count + ", movie_subject=" + movie_subject
 				+ ", movie_id=" + movie_id + "]";
+	}
+	public int getCounter() {
+		return counter;
+	}
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
 	
 	

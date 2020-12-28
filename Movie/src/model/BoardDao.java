@@ -234,4 +234,37 @@ public class BoardDao {
 		}
 		return list;
 	}
+
+	public void addPoint(String member_id, int board_type, int point) {
+		// TODO Auto-generated method stub
+		System.out.println("addPoint function : " + member_id);
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			map.clear();
+			map.put("member_id", member_id);
+			map.put("point", point);
+			System.out.println(map);
+			switch(board_type) {
+				case 0:
+					session.getMapper(cls).addMoviePoint(map);
+					break;
+				case 1:
+					session.getMapper(cls).addTheaterPoint(map);
+					break;
+				case 2:
+					session.getMapper(cls).addInformationPoint(map);
+					break;
+				case 3:
+					session.getMapper(cls).addGivePoint(map);
+					break;
+				case 4:
+					session.getMapper(cls).addActivityPoint(map);
+					break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			MyBatisConnection.close(session);
+		}
+	}
 }
