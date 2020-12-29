@@ -45,4 +45,16 @@ public interface CommentMapper {
 
 	@Update(" update member set member_activity_point = member_activity_point + #{point} where member_id = #{member_id}")
 	void addActivityPoint(Map<String, Object> map);
+	@Update(" update comment set recommand_count = recommand_count+1 where comment_num = #{comment_num}")
+	boolean recommand(Map<String, Object> map);
+	@Update(" update comment set not_recommand_count = not_recommand_count+1 where comment_num = #{comment_num}")
+	boolean notRecommand(Map<String, Object> map);
+	@Update(" update comment set alert_count = alert_count+1 where comment_num = #{comment_num}")
+	boolean alert(Map<String, Object> map);
+	
+	@Select( " SELECT * FROM board,comment "
+			+ " WHERE comment.board_num = board.board_num "
+			+ " AND board.board_type = #{board_type} "
+			+ " and comment.member_id = #{meeber_id}")
+	List<Comment> selectmycomment(Map<String, Object> map);
 }

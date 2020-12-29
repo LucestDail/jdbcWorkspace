@@ -62,41 +62,77 @@ public class BoardAction {
 			//regdate : now()
 			//readcnt : default 0
 			board.setBoard_type(board_type);
-			//board.setActivity_able(Integer.parseInt(multi.getParameter("activity_able")));
+			if(multi.getParameter("activity_able") == null) {
+				board.setActivity_able(0);
+			}else {
+				board.setActivity_able(Integer.parseInt(multi.getParameter("activity_able")));
+			}
 			board.setActivity_type(multi.getParameter("activity_type"));
-			//board.setGive_state(Integer.parseInt(multi.getParameter("give_state")));
-			//board.setGive_type(Integer.parseInt(multi.getParameter("give_type")));
-			//board.setInformation_type(Integer.parseInt("information_type"));
-			//board.setGive_information_type(Integer.parseInt(multi.getParameter("give_information_type")));
+			if(multi.getParameter("give_state") == null) {
+				board.setGive_state(0);
+			}else {
+				board.setGive_state(Integer.parseInt(multi.getParameter("give_state")));
+			}
+			if(multi.getParameter("give_type") == null) {
+				board.setGive_type(0);
+			}else {
+				board.setGive_type(Integer.parseInt(multi.getParameter("give_type")));
+			}
+			if(multi.getParameter("information_type") == null) {
+				board.setInformation_type(0);
+			}else {
+				board.setInformation_type(Integer.parseInt(multi.getParameter("information_type")));
+			}
+			if(multi.getParameter("give_information_type") == null) {
+				board.setGive_information_type(0);
+			}else {
+				board.setGive_information_type(Integer.parseInt(multi.getParameter("give_information_type")));
+			}
 			board.setArea_name(multi.getParameter("area_name"));
 			board.setArea_xpoint(multi.getParameter("area_xpoint"));
 			board.setArea_ypoint(multi.getParameter("area_ypoint"));
 			board.setArea_name_specific(multi.getParameter("area_name_specific"));
-			/*
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			try {
-				board.setDate_start_date(sf.parse(multi.getParameter("date_start_date")));
-				board.setDate_end_date(sf.parse(multi.getParameter("date_end_date")));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			if(multi.getParameter("date_start_date") == null) {
+				board.setDate_start_date(new Date());
+			}else {
+				try {
+					board.setDate_start_date(sf.parse(multi.getParameter("date_start_date")));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 			}
-			*/
-			//board.setScore_category_a(Integer.parseInt(multi.getParameter("score_category_a")));
-			//board.setScore_category_b(Integer.parseInt(multi.getParameter("score_category_b")));
-			//board.setScore_category_c(Integer.parseInt(multi.getParameter("score_category_c")));
-			//board.setScore_category_d(Integer.parseInt(multi.getParameter("score_category_d")));
-			//board.setAlert_count(Integer.parseInt(multi.getParameter("alert_count")));
-			//board.setRecommand_count(Integer.parseInt(multi.getParameter("recommand_count")));
-			//board.setNot_recommand_count(Integer.parseInt(multi.getParameter("not_recommand_count")));
+			if(multi.getParameter("date_end_date") == null) {
+				board.setDate_end_date(new Date());
+			}else {
+				try {
+					board.setDate_end_date(sf.parse(multi.getParameter("date_end_date")));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			if(multi.getParameter("score_category_a") == null) {
+				board.setScore_category_a(0);
+				board.setScore_category_b(0);
+				board.setScore_category_c(0);
+				board.setScore_category_d(0);
+			}else {
+				board.setScore_category_a(Integer.parseInt(multi.getParameter("score_category_a")));
+				board.setScore_category_b(Integer.parseInt(multi.getParameter("score_category_b")));
+				board.setScore_category_c(Integer.parseInt(multi.getParameter("score_category_c")));
+				board.setScore_category_d(Integer.parseInt(multi.getParameter("score_category_d")));
+			}
 			board.setMovie_subject(multi.getParameter("movie_subject"));
-			//board.setMovie_id(Integer.parseInt(multi.getParameter("movie_id")));
+			if(multi.getParameter("movie_id") == null) {
+				board.setMovie_id(0);
+			}else {
+				board.setMovie_id(Integer.parseInt(multi.getParameter("movie_id")));
+			}
 			if (dao.insert(board)) {
 				dao.addPoint(member_id, board_type, 10);
 				return new ActionForward(true, "list.do?board_type="+request.getSession().getAttribute("board_type"));
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String msg = "게시물 등록 실패";
@@ -233,7 +269,7 @@ public class BoardAction {
 	
 	public ActionForward updateForm(HttpServletRequest request, HttpServletResponse response){
 		System.out.println("updateForm ActionForward activated");
-		String num = request.getParameter("num");
+		String num = request.getParameter("board_num");
 		BoardDao dao = new BoardDao();
 		Board b = dao.selectOne(num);
 		request.setAttribute("b", b);
@@ -241,6 +277,7 @@ public class BoardAction {
 	}
 	
 	public ActionForward update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("boardaction update function activated");
 		Board board = new Board();
 		String path = request.getServletContext().getRealPath("/") + "movie/board/file/";
 		File f = new File(path);
@@ -251,6 +288,7 @@ public class BoardAction {
 		int size = 10*1024*1024;
 		MultipartRequest multi = new MultipartRequest(request, path, size, "euc-kr");
 		String board_num = multi.getParameter("board_num");
+		System.out.println("here : " + board_num);
 		System.out.println("update activated -> " + board_num + " from " + (String) request.getSession().getAttribute("board_type"));
 		board.setBoard_num(Integer.parseInt(board_num));
 		String member_id = (String) request.getSession().getAttribute("login");
@@ -261,6 +299,66 @@ public class BoardAction {
 		board.setBoard_attached_file(multi.getFilesystemName("board_attached_file"));
 		if(board.getBoard_attached_file() == null || board.getBoard_attached_file().equals("")){
 			board.setBoard_attached_file(multi.getParameter("board_attached_file_temp"));
+		}
+		if(multi.getParameter("score_category_a") == null) {
+			board.setScore_category_a(0);
+			board.setScore_category_b(0);
+			board.setScore_category_c(0);
+			board.setScore_category_d(0);
+		}else {
+			board.setScore_category_a(Integer.parseInt(multi.getParameter("score_category_a")));
+			board.setScore_category_b(Integer.parseInt(multi.getParameter("score_category_b")));
+			board.setScore_category_c(Integer.parseInt(multi.getParameter("score_category_c")));
+			board.setScore_category_d(Integer.parseInt(multi.getParameter("score_category_d")));
+		}
+		if(multi.getParameter("activity_able") == null) {
+			board.setActivity_able(0);
+		}else {
+			board.setActivity_able(Integer.parseInt(multi.getParameter("activity_able")));
+		}
+		board.setActivity_type(multi.getParameter("activity_type"));
+		if(multi.getParameter("give_state") == null) {
+			board.setGive_state(0);
+		}else {
+			board.setGive_state(Integer.parseInt(multi.getParameter("give_state")));
+		}
+		if(multi.getParameter("give_type") == null) {
+			board.setGive_type(0);
+		}else {
+			board.setGive_type(Integer.parseInt(multi.getParameter("give_type")));
+		}
+		if(multi.getParameter("information_type") == null) {
+			board.setInformation_type(0);
+		}else {
+			board.setInformation_type(Integer.parseInt(multi.getParameter("information_type")));
+		}
+		if(multi.getParameter("give_information_type") == null) {
+			board.setGive_information_type(0);
+		}else {
+			board.setGive_information_type(Integer.parseInt(multi.getParameter("give_information_type")));
+		}
+		board.setArea_name(multi.getParameter("area_name"));
+		board.setArea_xpoint(multi.getParameter("area_xpoint"));
+		board.setArea_ypoint(multi.getParameter("area_ypoint"));
+		board.setArea_name_specific(multi.getParameter("area_name_specific"));
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		if(multi.getParameter("date_start_date") == null) {
+			board.setDate_start_date(new Date());
+		}else {
+			try {
+				board.setDate_start_date(sf.parse(multi.getParameter("date_start_date")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		if(multi.getParameter("date_end_date") == null) {
+			board.setDate_end_date(new Date());
+		}else {
+			try {
+				board.setDate_end_date(sf.parse(multi.getParameter("date_end_date")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		BoardDao dao = new BoardDao();
 		Board dbBoard = dao.selectOne(board_num);
@@ -383,7 +481,6 @@ public class BoardAction {
 	}
 	
 	public ActionForward deleteComment(HttpServletRequest request, HttpServletResponse response) {
-		Comment comment = new Comment();
 		String comment_num = request.getParameter("comment_num");
 		System.out.println("commentDelete function -> " + comment_num);
 		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
@@ -395,5 +492,125 @@ public class BoardAction {
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
 		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward recommand(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("recommand board activated");
+		String board_num = request.getParameter("board_num");
+		String msg = "게시글 추천 실패!";
+		String url = "info.do?board_num=" + board_num;
+		Board board = new Board();
+		board.setBoard_num(Integer.parseInt(board_num));
+		if(new BoardDao().recommand(board)) {
+			msg = "게시글 추천 성공!";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward notRecommand(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("not recommand board activated");
+		String board_num = request.getParameter("board_num");
+		String msg = "게시글 비추천 실패!";
+		String url = "info.do?board_num=" + board_num;
+		Board board = new Board();
+		board.setBoard_num(Integer.parseInt(board_num));
+		if(new BoardDao().notRecommand(board)) {
+			msg = "게시글 비추천 성공!";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+
+	public ActionForward alert(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("alert board activated");
+		String board_num = request.getParameter("board_num");
+		String msg = "게시글 신고 실패!";
+		String url = "info.do?board_num=" + board_num;
+		Board board = new Board();
+		board.setBoard_num(Integer.parseInt(board_num));
+		if(new BoardDao().alert(board)) {
+			msg = "게시글 신고 성공!";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward recommandComment(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("recommand comment activated");
+		String comment_num = request.getParameter("comment_num");
+		System.out.println("commentDelete function -> " + comment_num);
+		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
+		
+		String msg = "댓글 추천 실패";
+		String url = "info.do?board_num=" + curComment.getBoard_num();
+		
+		if(new CommentDao().recommand(comment_num)) {
+			msg = "댓글 추천 성공";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward notRecommandComment(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("not recommand comment activated");
+		String comment_num = request.getParameter("comment_num");
+		System.out.println("commentDelete function -> " + comment_num);
+		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
+		
+		String msg = "댓글 비추천 실패";
+		String url = "info.do?board_num=" + curComment.getBoard_num();
+		
+		if(new CommentDao().notRecommand(comment_num)) {
+			msg = "댓글 비추천 성공";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+
+	public ActionForward alertComment(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("alert comment activated");
+		String comment_num = request.getParameter("comment_num");
+		System.out.println("commentDelete function -> " + comment_num);
+		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
+		
+		String msg = "댓글 신고 실패";
+		String url = "info.do?board_num=" + curComment.getBoard_num();
+		
+		if(new CommentDao().alert(comment_num)) {
+			msg = "댓글 신고 성공";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward index(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("activated index function");
+     	List<Board> readcntlist = dao.readcntlist();
+     	List<Board> recommandlist = dao.recommandlist();
+     	List<Board> noticelist = dao.noticelist();
+     	System.out.println(readcntlist  + " / " + recommandlist + " / " + noticelist);
+     	request.setAttribute("readcntlist", readcntlist);
+     	request.setAttribute("recommandlist", recommandlist);
+     	request.setAttribute("noticelist", noticelist);
+		return new ActionForward();
+	}
+	
+	public ActionForward myboard(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("mylistfunction activated");
+		int board_type = Integer.parseInt(request.getParameter("board_type"));
+		String member_id = (String)request.getSession().getAttribute("login");
+		List<Board> boardlist = new BoardDao().selectmyboard(member_id, board_type);
+		List<Comment> commentlist = new CommentDao().selectmycomment(member_id, board_type);
+		System.out.println(boardlist + "///" + commentlist);
+		request.setAttribute("boardlist", boardlist);
+		request.setAttribute("commentlist", commentlist);
+		return new ActionForward();
 	}
 }

@@ -198,8 +198,8 @@
 				<table>
 					<caption>공지사항</caption>
 						<tr>
-							<th width = "80%">글 제목</th>
-							<th width = "20%">작성일자</th>
+							<th width = "70%">글 제목</th>
+							<th width = "30%">작성일자</th>
 						<core:forEach var="notice" items="${noticelist}">
 						<tr>
 							<!-- 글 제목 -->
@@ -226,10 +226,7 @@
 						<tr>
 						</tr>
 				</table>
-			
-			
 			</td>
-
 			<td style = "width:25%; height:30%; border:1px solid black;">
 			<core:if test="${!empty sessionScope.login}">
 					<table>
@@ -343,8 +340,19 @@ function pieGraphPrint(data){
 				<table>
 					<caption>조회수 정렬 내림차순 10개 표시</caption>
 						<tr>
-							<th width = "80%">게시글 제목</th>
-							<th width = "20%"> 조회수</th>
+							<th width = "70%">글 제목</th>
+							<th width = "30%">조회수</th>
+						<core:forEach var="readcnt" items="${readcntlist}">
+						<tr>
+							<!-- 글 제목 -->
+							<td style = "text-align : left">
+								<a href = "info.do?board_num=${readcnt.board_num}&&board_type=${readcnt.board_type}">${readcnt.board_subject}</a>
+							</td>
+							<td>
+								${readcnt.board_readcnt}
+							</td>
+						</tr>
+						</core:forEach>
 						</tr>
 						<tr>
 						</tr>
@@ -356,8 +364,19 @@ function pieGraphPrint(data){
 				<table>
 					<caption>추천수 정렬 내림차순 10개 표시</caption>
 						<tr>
-							<th width = "80%">게시글 제목</th>
-							<th width = "20%"> 조회수</th>
+							<th width = "70%">글 제목</th>
+							<th width = "30%">추천수</th>
+						<core:forEach var="recommand" items="${recommandlist}">
+						<tr>
+							<!-- 글 제목 -->
+							<td style = "text-align : left">
+								<a href = "info.do?board_num=${recommand.board_num}&&board_type=${recommand.board_type}">${recommand.board_subject}</a>
+							</td>
+							<td>
+								${recommand.recommand_count}
+							</td>
+						</tr>
+						</core:forEach>
 						</tr>
 						<tr>
 						</tr>

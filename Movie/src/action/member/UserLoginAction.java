@@ -26,7 +26,7 @@ public abstract class UserLoginAction implements Action {
 		}
 		if(id != null && !id.equals(login) && !login.equals("admin")) {
 			request.setAttribute("msg", "본인만 확인 가능합니다...");
-			request.setAttribute("url", "../Movie/index.jsp");
+			request.setAttribute("url", "../board/index.do");
 			return new ActionForward(false,"../alert.jsp");
 		}
 		return doExecute(request, response);

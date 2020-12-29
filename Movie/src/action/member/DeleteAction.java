@@ -14,7 +14,7 @@ public class DeleteAction extends UserLoginAction{
 		
 		if(id.equals("admin")) {
 			request.setAttribute("msg", "관리자는 탈퇴가 불가능합니다...");
-			request.setAttribute("url", "../Movie/index.jsp");
+			request.setAttribute("url", "../board/index.do");
 			return new ActionForward(false, "../alert.jsp");
 		}
 		

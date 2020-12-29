@@ -42,7 +42,7 @@ public class JoinAction implements Action {
 		String url = "../member/joinform.me";
 		if(new MemberDao().insert(member) > 0) {
 			msg = member.getMember_nickname() + "님 회원가입 완료입니다.";
-			url = "../Movie/index.jsp";
+			url = "../board/index.do";
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);

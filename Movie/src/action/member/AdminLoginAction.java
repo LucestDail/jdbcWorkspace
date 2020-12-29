@@ -28,7 +28,7 @@ public abstract class AdminLoginAction implements Action{
 			return new ActionForward(false,"../alert.jsp");
 		}else if(!login.equals("admin")) {
 			request.setAttribute("msg", "관리자만 확인 가능합니다...");
-			request.setAttribute("url", "../Movie/index.jsp");
+			request.setAttribute("url", "../board/index.do");
 			return new ActionForward(false,"../alert.jsp");
 		}else {
 			return doExecute(request,response);

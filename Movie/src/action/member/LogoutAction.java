@@ -18,7 +18,7 @@ public class LogoutAction implements Action{
 		request.getSession().invalidate();
 		request.setAttribute("msg", "·Î±×¾Æ¿ôÇÏ¼Ì½À´Ï´Ù");
 		request.setAttribute("url", "loginForm.me");
-		return new ActionForward(false,"../Movie/index.jsp");
+		return new ActionForward(false,"../board/index.do");
 	}
 
 }

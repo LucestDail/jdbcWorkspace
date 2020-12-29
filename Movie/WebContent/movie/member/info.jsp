@@ -4,6 +4,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix = "functions" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <core:set var="path" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,7 +81,12 @@
 	</tr>
 	<tr>
 		<td width = "25%">
-			개인항목 1
+			내글, 댓글 조회하기
+			<a href = "${path}/movie/board/myboard.do?board_type=0">영화 세상</a>
+			<a href = "${path}/movie/board/myboard.do?board_type=1">극장 마실</a>
+			<a href = "${path}/movie/board/myboard.do?board_type=2">정보 바다</a>
+			<a href = "${path}/movie/board/myboard.do?board_type=3">나눔 누리</a>
+			<a href = "${path}/movie/board/myboard.do?board_type=4">활동 바다</a>
 		</td>
 		<td width = "25%">
 			개인항목 2

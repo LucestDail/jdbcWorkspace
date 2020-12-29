@@ -33,7 +33,11 @@ public class LoginAction implements Action{
 				request.getSession().setAttribute("login", id);
 				request.getSession().setAttribute("picture", picture);
 				request.setAttribute("msg", member.getMember_nickname() + "님 환영합니다!");
-				request.setAttribute("url","../Movie/index.jsp");
+				request.setAttribute("url","../board/index.do");
+				if(member.getMember_is_admin() == 1) {
+					request.setAttribute("msg", "관리자님 환영합니다!");
+					request.getSession().setAttribute("admin", id);
+				}
 			}else{
 				request.setAttribute("msg", "비밀번호가 틀립니다");
 				request.setAttribute("url", "loginForm.me");

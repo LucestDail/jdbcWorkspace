@@ -192,8 +192,6 @@ public interface BoardMapper {
 		"</trim>",
 		" where ",
 			" board_num = ${board_num} ",
-		" and ",
-			" board_type = ${board_type} ",
 		"</script>"})
 	int update(Map map);
 	
@@ -222,4 +220,23 @@ public interface BoardMapper {
 	
 	@Update( "update member set member_activity_point = member_activity_point + #{point} where member_id = #{member_id} ")
 	void addActivityPoint(Map<String, Object> map);
+
+	@Update( "update board set alert_count = alert_count+1 where board_num = #{board_num}")
+	boolean alert(Map<String, Object> map);
+	
+	@Update( "update board set recommand_count = recommand_count+1 where board_num = #{board_num}")
+	boolean recommand(Map<String, Object> map);
+	
+	@Update( "update board set not_recommand_count = not_recommand_count+1 where board_num = #{board_num}")
+	boolean notRecommand(Map<String, Object> map);
+
+	@Select(" select * from board order by board_readcnt desc limit 0,10 ")
+	List<Board> selectreadcntlist();
+	@Select(" select * from board order by recommand_count desc limit 0,10 ")
+	List<Board> selectrecommandlist();
+	@Select(" select * from board where board_notice_able = 1 order by board_num desc limit 0,10")
+	List<Board> selectnoticelist();
+	
+	@Select(" select * from board where member_id = #{member_id} and board_type = #{board_type}")
+	List<Board> selectmyboard(Map<String, Object> map);
 }
