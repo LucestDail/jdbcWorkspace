@@ -14,18 +14,6 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 </script>
-<style>
-   #centerPosition {  
-     position:absolute;
-     height:800px;
-     width:550px;
-     margin:-150px 0px 0px -200px;
-     top: 50%;
-     left: 50%;
-     padding: 5px;
-   }
-
-</style>
 </head>
 <body>
 <script type = "text/javascript">
@@ -61,7 +49,7 @@ $(function(){
 	<input type = "hidden" name="picture" value ="${member.member_picture}">
 	<input type = "hidden" name="kbn">
 	<input type = "hidden" name = "emailreceive" id = "emailreceive" value = "0">
-	<table><caption>회원정보 수정</caption>
+	<table style = "height:800px"><caption>회원정보 수정</caption>
 		<tr>
 			<td rowspan = "10" valign = "middle">
 				<img src = "picture/${member.member_picture}" width="100" height="120" id="picture"><br>

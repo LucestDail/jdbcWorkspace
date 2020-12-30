@@ -31,18 +31,6 @@
 		open(page + ".me","",op);
 	}
 </script>
-<style>
-   #centerPosition {  
-     position:absolute;
-     height:100px;
-     width:550px;
-     margin:-150px 0px 0px -200px;
-     top: 60%;
-     left: 45%;
-     padding: 5px;
-   }
-
-</style>
 </head>
 <body>
 <div id = "centerPosition">

@@ -239,4 +239,7 @@ public interface BoardMapper {
 	
 	@Select(" select * from board where member_id = #{member_id} and board_type = #{board_type}")
 	List<Board> selectmyboard(Map<String, Object> map);
+
+	@Select(" select * from board order by board_regdate desc limit 0,10")
+	List<Board> selectrecentboard();
 }

@@ -15,7 +15,7 @@ public class CommentDao {
 	public int maxnum() {
 		SqlSession session = MyBatisConnection.getConnection();
 		try {
-			return session.getMapper(cls).maxnum();
+			return session.getMapper(cls).maxnum()+1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -204,6 +204,19 @@ public class CommentDao {
 			map.put("member_id", member_id);
 			map.put("board_type", board_type);
 			return session.getMapper(cls).selectmycomment(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			MyBatisConnection.close(session);
+		}
+		return null;
+	}
+
+	public List<Comment> selectrecentcomment() {
+		// TODO Auto-generated method stub
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			return session.getMapper(cls).selectrecentcomment();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

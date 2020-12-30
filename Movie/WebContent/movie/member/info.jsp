@@ -25,12 +25,9 @@
 </style>
 </head>
 <body>
-<table style = "width : 100%">
+<table style = "width : 100%; height: 600px;">
 	<tr>
-		<td colspan = "2" width = "50%">
-			개인정보 그래프
-		</td>
-		<td colspan = "2" width = "50%">
+		<td>
 			<form name = "f" method="post">
 			<input type = "hidden" name ="picture" value = "">
 			<table>
@@ -68,34 +65,18 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<a href = "../member/updateForm.me?id=${member.member_id}" class = "redbutton">수정</a>
-							<core:if test="${param.id != 'admin' && sessionScope.login != 'admin' }">
-						<a href = "../member/deleteForm.me?id=${member.member_id}" class = "normalbutton">탈퇴</a>
-							</core:if>
-						<a href = "${path}/movie/Movie/index.jsp" class = "normalbutton">돌아가기</a>
+						<a href = "${path}/movie/member/updateForm.me?id=${member.member_id}" class = "redbutton">수정</a>
+					<core:if test="${param.id != 'admin' && sessionScope.login != 'admin' }">
+						<a href = "${path}/movie/member/deleteForm.me?id=${member.member_id}" class = "normalbutton">탈퇴</a>
+					</core:if>
+					<core:if test="${param.id == 'admin' && sessionScope.login == 'admin' }">
+						<a href = "${path}/movie/member/list.me" class = "normalbutton">회원목록</a>
+					</core:if>
+						<a href = "${path}/movie/board/index.do" class = "normalbutton">돌아가기</a>
 				</td>
 			</tr>
 		</table>
 		</form>
-		</td>
-	</tr>
-	<tr>
-		<td width = "25%">
-			내글, 댓글 조회하기
-			<a href = "${path}/movie/board/myboard.do?board_type=0">영화 세상</a>
-			<a href = "${path}/movie/board/myboard.do?board_type=1">극장 마실</a>
-			<a href = "${path}/movie/board/myboard.do?board_type=2">정보 바다</a>
-			<a href = "${path}/movie/board/myboard.do?board_type=3">나눔 누리</a>
-			<a href = "${path}/movie/board/myboard.do?board_type=4">활동 바다</a>
-		</td>
-		<td width = "25%">
-			개인항목 2
-		</td>
-		<td width = "25%">
-			개인항목 3
-		</td>
-		<td width = "25%">
-			개인 항목 3
 		</td>
 	</tr>
 </table>

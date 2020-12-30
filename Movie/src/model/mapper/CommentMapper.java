@@ -57,4 +57,6 @@ public interface CommentMapper {
 			+ " AND board.board_type = #{board_type} "
 			+ " and comment.member_id = #{meeber_id}")
 	List<Comment> selectmycomment(Map<String, Object> map);
+	@Select(" select * from comment order by comment_regdate desc limit 0,10")
+	List<Comment> selectrecentcomment();
 }

@@ -377,4 +377,17 @@ public class BoardDao {
 		}
 		return null;
 	}
+
+	public List<Board> selectrecentboard() {
+		// TODO Auto-generated method stub
+		SqlSession session = MyBatisConnection.getConnection();
+		try {
+			return session.getMapper(cls).selectrecentboard();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			MyBatisConnection.close(session);
+		}
+		return null;
+	}
 }

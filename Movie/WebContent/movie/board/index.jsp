@@ -77,45 +77,48 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-	<table style="width: 100%; table-layout: fixed;" >
+<table style="width: 100%; text-align:center;">
 		<tr>
-			<td colspan="2" rowspan="2">
+			<td rowspan="2">
 				<div class="animation_canvas">
 					<div class="slider_panel">
-						<img src="${path}/resource/slidimg/Desert.jpg"
+						<img src="${path}/resource/slidimg/movie1.jpg"
 							class="slider_image"> <img
-							src="${path}/resource/slidimg/movie.jpg" class="slider_image">
+							src="${path}/resource/slidimg/movie.jpg"
+							class="slider_image">
 						<img src="${path}/resource/slidimg/cinema.jpg"
 							class="slider_image"> <img
-							src="${path}/resource/slidimg/Desert.jpg" class="slider_image">
+							src="${path}/resource/slidimg/movie2.jpg"
+							class="slider_image">
 						<img src="${path}/resource/slidimg/ticket.jpg"
 							class="slider_image"> <img
-							src="${path}/resource/slidimg/Desert.jpg" class="slider_image">
+							src="${path}/resource/slidimg/movie.jpg"
+							class="slider_image">
 					</div>
 					<div class="slider_text_panel">
 						<div class="slider_text">
-							<h1>movie picture1</h1>
-							<p>사이트 소개입니다...</p>
+							<h1>영화로와</h1>
+							<p>영화인들을 위한 커뮤니티사이트</p>
 						</div>
 						<div class="slider_text">
-							<h1>movie picture2</h1>
-							<p>영화세상입니다...</p>
+							<h1 style = "color:white">영화 세상</h1>
+							<p style = "color:white">영화 리뷰와 감상 공간</p>
 						</div>
 						<div class="slider_text">
-							<h1>movie picture3</h1>
-							<p>극장마실입니다...</p>
+							<h1>극장 마실</h1>
+							<p>극장에 관한 모든것</p>
 						</div>
 						<div class="slider_text">
-							<h1>movie picture4</h1>
-							<p>정보바다입니다...</p>
+							<h1>정보 바다</h1>
+							<p>영화에 대한 모든 것</p>
 						</div>
 						<div class="slider_text">
-							<h1>movie picture5</h1>
-							<p>나눔누리입니다...</p>
+							<h1 style = "color:white">나눔 누리</h1>
+							<p style = "color:white">나눔과 소통</p>
 						</div>
 						<div class="slider_text">
-							<h1>movie picture6</h1>
-							<p>활동마당입니다...</p>
+							<h1>활동 마당</h1>
+							<p>직접 참여해보세요</p>
 						</div>
 					</div>
 					<div class="control_panel">
@@ -191,43 +194,7 @@
 	}
 </script>
 			</td>
-			
-			
-			<!-- 공지사항 메뉴 -->
 			<td>
-				<table>
-					<caption>공지사항</caption>
-						<tr>
-							<th width = "70%">글 제목</th>
-							<th width = "30%">작성일자</th>
-						<core:forEach var="notice" items="${noticelist}">
-						<tr>
-							<!-- 글 제목 -->
-							<td style = "text-align : left">
-								<a href = "info.do?board_num=${notice.board_num}&&board_type=${notice.board_type}">${notice.board_subject}</a>
-							</td>
-							<!--  작성일자 -->
-							<fmt:formatDate var = "rdate" value="${notice.board_regdate}" pattern = "yyyy-MM-dd"/>
-							<core:if test = "${today == rdate}">
-								<!-- 오늘일 경우 -->
-								<td>
-								<fmt:formatDate value = "${notice.board_regdate}" pattern = "HH:mm:ss"/>
-								</td>
-							</core:if>
-							<core:if test = "${today != rdate}">
-								<!--  오늘이 아닌 경우 -->
-								<td>
-								<fmt:formatDate value = "${notice.board_regdate}" pattern = "yyyy-MM-dd"/>
-								</td>
-							</core:if>
-						</tr>
-						</core:forEach>
-						</tr>
-						<tr>
-						</tr>
-				</table>
-			</td>
-			<td style = "width:25%; height:30%; border:1px solid black;">
 			<core:if test="${!empty sessionScope.login}">
 					<table>
 						<tr>
@@ -264,6 +231,8 @@
 								<td>
 									<input type="button" class="redbutton" value="회원가입" style = "width:100%;" onclick="location.href = '${path}/movie/member/joinForm.me'">
 								</td>
+							</tr>
+							<tr>
 								<td>
 									<input type="button" class="normalbutton" value="아이디찾기" style = "width:100%;" onclick="win_open('idForm')">
 								</td>
@@ -277,68 +246,44 @@
 				
 				</td>
 		</tr>
-		<tr>
-			<!--  graph configuration area -->
-			<td colspan="2" rowspan="2">
-			<!--  
-				<div id = "piecontainer" style = "width : 80%; border : 1px solid #FFFFFF">
-					<canvas id = "canvas1" style = "width:100%;"></canvas>
-				</div>
-				<script type = "text/javascript">
-var randomColorFactor = function(){
-	return Math.round(Math.random() * 255);
-}
-var randomColor = function(opa){
-	return "rgba(" + randomColorFactor() + "," + randomColorFactor() + "," + randomColorFactor() + "," + (opa || '.3')+")";
-};
-$(function(){
-	piegraph();
-})
-function piegraph(){
-	$.ajax("${path}/movie/ajax/graph.do",{
-		success : function(data){
-			console.log(data);
-			pieGraphPrint(data);
-		},
-		error : function(e){
-			alert("서버 오류 : " + e.status);
-		}
-	})
-}
-function pieGraphPrint(data){
-	var rows = JSON.parse(data);
-	var names = [];
-	var datas = [];
-	var colors = [];
-	$.each(rows,function(index,item){
-			names[index] = item.name;
-			datas[index] = item.cnt;
-			colors[index] = randomColor(0.7);
-	})
-	var config = {
-		type : "pie",
-		data : {
-			datasets : [{
-				data : datas,
-				backgroundColor : colors
-			}],
-			labels : names
-		},
-		options : {
-			responsive : true,
-			legend : {position : "top"},
-		}
-	}
-	var ctx = document.getElementById("canvas1").getContext("2d");
-	new Chart(ctx, config);
-}
-</script>-->
-			</td>
-		</tr>
+			<!-- 공지사항 메뉴 -->
+			<tr>
+				<td>
+				<table class = "table table-hover">
+					<caption>공지사항</caption>
+						<tr>
+							<th width = "70%">글 제목</th>
+							<th width = "30%">작성일자</th>
+						<core:forEach var="notice" items="${noticelist}">
+						<tr>
+							<!-- 글 제목 -->
+							<td style = "text-align : left">
+								<a href = "info.do?board_num=${notice.board_num}&&board_type=${notice.board_type}">${notice.board_subject}</a>
+							</td>
+							<!--  작성일자 -->
+							<fmt:formatDate var = "rdate" value="${notice.board_regdate}" pattern = "yyyy-MM-dd"/>
+							<core:if test = "${today == rdate}">
+								<!-- 오늘일 경우 -->
+								<td>
+								<fmt:formatDate value = "${notice.board_regdate}" pattern = "HH:mm:ss"/>
+								</td>
+							</core:if>
+							<core:if test = "${today != rdate}">
+								<!--  오늘이 아닌 경우 -->
+								<td>
+								<fmt:formatDate value = "${notice.board_regdate}" pattern = "yy-MM-dd"/>
+								</td>
+							</core:if>
+						</tr>
+						</core:forEach>
+						</tr>
+				</table>
+				</td>
+			</tr>
 		<tr>
 			<td>
-				<table>
-					<caption>조회수 정렬 내림차순 10개 표시</caption>
+				<table class = "table table-hover">
+					<caption>현재 인기 있는 글</caption>
 						<tr>
 							<th width = "70%">글 제목</th>
 							<th width = "30%">조회수</th>
@@ -354,15 +299,34 @@ function pieGraphPrint(data){
 						</tr>
 						</core:forEach>
 						</tr>
+				</table>
+			</td>
+			<td>
+				
+				<table class = "table table-hover">
+					<caption>최신 게시글</caption>
 						<tr>
+							<th width = "70%">글 제목</th>
+							<th width = "30%">작성 일시</th>
+						<core:forEach var="board" items="${recentboard}">
+						<tr>
+							<!-- 글 제목 -->
+							<td style = "text-align : left">
+								<a href = "info.do?board_num=${board.board_num}&&board_type=${board.board_type}">${board.board_subject}</a>
+							</td>
+							<td>
+								<fmt:formatDate value = "${board.board_regdate}" pattern = "yy-MM-dd"/>	
+							</td>
+						</tr>
+						</core:forEach>
 						</tr>
 				</table>
 			</td>
-
-			
+		</tr>
+		<tr>
 			<td>
-				<table>
-					<caption>추천수 정렬 내림차순 10개 표시</caption>
+				<table class = "table table-hover">
+					<caption>추천 많이 받은 글</caption>
 						<tr>
 							<th width = "70%">글 제목</th>
 							<th width = "30%">추천수</th>
@@ -378,7 +342,25 @@ function pieGraphPrint(data){
 						</tr>
 						</core:forEach>
 						</tr>
+				</table>
+			</td>
+			<td>
+				<table class = "table table-hover">
+					<caption>최신 댓글</caption>
 						<tr>
+							<th width = "70%">댓글 내용</th>
+							<th width = "30%">작성 시각</th>
+						<core:forEach var="comment" items="${recentcomment}">
+						<tr>
+							<!-- 글 제목 -->
+							<td style = "text-align : left">
+								<a href = "info.do?board_num=${comment.board_num}">${comment.comment_content}</a>
+							</td>
+							<td>
+								<fmt:formatDate value = "${comment.comment_regdate}" pattern = "yy-MM-dd"/>	
+							</td>
+						</tr>
+						</core:forEach>
 						</tr>
 				</table>
 			</td>

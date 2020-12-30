@@ -19,30 +19,12 @@
 </script>
 </head>
 <body>
-<table>
-	<caption>게시글 목록</caption>
-		<core:if test = "${boardcount == 0}">
-		<tr>
-			<td colspan = "5"> 등록된 게시글이 없습니다...
-			</td>
-		</tr>
-		</core:if>
-		
-		
-		<core:if test = "${boardcount > 0}">
-		
-		
-		<tr>
-			<td colspan = "5" style = "text-align:right"> 글개수:${boardcount}
-			</td>
-		</tr>
-
-		<!--  movie board type selected start-->
-		<core:if test = "${param.board_type == 0}">
-		<tr>
+<core:if test = "${param.board_type == 0}">
+<table class = "table table=bordered">
+<tr>
 			<td>영화 포스터
 			</td>
-			<td>영화 정보
+			<td colspan = "6">영화 정보
 			</td>
 			<td>영화 관련 상호작용
 			<table>
@@ -64,15 +46,33 @@
 			</table>
 			</td>
 		</tr>
+</table>
+</core:if>
+<table class = "table table-hover">
+	<caption>게시글 목록</caption>
+		<core:if test = "${boardcount == 0}">
 		<tr>
-			<th width = "5%">글 번호</th>
-			<th width = "40%"> 리뷰 제목</th>
+			<td>
+				등록된 게시글이 없습니다...
+			</td>
+		</tr>
+		</core:if>
+		<core:if test = "${boardcount > 0}">
+		<!--  movie board type selected start-->
+		<core:if test = "${param.board_type == 0}">
+		<tr>
+			<td colspan = "8" style = "text-align:right"> 글개수:${boardcount}
+			</td>
+		</tr>
+		<tr>
+			<th width = "5%">번호</th>
+			<th width = "30%"> 리뷰 제목</th>
 			<th width = "10%"> 작성자</th>
 			<th width = "10%">평점</th>
 			<th width = "10%"> 작성일자</th>
-			<th width = "10%">조회수</th>
-			<th width = "10%">추천</th>
-			<th width = "10%">비추천</th>	
+			<th width = "5%"> 조회</th>
+			<th width = "5%">추천</th>
+			<th width = "5%">비추</th>
 		</tr>
 		<core:forEach var="board" items="${list}">
 		<tr>
@@ -117,16 +117,16 @@
 		<!--  theater board type start-->
 		<core:if test = "${param.board_type == 1}">
 		<tr>
-			<th width = "5%">글 번호</th>
+			<th width = "5%">번호</th>
 			<th width = "10%"> 지역 명칭</th>
 			<th width = "10%"> 극장 명칭</th>
-			<th width = "30%"> 제목</th>
+			<th width = "20%"> 제목</th>
 			<th width = "10%"> 작성자</th>
 			<th width = "5%">평점</th>
 			<th width = "10%"> 작성일자</th>
-			<th width = "5%">조회수</th>
+			<th width = "5%"> 조회</th>
 			<th width = "5%">추천</th>
-			<th width = "5%">비추천</th>	
+			<th width = "5%">비추</th>
 		</tr>
 		
 		<core:forEach var="board" items="${list}">
@@ -179,15 +179,20 @@
 			<th width = "30%"> 제목</th>
 			<th width = "5%"> 작성자</th>
 			<th width = "20%"> 작성일자</th>
-			<th width = "5%"> 조회수</th>
+			<th width = "5%"> 조회</th>
 			<th width = "5%">추천</th>
-			<th width = "5%">비추천</th>
+			<th width = "5%">비추</th>
 		</tr>
 		
 		<core:forEach var="board" items="${list}">
 		<tr>
 			<td>${boardnum}</td>
-			<td>${board.information_type}</td>
+			<td>
+			<core:if test = "${board.information_type == 0}">일반</core:if>
+			<core:if test = "${board.information_type == 1}">이벤트</core:if>
+			<core:if test = "${board.information_type == 2}">시사회</core:if>
+			<core:if test = "${board.information_type == 3}">기타</core:if>
+			</td>
 			<core:set var = "boardnum" value = "${boardnum -1 }"/>
 			<td style = "text-align : left">
 				<a href = "info.do?board_num=${board.board_num }&&board_type=${param.board_type}">${board.board_subject}(${board.counter})</a>
@@ -223,14 +228,14 @@
 		<tr>
 			<th width = "5%"> 번호</th>
 			<th width = "5%"> 분류</th>
-			<th width = "30%"> 제목</th>
+			<th width = "20%"> 제목</th>
 			<th width = "10%"> 작성자</th>
-			<th width = "10%"> 작성일자</th>
-			<th width = "15%"> 나눔기한</th>
-			<th width = "10%"> 조회수</th>
-			<th width = "5%"> 상태 </th>
+			<th width = "15%"> 작성일자</th>
+			<th width = "20%"> 나눔기한</th>
+			<th width = "5%"> 조회</th>
+			<th width = "8%"> 상태 </th>
 			<th width = "5%">추천</th>
-			<th width = "5%">비추천</th>
+			<th width = "5%">비추</th>
 		</tr>
 		
 		<core:forEach var="board" items="${list}">
@@ -238,7 +243,13 @@
 			<td>${boardnum}</td>
 			<core:set var = "boardnum" value = "${boardnum -1 }"/>
 			
-			<td>${board.give_information_type}</td>
+			<td>
+			<core:if test = "${board.give_information_type == 0}">영화티켓</core:if>
+			<core:if test = "${board.give_information_type == 1}">굿즈</core:if>
+			<core:if test = "${board.give_information_type == 2}">기념품</core:if>
+			<core:if test = "${board.give_information_type == 3}">기타</core:if>
+			
+			</td>
 			
 			<td style = "text-align : left">
 				<a href = "info.do?board_num=${board.board_num }&&board_type=${param.board_type}">${board.board_subject}(${board.counter})</a>
@@ -265,7 +276,10 @@
 			
 			<td>${board.board_readcnt}</td>
 			
-			<td>${board. give_state }</td>
+			<td>
+			<core:if test = "${board.give_state == 0}">나눔중</core:if>
+			<core:if test = "${board.give_state == 1}">나눔완료</core:if>
+			</td>
 						<!--  추천 -->
 			<td>${board.recommand_count}</td>
 			<!--  추천 -->
@@ -284,15 +298,14 @@
 			<th width = "5%"> 번호</th>
 			<th width = "5%"> 지역</th>
 			<th width = "5%"> 분류</th>
-			<th width = "20%"> 제목</th>
+			<th width = "15%"> 제목</th>
 			<th width = "10%"> 작성자</th>
-			<th width = "10%"> 작성일자</th>
-			<th width = "15%"> 활동기간</th>
-			<th width = "5%"> 참여수</th>
+			<th width = "15%"> 작성일자</th>
+			<th width = "20%"> 활동기간</th>
 			<th width = "5%"> 상태</th>
-			<th width = "5%"> 조회수</th>
+			<th width = "5%"> 조회</th>
 			<th width = "5%">추천</th>
-			<th width = "5%">비추천</th>
+			<th width = "5%">비추</th>
 		</tr>
 		
 		<core:forEach var="board" items="${list}">
@@ -325,8 +338,11 @@
 			</core:if>
 			
 			<td><fmt:formatDate value = "${board.date_start_date}" pattern = "yyyy-MM-dd"/> ~ <fmt:formatDate value = "${board.date_end_date}" pattern = "yyyy-MM-dd"/></td>
-			<td>참여인수</td>
-			<td>${board.activity_able}</td>
+			<td>
+			<core:if test = "${board.activity_able == 0}">준비</core:if>
+			<core:if test = "${board.activity_able == 1}">활동</core:if>
+			<core:if test = "${board.activity_able == 2}">종료</core:if>
+			</td>
 			<td>${board.board_readcnt}</td>
 						<!--  추천 -->
 			<td>${board.recommand_count}</td>
@@ -338,7 +354,22 @@
 		<!--  activity board type end -->
 		
 		<tr>
-			<td colspan = "5">
+		<core:if test = "${sessionScope.board_type == 0 }">
+			<td colspan = "8" align = "center">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 1 }">
+			<td colspan = "10" align = "center">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 2 }">
+			<td colspan = "8" align = "center">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 3 }">
+			<td colspan = "10" align = "center">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 4 }">
+			<td colspan = "12" align = "center">
+		</core:if>
+			
 				<core:if test = "${pageNum <= 1}">
 					[이전]
 				</core:if>
@@ -366,7 +397,21 @@
 		</core:if>
 		<tr>
 			<core:if test = "${!empty sessionScope.login}">
-			<td colspan = "5" style = "text-align:right">
+		<core:if test = "${sessionScope.board_type == 0 }">
+			<td colspan = "8" style = "text-align:right">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 1 }">
+			<td colspan = "10" style = "text-align:right">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 2 }">
+			<td colspan = "8" style = "text-align:right">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 3 }">
+			<td colspan = "10" style = "text-align:right">
+		</core:if>
+		<core:if test = "${sessionScope.board_type == 4 }">
+			<td colspan = "12" style = "text-align:right">
+		</core:if>
 				<a href = "writeForm.do?board_type=${sessionScope.board_type}">[글쓰기]</a>
 			</td>
 			</core:if>

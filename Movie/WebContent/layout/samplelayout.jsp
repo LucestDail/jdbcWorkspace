@@ -11,10 +11,13 @@
 <title><decorator:title /></title>
 <decorator:head />
 <link rel="stylesheet" href="${path}/resource/mycss.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type = "text/javascript" src = "http://cdn.ckeditor.com/4.5.7/full/ckeditor.js">
+</script>
 </head>
 <body>
 	<div id="wrap">
@@ -34,8 +37,9 @@
 					</core:if>
 				</ul>
 			</div>
-			<div id="headerLogo">
+			<div id="headerLogo" class = "headerLogo">
 				<div id="headerLogoTable">
+					<div class = "headerLogoMark">
 					<table>
 						<tbody>
 							<tr>
@@ -46,6 +50,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 		<div id="headerNavi">
@@ -61,10 +66,20 @@
 	</div>
 	<!-- main content configuration, this will be decorator activating -->
 	<div id="container" style = "height : 50%">
-	<decorator:body />
+	<table style = "width: 100%">
+		<tr>
+			<td width = 25%;>
+			</td>
+			<td width = 50%;>
+				<decorator:body />
+			</td>
+			<td width = 25%;>
+			</td>
+		</tr>
+	</table>
 	</div>
 	<!-- footer information configuration -->
-	<div id="footer" style = "height : 15%">
+	<div id="footer">
 		 <footer>
             <div class="container">
                 <div class="footerMain">

@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.apache.ibatis.io.Resources"/>
-    <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSessionFactory"/>
-    <fullyQualifiedTypeName name="java.io.InputStream"/>
-    <fullyQualifiedTypeName name="mybatisjava.Student"/>
-    <fullyQualifiedTypeName name="org.apache.ibatis.annotations.Param"/>
-    <fullyQualifiedTypeName name="mybatisjava.Professor"/>
-    <fullyQualifiedTypeName name="mapper.ProfessorMapper"/>
-    <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSessionFactoryBuilder"/>
     <fullyQualifiedTypeName name="java.io.Reader"/>
     <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSession"/>
     <fullyQualifiedTypeName name="model.mapper.MemberMapper"/>
@@ -37,8 +29,6 @@
     <fullyQualifiedTypeName name="javax.mail.Authenticator"/>
     <fullyQualifiedTypeName name="javax.mail.PasswordAuthentication"/>
     <fullyQualifiedTypeName name="model.mapper.BoardMapper"/>
-    <fullyQualifiedTypeName name="model.BoardDao"/>
-    <fullyQualifiedTypeName name="model.Board"/>
     <fullyQualifiedTypeName name="action.ActionForward"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
     <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
@@ -49,15 +39,25 @@
     <fullyQualifiedTypeName name="org.apache.ibatis.annotations.Insert"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="model.CommentDao"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="model.Comment"/>
-    <fullyQualifiedTypeName name="org.jsoup.Jsoup"/>
-    <fullyQualifiedTypeName name="org.jsoup.nodes.Document"/>
-    <fullyQualifiedTypeName name="org.jsoup.select.Elements"/>
-    <fullyQualifiedTypeName name="org.jsoup.nodes.Element"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
     <fullyQualifiedTypeName name="org.json.simple.parser.JSONParser"/>
     <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
     <fullyQualifiedTypeName name="org.json.simple.JSONArray"/>
+    <fullyQualifiedTypeName name="org.openqa.selenium.WebDriver"/>
+    <fullyQualifiedTypeName name="org.openqa.selenium.WebElement"/>
+    <fullyQualifiedTypeName name="org.openqa.selenium.chrome.ChromeDriver"/>
+    <fullyQualifiedTypeName name="org.openqa.selenium.By"/>
+    <fullyQualifiedTypeName name="org.jsoup.Jsoup"/>
+    <fullyQualifiedTypeName name="org.jsoup.nodes.Document"/>
+    <fullyQualifiedTypeName name="org.jsoup.nodes.Element"/>
+    <fullyQualifiedTypeName name="javax.lang.model.util.Elements"/>
+    <fullyQualifiedTypeName name="org.jsoup.select.Elements"/>
+    <fullyQualifiedTypeName name="model.Activity_Encounter"/>
+    <fullyQualifiedTypeName name="model.Activity_EncounterDao"/>
+    <fullyQualifiedTypeName name="model.mapper.Activity_EncounterMapper"/>
+    <fullyQualifiedTypeName name="model.BoardDao"/>
+    <fullyQualifiedTypeName name="model.Board"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

@@ -7,12 +7,13 @@
 <%@ taglib prefix = "core" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix = "functions" uri = "http://java.sun.com/jsp/jstl/functions" %>
+<core:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset = "euc-kr">
 	<title>회원 목록</title>
-	<link rel = "stylesheet" href="../../css/main.css">
+	<link rel="stylesheet" href="${path}/resource/mycss.css">
 	<script type="text/javascript"
 			src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 	</script>
@@ -38,14 +39,13 @@
 </head>
 <body>
 <form action = "mailform.me" method = "post" name = "f">
-<table class="w3-table-all w3-border">
+<table class="table">
 	<caption>회원 목록</caption>
 		<tr>
 			<th>아이디</th>
 			<th>사진</th>
 			<th>이름</th>
 			<th>성별</th>
-			<th>전화</th>
 			<th>회원관리</th>
 			<th>이메일</th>
 			<th><input type = "checkbox" name = "allchk" onchange = "allchkbox2(this)"></th>
@@ -53,29 +53,32 @@
 		<core:forEach var = "member" items = "${list}">
 		<tr>
 			<td>
-				<a href = "info.me?id=${member.id}"> ${member.id}</a>
+				<a href = "info.me?id=${member.member_id}"> ${member.member_id}</a>
 			</td>
 			<td>
-				<img src = "picture/sm_${member.picture}" width="20" height="30">
+				<img src = "picture/sm_${member.member_picture}" width="20" height="30">
 			</td>
-			<td>${member.name }</td>
-			<td>${member.gender==1?"남":"여"}</td>
-			<td>${member.tel }</td>
-			<td><a href = "updateForm.me?id=${member.id}">[수정]</a>
-			<core:if test = "${member.id != 'admin'}">
-			<a href = "deleteForm.me?id=${member.id}">[강제탈퇴]</a>
+			<td>${member.member_nickname }</td>
+			<td>${member.member_gender==1?"남":"여"}</td>
+			<td><a href = "updateForm.me?id=${member.member_id}">[수정]</a>
+			<core:if test = "${member.member_id != 'admin'}">
+			<a href = "deleteForm.me?id=${member.member_id}">[강제탈퇴]</a>
 			</core:if>
 			</td>
-			<td>${member.email}</td>
-			<td><input type="checkbox" name="mailchk" value="${member.email}" onchange = "clickit(this)"></td>
+			<td>${member.member_email}</td>
+			<td>
+			<core:if test="${member.member_email_receive_ok == 0}">
+				<input type="checkbox" name="mailchk" value="${member.member_email}" onchange = "clickit(this)">
+			</core:if>
+			</td>
 		</tr>
 		</core:forEach>
 		<tr>
-			<td colspan = "6" class = "w3-center">
-				<input type = "button" value = "돌아가기" onclick="location.href='main.me'">
+			<td colspan = "6">
+				<input type = "button" value = "돌아가기" onclick="location.href='${path}/movie/board/index.do'" class = "normalbutton">
 			</td>
-			<td colspan = "2" class = "w3-center">
-				<input type = "submit" value = "메일전송">
+			<td colspan = "2">
+				<input type = "submit" value = "메일전송" class = "redbutton">
 			</td>
 		</tr>
 </table>

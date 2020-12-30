@@ -54,18 +54,6 @@ $(function(){
 })
 
 </script>
-<style>
-   #centerPosition {  
-     position:absolute;
-     height:800px;
-     width:550px;
-     margin:-150px 0px 0px -200px;
-     top: 50%;
-     left: 50%;
-     padding: 5px;
-   }
-
-</style>
 </head>
 <body>
 <div id = "centerPosition">
@@ -85,7 +73,7 @@ $(function(){
 			</td>
 			<th>아이디</th>
 			<td>
-				<input type = "text" name = "id" id = "id">
+				<input type = "text" name = "id" id = "id"><br>
 				<input type = "button" id = "idcheck" value = "아이디 중복 체크" class = "normalbutton">
 			</td>
 		</tr>

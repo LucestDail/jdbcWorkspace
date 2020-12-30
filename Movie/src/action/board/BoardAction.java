@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 
 import action.ActionForward;
+import model.Activity_Encounter;
+import model.Activity_EncounterDao;
 import model.Board;
 import model.BoardDao;
 import model.Comment;
@@ -216,6 +218,10 @@ public class BoardAction {
     	CommentDao cdao = new CommentDao();
     	List<Comment> listComment = cdao.select(board_num);
     	request.setAttribute("listComment", listComment);
+    	if(infoBoard.getBoard_type() == 4) {
+    		List<Activity_Encounter> encountlist = new Activity_EncounterDao().selectmember(board_num);
+        	request.setAttribute("encountlist", encountlist);
+    	}
 		return new ActionForward();
 	}
 	
@@ -542,7 +548,7 @@ public class BoardAction {
 	public ActionForward recommandComment(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("recommand comment activated");
 		String comment_num = request.getParameter("comment_num");
-		System.out.println("commentDelete function -> " + comment_num);
+		System.out.println("recommand method -> " + comment_num);
 		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
 		
 		String msg = "댓글 추천 실패";
@@ -559,7 +565,7 @@ public class BoardAction {
 	public ActionForward notRecommandComment(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("not recommand comment activated");
 		String comment_num = request.getParameter("comment_num");
-		System.out.println("commentDelete function -> " + comment_num);
+		System.out.println("notrecommand method function -> " + comment_num);
 		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
 		
 		String msg = "댓글 비추천 실패";
@@ -576,9 +582,9 @@ public class BoardAction {
 	public ActionForward alertComment(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("alert comment activated");
 		String comment_num = request.getParameter("comment_num");
-		System.out.println("commentDelete function -> " + comment_num);
+		System.out.println("alertcomment method -> " + comment_num);
 		Comment curComment = new CommentDao().selectOne(Integer.parseInt(comment_num));
-		
+		System.out.println(curComment.getBoard_num());
 		String msg = "댓글 신고 실패";
 		String url = "info.do?board_num=" + curComment.getBoard_num();
 		
@@ -595,10 +601,14 @@ public class BoardAction {
      	List<Board> readcntlist = dao.readcntlist();
      	List<Board> recommandlist = dao.recommandlist();
      	List<Board> noticelist = dao.noticelist();
+     	List<Board> recentboardlist = new BoardDao().selectrecentboard();
+		List<Comment> recentcommentlist = new CommentDao().selectrecentcomment();
      	System.out.println(readcntlist  + " / " + recommandlist + " / " + noticelist);
      	request.setAttribute("readcntlist", readcntlist);
      	request.setAttribute("recommandlist", recommandlist);
      	request.setAttribute("noticelist", noticelist);
+     	request.setAttribute("recentboard", recentboardlist);
+		request.setAttribute("recentcomment", recentcommentlist);
 		return new ActionForward();
 	}
 	
@@ -608,9 +618,49 @@ public class BoardAction {
 		String member_id = (String)request.getSession().getAttribute("login");
 		List<Board> boardlist = new BoardDao().selectmyboard(member_id, board_type);
 		List<Comment> commentlist = new CommentDao().selectmycomment(member_id, board_type);
-		System.out.println(boardlist + "///" + commentlist);
 		request.setAttribute("boardlist", boardlist);
 		request.setAttribute("commentlist", commentlist);
 		return new ActionForward();
+	}
+	public ActionForward encount(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("encount activated");
+		String board_num = request.getParameter("board_num");
+		String member_id = request.getParameter("member_id");
+		String msg = "참여 실패!";
+		String url = "info.do?board_num=" + board_num;
+		Activity_Encounter ae = new Activity_Encounter();
+		ae.setBoard_num(Integer.parseInt(board_num));
+		ae.setMember_id(member_id);
+		if(new Activity_EncounterDao().select(ae)) {
+			msg = "이미 참여했습니다!";
+		}else {
+			if(new Activity_EncounterDao().insert(ae)) {
+				msg = "참여 성공!";
+			}
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
+	}
+	
+	public ActionForward encountcancel(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("encountcancel activated");
+		String board_num = request.getParameter("board_num");
+		String member_id = request.getParameter("member_id");
+		String msg = "참여 제거 실패!";
+		String url = "info.do?board_num=" + board_num;
+		Activity_Encounter ae = new Activity_Encounter();
+		ae.setBoard_num(Integer.parseInt(board_num));
+		ae.setMember_id(member_id);
+		if(!(new Activity_EncounterDao().select(ae))) {
+			msg = "참여자 명단에 없습니다!";
+		}else {
+			if(new Activity_EncounterDao().delete(ae)) {
+				msg = "참여 제거 성공!";
+			}
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("url", url);
+		return new ActionForward(false, "../alert.jsp");
 	}
 }
