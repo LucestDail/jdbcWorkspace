@@ -17,7 +17,7 @@ public class LogoutAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.getSession().invalidate();
 		request.setAttribute("msg", "·Î±×¾Æ¿ôÇÏ¼Ì½À´Ï´Ù");
-		request.setAttribute("url", "loginForm.me");
+		request.setAttribute("url", "../board/index.do");
 		return new ActionForward(false,"../board/index.do");
 	}
 

@@ -35,17 +35,17 @@
 <body>
 <div id = "centerPosition">
 <form action="${path}/movie/member/login.me" method="post" name="f" onsubmit="return inputcheck(this)">
-	<table>
+	<table class = "table" style = "text-align:center">
 		<tr>
-			<td align = "center"><input type="text" name="id" onfocus="this.value=''" value = "아이디를 입력하세요"></td>
-			<td rowspan = "2" align = "center">
+			<td align = "center" colspan = "4"><input type="text" name="id" onfocus="this.value=''" value = "아이디를 입력하세요" class = "form-control"></td>
+		</tr>
+		<tr>
+			<td align = "center" colspan = "4"><input type="password" name="password" onfocus="this.value=''" value = "비밀번호를 입력하세요" class="form-control"></td>
+		</tr>
+		<tr>
+			<td>
 				<input type="submit" class="normalbutton" value="로  그  인" style = "width:100%;">
 			</td>
-		</tr>
-		<tr>
-			<td align = "center"><input type="password" name="password" onfocus="this.value=''" value = "비밀번호를 입력하세요"></td>
-		</tr>
-		<tr>
 			<td>
 				<input type="button" class="redbutton" value="회원가입" style = "width:100%;" onclick="location.href = '${path}/movie/member/joinForm.me'">
 			</td>

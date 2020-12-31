@@ -32,7 +32,7 @@ public class Board {
 	private int recommand_count;
 	private int not_recommand_count;
 	private String movie_subject;
-	private int movie_id;
+	private String movie_id;
 	private int counter;
 	public int getBoard_num() {
 		return board_num;
@@ -208,10 +208,10 @@ public class Board {
 	public void setMovie_subject(String movie_subject) {
 		this.movie_subject = movie_subject;
 	}
-	public int getMovie_id() {
+	public String getMovie_id() {
 		return movie_id;
 	}
-	public void setMovie_id(int movie_id) {
+	public void setMovie_id(String movie_id) {
 		this.movie_id = movie_id;
 	}
 	@Override

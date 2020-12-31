@@ -1,3 +1,14 @@
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="org.jsoup.nodes.Element"%>
+<%@page import="org.jsoup.select.Elements"%>
+<%@page import="org.jsoup.Jsoup"%>
+<%@page import="org.jsoup.nodes.Document"%>
+<%@page import="java.io.InputStreamReader"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.net.HttpURLConnection"%>
+<%@page import="java.net.URL"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix = "core" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -20,32 +31,64 @@
 </head>
 <body>
 <core:if test = "${param.board_type == 0}">
-<table class = "table table=bordered">
+<table class = "table table-bordered">
 <tr>
-			<td>영화 포스터
-			</td>
-			<td colspan = "6">영화 정보
-			</td>
-			<td>영화 관련 상호작용
-			<table>
-				<tr>
-					<td>
-						좋아요
-					</td>
-				</tr>
-				<tr>
-					<td>
-						봤어요
-					</td>
-				</tr>
-				<tr>
-					<td>
-						기대되요
-					</td>
-				</tr>
-			</table>
-			</td>
-		</tr>
+	<td colspan = "5">
+<%
+	String movieid = request.getParameter("movie_id");
+	String apiurl = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.xml?key=14234f311919496d0877ff15e5d5c03c&movieCd="+movieid;
+	String line = "";
+	String str = "";
+	URL url = new URL(apiurl);
+	HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+	conn.setRequestProperty("Accept","application/xml");
+	BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
+	while((str = br.readLine()) != null){
+		line += str;
+	}
+	System.out.println(line);
+	Document doc = null;
+	String html = "<table class = 'table'><caption> 현재 검색 영화 코드 : "+movieid+" </caption><tr><th>정보 분류</th><th>정보</th></tr>";
+	try{
+		doc = Jsoup.parse(line);
+		Elements e1 = doc.select("movieInfo");
+		for(Element ele : e1){
+			html += "<tr><th>영화명(국문)</th><td>" + ele.select("movieNm").get(0).text() + "</td></tr>";
+			html += "<tr><th>영화명(영문)</th><td>" + ele.select("movieNmEn").get(0).text() + "</td></tr>";
+			html += "<tr><th>상영시간</th><td>" + ele.select("showTm").get(0).text() + "</td></tr>";
+			html += "<tr><th>제작연도</th><td>" + ele.select("prdtYear").get(0).text() + "</td></tr>";
+			html += "<tr><th>개봉연도</th><td>" + ele.select("openDt").get(0).text() + "</td></tr>";
+			html += "<tr><th>제작상태</th><td>" + ele.select("prdtStatNm").get(0).text() + "</td></tr>";
+			html += "<tr><th>영화유형</th><td>" + ele.select("typeNm").get(0).text() + "</td></tr>";
+		}
+		Elements e2 = doc.select("genre");
+		for(Element ele : e2){
+			html += "<tr><th>장르</th><td>" + ele.select("genreNm").get(0).text() + "</td></tr>";
+		}
+		Elements e3 = doc.select("director");
+		for(Element ele : e3){
+			html += "<tr><th>영화감독</th><td>" + ele.select("peopleNm").get(0).text() + "</td></tr>";
+		}
+		Elements e4 = doc.select("company");
+		for(Element ele : e4){
+			html += "<tr><th>제작사명</th><td>" + ele.select("companyNm").get(0).text() + "</td></tr>";
+		}
+		Elements e5 = doc.select("nation");
+		for(Element ele : e5){
+			html += "<tr><th>국가명</th><td>" + ele.select("nationNm").get(0).text() + "</td></tr>";
+		}
+		Elements e6 = doc.select("audit");
+		for(Element ele : e6){
+			html += "<tr><th>관람등급</th><td>" + ele.select("watchGradeN").get(0).text() + "</td></tr>";
+		}
+		html += "</table>";
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+%>
+<%= html %>
+	</td>
+	</tr>
 </table>
 </core:if>
 <table class = "table table-hover">
@@ -412,7 +455,12 @@
 		<core:if test = "${sessionScope.board_type == 4 }">
 			<td colspan = "12" style = "text-align:right">
 		</core:if>
-				<a href = "writeForm.do?board_type=${sessionScope.board_type}">[글쓰기]</a>
+		<core:if test = "${!empty param.movie_id}">
+			<a href = "writeForm.do?board_type=${sessionScope.board_type}&&movie_id=${param.movie_id}">[글쓰기]</a>
+		</core:if>
+		<core:if test = "${empty param.movie_id}">
+			<a href = "writeForm.do?board_type=${sessionScope.board_type}">[글쓰기]</a>
+		</core:if>
 			</td>
 			</core:if>
 			<core:if test = "${empty sessionScope.login}">

@@ -1,3 +1,12 @@
+<%@page import="org.jsoup.select.Elements"%>
+<%@page import="org.jsoup.Jsoup"%>
+<%@page import="org.jsoup.nodes.Document"%>
+<%@page import="java.io.InputStreamReader"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.net.HttpURLConnection"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -71,10 +80,25 @@
 <body>
 	<form action = "write.do" method = "post" enctype = "multipart/form-data" name = "f">
 	<input type = "hidden" name = "board_notice_able" value = "0">
-	<input type = "hidden" name = "movie_id" value = "1">
-	<input type = "hidden" name = "movie_subject" value = "1">
+	<input type = "hidden" name = "movie_id">
+	<input type = "hidden" name = "movie_subject">
+	<input type = "hidden" name = "area_xpoint" value = "0">
+	<input type = "hidden" name = "area_ypoint" value = "0">
 	<table class="table table-bordered">
 		<caption>게시판 글쓰기</caption>
+		<tr>
+			<th>
+				작품대상
+			</th>
+			<td>
+			<core:if test="${!empty param.movie_id}">
+				<input type = "text" name = "movie_id" readonly value = "${param.movie_id}">
+			</core:if>
+			<core:if test = "${empty param.movie_id}">
+				<input type = "text" name = "movie_subject">
+			</core:if>
+			</td>
+		</tr>
 		<tr>
 			<th>
 				제목

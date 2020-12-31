@@ -125,11 +125,7 @@ public class BoardAction {
 				board.setScore_category_d(Integer.parseInt(multi.getParameter("score_category_d")));
 			}
 			board.setMovie_subject(multi.getParameter("movie_subject"));
-			if(multi.getParameter("movie_id") == null) {
-				board.setMovie_id(0);
-			}else {
-				board.setMovie_id(Integer.parseInt(multi.getParameter("movie_id")));
-			}
+			board.setMovie_id(multi.getParameter("movie_id"));
 			if (dao.insert(board)) {
 				dao.addPoint(member_id, board_type, 10);
 				return new ActionForward(true, "list.do?board_type="+request.getSession().getAttribute("board_type"));
@@ -145,17 +141,12 @@ public class BoardAction {
 	}
 	
 	public ActionForward list(HttpServletRequest request, HttpServletResponse response) {
-		/**
-		 *  1. 한페이지당 출력되는 게시글은 10개까지만 -> pageNum 파라매터값 저장, 없는 경우는 1로 설정
-    		2. 최근 등록된 게시물이 가장 위에 배치
-    		3. db에서 해당 페이지에 출력된 내용을 조회하여 호면에 출력, 게시물을 출력 부분, 페이지 구분 출력 부분
-		 */
 		int pageNum = 1;
 		String board_type = request.getParameter("board_type");
+		
      	try{
      		pageNum = Integer.parseInt(request.getParameter("pageNum"));
      	}catch(NumberFormatException e){
-     		//없엉...
      	}
      	String column = request.getParameter("column");
      	String find = request.getParameter("find");
@@ -163,27 +154,29 @@ public class BoardAction {
      		column = null;
      		find = null;
      	}
+     	String movie_id = request.getParameter("movie_id");
+     	String movie_subject = request.getParameter("movie_subject");
+     	System.out.println("list get parameter : " + movie_id + "," + movie_subject);
+		if(movie_id != null) {
+			System.out.println("movie id is available");
+			column = "movie_id";
+			find = movie_id;
+			movie_subject = "0";
+		}else if(movie_subject != null){
+			System.out.println("movie subject is available");
+			column = "movie_subject";
+			find = movie_subject;
+			movie_id = "0";
+		}else {
+			System.out.println("it is null on movie information");
+		}
+		
+		
+		
      	int limit = 10;
-     	int boardcount = dao.boardCount(column, find, board_type); // 전체 게시물 등록 건수를 리턴
-     	//pageNum에 출력될 게시물 10개를 List 객체로 리턴
+     	int boardcount = dao.boardCount(column, find, board_type);
      	List<Board> list = dao.list(pageNum,limit, column, find, board_type);
      	System.out.println("printing list -> " + list);
-     	/*
-     	startpage : 화면에 출력될 시작 페이지 번호
-     	현재 페이지 시작페이지
-     		2	:	1
-     	2/10.0 => 0.2 + 0.9 => (int)(1.1) - 1 => 0 * 10 => 0+1 => 1
-     		505	:	501
-     	505/10.0 => 50.5 + 0.9 => (int)(51.4) - 1 => 50*10 => 500 + 1
-     	
-     	
-     	첨부파일이 있는 경우 @ 표시하기 -> @ 누르면 사진 표시
-     	오늘 등록된 게시물은 시:분:초로 출력하기
-     	오늘 등록이 아닌 경우는 년-월-일 시:분으로 출력하기
-     	
-     	답글인 경우 들여쓰기 ㅂ 한자 6번 └
-     	
-     	*/
      	int maxpage = (int)((double)boardcount/limit + 0.95);
      	int startpage = ((int)(pageNum/10.0 + 0.9) - 1) * 10 + 1;
      	int endpage = startpage + 9;
@@ -201,6 +194,8 @@ public class BoardAction {
      	request.setAttribute("endpage", endpage);
      	request.setAttribute("boardnum", boardnum);
      	request.setAttribute("today", today);
+     	request.setAttribute("movie_id", movie_id);
+     	request.setAttribute("movie_subject", movie_subject);
      	request.getSession().setAttribute("board_type",board_type);
      	System.out.println("current board type : " + board_type);
 		return new ActionForward();

@@ -62,7 +62,7 @@ $(function(){
 	<input type = "hidden" id = "idcheckconfirm" value = "0">
 	<input type = "hidden" name = "emailreceive" id = "emailreceive" value = "0">
 	<div id = "idchecker"></div>
-	<table>
+	<table class = "table table-bordered">
 		<tr>
 			<td rowspan = "8" valign = "middle" align = "center">
 				<img src = ${path}/resource/assets/images/profileicon.png width="100" height="120" id="picture">
@@ -72,43 +72,44 @@ $(function(){
 				</font>
 			</td>
 			<th>아이디</th>
-			<td>
-				<input type = "text" name = "id" id = "id"><br>
+			<td align = "center">
+				<input type = "text" name = "id" id = "id" class="form-control"><br>
 				<input type = "button" id = "idcheck" value = "아이디 중복 체크" class = "normalbutton">
 			</td>
 		</tr>
 		
 		<tr>
 			<th>비밀번호</th>
-			<td><input type = "password" name = "password"></td>
+			<td><input type = "password" name = "password" class="form-control"></td>
 		</tr>
 		<tr>
 			<th>닉네임</th>
 			<td>
-				<input type = "text" name = "nickname" id = "nickname">
+				<input type = "text" name = "nickname" id = "nickname" class="form-control">
 			</td>
 		</tr>
 		<tr>
 			<th>성별</th>
-			<td>
+			<td align = "center">
 				<input type = "radio" name = "gender" value = "1" checked>남
 				<input type = "radio" name = "gender" value = "2">여
 			</td>
 		</tr>
 		<tr>
 			<th>나이(만)</th>
-			<td><input type = "text" name = "age"></td>
+			<td><input type = "text" name = "age" class="form-control"></td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td><input type = "text" name = "email">
-			<input type = "checkbox" id = "emailcheckbox">
+			<td align = "center">
+			<input type = "text" name = "email" class="form-control"><br>
+			이메일 수신을 원하지 않습니다 &nbsp;&nbsp;&nbsp;<input type = "checkbox" id = "emailcheckbox">
 			</td>
 		</tr>
 		<tr>
 			<th>대표 선호 장르</th>
 			<td>
-				<select name = "genre">
+				<select name = "genre" class="form-control">
 					<option value = "horror">코미디</option>
 					<option value = "crime">범죄</option>
 					<option value = "thriller">스릴러</option>
@@ -135,7 +136,7 @@ $(function(){
 		<tr>
 			<th>자기소개</th>
 			<td>
-				<textarea name = "introduction" style = "width:170px; height:100px;"></textarea>
+				<textarea name = "introduction" class="form-control" rows="3"></textarea>
 			</td>
 		</tr>
 		<tr>

@@ -32,7 +32,7 @@
 	String[] movieTypeCdArr = request.getParameterValues("movieTypeCdArr")==null? null:request.getParameterValues("movieTypeCdArr");	//영화형태코드 배열 (공통코드서비스에서 '2201'로 조회된 영화형태코드)
 	
 	// 발급키
-	String key = "430156241533f1d058c603178cc3ca0e";
+	String key = "14234f311919496d0877ff15e5d5c03c";
 	// KOBIS 오픈 API Rest Client를 통해 호출
     KobisOpenAPIRestService service = new KobisOpenAPIRestService(key);
 

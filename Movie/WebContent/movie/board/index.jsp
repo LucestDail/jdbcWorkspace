@@ -219,25 +219,26 @@
 					<form action="${path}/movie/member/login.me" method="post" name="f" onsubmit="return inputcheck(this)">
 						<table>
 							<tr>
-								<td align = "center"><input type="text" name="id" onfocus="this.value=''" value = "아이디를 입력하세요"></td>
-								<td rowspan = "2">
+								<td align = "center" colspan = "2"><input type="text" name="id" onfocus="this.value=''" value = "아이디를 입력하세요" class="form-control"></td>
+							</tr>
+							<tr>
+								<td align = "center" colspan = "2"><input type="password" name="password" onfocus="this.value=''" value = "비밀번호를 입력하세요" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>
+									<input type="button" class="redbutton" value="회원가입"  onclick="location.href ='${path}/movie/member/joinForm.me'" style = "width:100%;">
+									
+								</td>
+								<td>
 									<input type="submit" class="normalbutton" value="로  그  인" style = "width:100%;">
 								</td>
 							</tr>
 							<tr>
-								<td align = "center"><input type="password" name="password" onfocus="this.value=''" value = "비밀번호를 입력하세요"></td>
-							</tr>
-							<tr>
 								<td>
-									<input type="button" class="redbutton" value="회원가입" style = "width:100%;" onclick="location.href = '${path}/movie/member/joinForm.me'">
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="button" class="normalbutton" value="아이디찾기" style = "width:100%;" onclick="win_open('idForm')">
+									<input type="button" class="normalbutton" value="아이디찾기" style = "width:100%;" onclick="win_open('/Movie/movie/member/idForm')">
 								</td>
 								<td>
-									<input type="button" class="normalbutton" value="비밀번호찾기" style = "width:100%;" onclick="win_open('pwForm')">
+									<input type="button" class="normalbutton" value="비밀번호찾기" style = "width:100%;" onclick="win_open('/Movie/movie/member/pwForm')">
 								</td>
 							</tr>
 						</table>

@@ -15,6 +15,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!--
 ------------------------------------------------------------
 * @설명 : 영화코드 조회 SOAP 예제
@@ -41,7 +42,7 @@
 <script type="text/javascript" src="../../js/KobisOpenAPIRestService.js"></script>
 <script type="text/javascript">
 $(function(){
-	var kobisService = new KobisOpenAPIRestService("430156241533f1d058c603178cc3ca0e");
+	var kobisService = new KobisOpenAPIRestService("14234f311919496d0877ff15e5d5c03c");
 	var resJson = null;
 	try{
 		resJson = kobisService.getMovieList(true,{curPage:"<%=curPage%>",itemPerPage:"<%=itemPerPage%>",movieNm:"<%=movieNm%>",directorNm:"<%=directorNm%>",openStartDt:"<%=openStartDt%>",openEndDt:"<%=openEndDt%>",prdtStartYear:"<%=prdtStartYear%>",prdtEndYear:"<%=prdtEndYear%>",repNationCd:"<%=repNationCd%>",movieTypeCdArr:"<%=movieTypeCdArr%>"});
@@ -57,7 +58,7 @@ $(function(){
 		for(var i=0;i<movieList.length;i++){
 			var movie = movieList[i];
 			
-			var appendStr = "<tr><td>"+movie.movieNm+"</td><td>"+movie.movieNmEn+"</td><td>"+movie.prdtYear+"</td><td>"+movie.openDt+"</td><td>"+movie.repNationNm+"</td>";
+			var appendStr = "<tr><td><a href = '/Movie/movie/board/list.do?board_type=0&&movie_id="+movie.movieCd+"'>"+movie.movieNm+"</a></td><td>"+movie.movieNmEn+"</td><td>"+movie.prdtYear+"</td><td>"+movie.openDt+"</td><td>"+movie.repNationNm+"</td>";
 			
 			//감독
 			appendStr += "<td>";			
@@ -75,9 +76,7 @@ $(function(){
 					appendStr += movie.companys[com].companyNm;
 				}				
 			}
-			appendStr += "</td></tr>";
-			
-									
+			appendStr += "</td></tr>";						
 			$("#titleInfo p:eq(0)").html(totCnt);			
 			$("#boxtab tbody").append(appendStr);
 		}
